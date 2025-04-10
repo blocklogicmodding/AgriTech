@@ -1,14 +1,15 @@
 package com.blocklogic.agritech.block.custom;
 
-import com.blocklogic.agritech.block.entity.AgriTechPlanterEntity;
+import com.blocklogic.agritech.block.entity.AgritechPlanterBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -50,13 +51,13 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new AgriTechPlanterEntity(blockPos, blockState);
+        return new AgritechPlanterBlockEntity(blockPos, blockState);
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if(state.getBlock() != newState.getBlock()) {
-            if(level.getBlockEntity(pos) instanceof AgriTechPlanterEntity agritechPlanterBlock) {
+            if(level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity agritechPlanterBlock) {
                 agritechPlanterBlock.drops();
                 level.updateNeighbourForOutputSignal(pos, this);
             }
@@ -66,15 +67,20 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof AgriTechPlanterEntity agriTechPlanterEntity) {
-            if(agriTechPlanterEntity.inventory.getStackInSlot(0).isEmpty() && !stack.isEmpty()) {
-                agriTechPlanterEntity.inventory.insertItem(0, stack.copy(), false);
+        if(level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity agriTechPlanterBlockEntity) {
+            if(player.isCrouching() && !level.isClientSide()) {
+                ((ServerPlayer) player).openMenu(new SimpleMenuProvider(agriTechPlanterBlockEntity, Component.literal("Agritech Planter")), pos);
+                return ItemInteractionResult.SUCCESS;
+            }
+
+            if(agriTechPlanterBlockEntity.inventory.getStackInSlot(0).isEmpty() && !stack.isEmpty()) {
+                agriTechPlanterBlockEntity.inventory.insertItem(0, stack.copy(), false);
                 stack.shrink(1);
                 level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
             } else if (stack.isEmpty()) {
-                ItemStack stackInPlanter = agriTechPlanterEntity.inventory.extractItem(0, 1, false);
+                ItemStack stackInPlanter = agriTechPlanterBlockEntity.inventory.extractItem(0, 1, false);
                 player.setItemInHand(InteractionHand.MAIN_HAND, stackInPlanter);
-                agriTechPlanterEntity.clearContents();
+                agriTechPlanterBlockEntity.clearContents();
                 level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
             }
         }

@@ -2,8 +2,13 @@ package com.blocklogic.agritech;
 
 import com.blocklogic.agritech.block.ModBlocks;
 import com.blocklogic.agritech.block.entity.ModBlockEntities;
+import com.blocklogic.agritech.block.entity.renderer.AgritechPlanterBlockEntityRendered;
 import com.blocklogic.agritech.item.ModCreativeModeTabs;
 import com.blocklogic.agritech.item.ModItems;
+import com.blocklogic.agritech.screen.ModMenuTypes;
+import com.blocklogic.agritech.screen.custom.AgritechPlanterScreen;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -58,6 +63,7 @@ public class AgriTech
         ModBlocks.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 
@@ -87,6 +93,16 @@ public class AgriTech
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             
+        }
+
+        @SubscribeEvent
+        public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(ModBlockEntities.AGRITECH_PLANTER_BLOCK_ENTITY.get(), AgritechPlanterBlockEntityRendered::new);
+        }
+
+        @SubscribeEvent
+        public static void registerScreens(RegisterMenuScreensEvent event) {
+            event.register(ModMenuTypes.AGRITECH_PLANTER_MENU.get(), AgritechPlanterScreen::new);
         }
     }
 }
