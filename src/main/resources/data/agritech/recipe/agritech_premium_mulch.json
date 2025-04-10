@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "minecraft:leaves"
+    },
+    "F": {
+      "item": "agritech:agritech_fertile_mulch"
+    },
+    "D": {
+      "item": "minecraft:diamond_block"
+    }
+  },
+  "pattern": [
+    "LDL",
+    "DFD",
+    "LDL"
+  ],
+  "result": {
+    "id": "agritech:agritech_premium_mulch",
+    "count": 2
+  }
+}

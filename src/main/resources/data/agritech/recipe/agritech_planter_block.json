@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "minecraft:oak_planks"
+    },
+    "S": {
+      "item": "minecraft:oak_slab"
+    },
+    "D": {
+      "item": "minecraft:dirt"
+    },
+    "L": {
+      "item": "minecraft:oak_log"
+    }
+  },
+  "pattern": [
+    "S S",
+    "ODO",
+    "LOL"
+  ],
+  "result": {
+    "id": "agritech:agritech_planter_block",
+    "count": 1
+  }
+}

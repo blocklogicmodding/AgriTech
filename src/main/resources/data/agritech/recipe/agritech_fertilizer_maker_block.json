@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "minecraft:oak_planks"
+    },
+    "L": {
+      "item": "minecraft:oak_log"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "M": {
+      "item": "agritech:agritech_simple_mulch"
+    }
+  },
+  "pattern": [
+    "LIL",
+    "OMO",
+    "LOL"
+  ],
+  "result": {
+    "id": "agritech:agritech_fertilizer_maker_block",
+    "count": 1
+  }
+}

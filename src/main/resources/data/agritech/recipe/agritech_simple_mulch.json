@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "minecraft:leaves"
+    },
+    "H": {
+      "item": "minecraft:hay_block"
+    }
+  },
+  "pattern": [
+    "L L",
+    " H ",
+    "L L"
+  ],
+  "result": {
+    "id": "agritech:agritech_simple_mulch",
+    "count": 2
+  }
+}

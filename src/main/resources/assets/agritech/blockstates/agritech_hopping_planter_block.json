@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "agritech:block/agritech_hopping_planter_block"
+    }
+  }
+}

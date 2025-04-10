@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "agritech:block/agritech_simple_mulch"
+  }
+}

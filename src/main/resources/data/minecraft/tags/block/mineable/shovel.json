@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "agritech:agritech_simple_mulch",
+    "agritech:agritech_fertile_mulch",
+    "agritech:agritech_premium_mulch",
+    "agritech:agritech_pristine_mulch"
+  ]
+}
