@@ -1,6 +1,7 @@
 package com.blocklogic.agritech;
 
 import com.blocklogic.agritech.block.ModBlocks;
+import com.blocklogic.agritech.block.entity.ModBlockEntities;
 import com.blocklogic.agritech.item.ModCreativeModeTabs;
 import com.blocklogic.agritech.item.ModItems;
 import org.slf4j.Logger;
@@ -56,6 +57,7 @@ public class AgriTech
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 
