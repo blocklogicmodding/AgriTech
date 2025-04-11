@@ -3,6 +3,7 @@ package com.blocklogic.agritech.screen.custom;
 import com.blocklogic.agritech.block.ModBlocks;
 import com.blocklogic.agritech.block.entity.AgritechPlanterBlockEntity;
 import com.blocklogic.agritech.screen.ModMenuTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,9 +17,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.BiPredicate;
 
 public class AgritechPlanterMenu extends AbstractContainerMenu {
 
@@ -173,8 +177,13 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.AGRITECH_PLANTER_BLOCK.get());
+        Block block = blockEntity.getBlockState().getBlock();
+
+        if (block == ModBlocks.AGRITECH_PLANTER_BLOCK.get() || block == ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get()) {
+            return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, block);
+        }
+
+        return false;
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

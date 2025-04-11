@@ -27,12 +27,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class AgritechPlanterBlock extends BaseEntityBlock {
+public class AgritechHoppingPlanterBlock extends BaseEntityBlock {
 
-    public static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.1, 15.0, 13.0, 15.00);
-    public static final MapCodec<AgritechPlanterBlock> CODEC = simpleCodec(AgritechPlanterBlock::new);
+    public static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.1, 15.0, 13.0, 15.0);
+    public static final MapCodec<AgritechHoppingPlanterBlock> CODEC = simpleCodec(AgritechHoppingPlanterBlock::new);
 
-    public AgritechPlanterBlock(Properties properties) {
+    public AgritechHoppingPlanterBlock(Properties properties) {
         super(properties);
     }
 
@@ -53,15 +53,15 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new AgritechPlanterBlockEntity(blockPos, blockState);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new AgritechPlanterBlockEntity(pos, state);
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if(state.getBlock() != newState.getBlock()) {
-            if(level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity agritechPlanterBlock) {
-                agritechPlanterBlock.drops();
+        if (state.getBlock() != newState.getBlock()) {
+            if (level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity planter) {
+                planter.drops();
                 level.updateNeighbourForOutputSignal(pos, this);
             }
         }
@@ -70,10 +70,11 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity agritechHoppingPlanterBlockEntity) {
+        if (level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity planter) {
             if (!level.isClientSide()) {
                 MenuProvider menuProvider = new SimpleMenuProvider(
-                        (containerId, playerInventory, playerEntity) -> new AgritechPlanterMenu(containerId, playerInventory, agritechHoppingPlanterBlockEntity),
+                        (containerId, playerInventory, playerEntity) ->
+                                new AgritechPlanterMenu(containerId, playerInventory, planter),
                         Component.literal("Agritech Planter")
                 );
 
@@ -87,9 +88,9 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return type == ModBlockEntities.AGRITECH_PLANTER_BLOCK_ENTITY.get() ?
-                (lvl, pos, blockState, blockEntity) -> AgritechPlanterBlockEntity.tick(lvl, pos, blockState, (AgritechPlanterBlockEntity)blockEntity) :
-                null;
+        return type == ModBlockEntities.AGRITECH_PLANTER_BLOCK_ENTITY.get()
+                ? (lvl, pos, blockState, be) ->
+                AgritechPlanterBlockEntity.tick(lvl, pos, blockState, (AgritechPlanterBlockEntity) be)
+                : null;
     }
-
 }

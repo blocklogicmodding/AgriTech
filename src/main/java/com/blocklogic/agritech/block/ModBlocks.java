@@ -1,6 +1,7 @@
 package com.blocklogic.agritech.block;
 
 import com.blocklogic.agritech.AgriTech;
+import com.blocklogic.agritech.block.custom.AgritechHoppingPlanterBlock;
 import com.blocklogic.agritech.block.custom.AgritechPlanterBlock;
 import com.blocklogic.agritech.item.ModItems;
 import net.minecraft.network.chat.Component;
@@ -78,7 +79,7 @@ public class ModBlocks {
             });
 
     public static final DeferredBlock<Block> AGRITECH_HOPPING_PLANTER_BLOCK = registerBlock("agritech_hopping_planter_block",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new AgritechHoppingPlanterBlock(BlockBehaviour.Properties.of()
                     .strength(3f)
                     .sound(SoundType.WOOD)
                     .noOcclusion()) {
