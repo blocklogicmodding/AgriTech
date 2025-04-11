@@ -7,6 +7,7 @@ import com.blocklogic.agritech.item.ModCreativeModeTabs;
 import com.blocklogic.agritech.item.ModItems;
 import com.blocklogic.agritech.screen.ModMenuTypes;
 import com.blocklogic.agritech.screen.custom.AgritechPlanterScreen;
+import com.blocklogic.agritech.screen.custom.FertilizerMakerScreen;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.slf4j.Logger;
@@ -26,13 +27,10 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(AgriTech.MODID)
 public class AgriTech
 {
-    // Define mod id in a common place for everything to reference
     public static final String MODID = "agritech";
-    // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public AgriTech(IEventBus modEventBus, ModContainer modContainer)
@@ -86,6 +84,7 @@ public class AgriTech
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(ModMenuTypes.AGRITECH_PLANTER_MENU.get(), AgritechPlanterScreen::new);
+            event.register(ModMenuTypes.FERTILIZER_MAKER_MENU.get(), FertilizerMakerScreen::new);
         }
     }
 }

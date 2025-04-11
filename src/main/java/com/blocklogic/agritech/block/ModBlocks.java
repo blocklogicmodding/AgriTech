@@ -3,6 +3,7 @@ package com.blocklogic.agritech.block;
 import com.blocklogic.agritech.AgriTech;
 import com.blocklogic.agritech.block.custom.AgritechHoppingPlanterBlock;
 import com.blocklogic.agritech.block.custom.AgritechPlanterBlock;
+import com.blocklogic.agritech.block.custom.FertilizerMakerBlock;
 import com.blocklogic.agritech.item.ModItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -91,7 +92,7 @@ public class ModBlocks {
             });
 
     public static final DeferredBlock<Block> AGRITECH_FERTILIZER_MAKER_BLOCK = registerBlock("agritech_fertilizer_maker_block",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new FertilizerMakerBlock(BlockBehaviour.Properties.of()
                     .strength(3f)
                     .sound(SoundType.WOOD)
                     .noOcclusion()) {
