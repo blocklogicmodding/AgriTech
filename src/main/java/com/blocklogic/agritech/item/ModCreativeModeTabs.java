@@ -16,7 +16,7 @@ public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, AgriTech.MODID);
 
     public static final Supplier<CreativeModeTab> AGRITECH = CREATIVE_MODE_TAB.register("agritech",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.AGRITECH_SIMPLE_MULCH.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.AGRITECH_PLANTER_BLOCK.get()))
                     .title(Component.translatable("creativetab.agritech.agritech"))
                     .displayItems((ItemDisplayParameters, output) -> {
                         output.accept(ModBlocks.AGRITECH_SIMPLE_MULCH);
