@@ -34,7 +34,7 @@ public class FertilizerMakerScreen extends AbstractContainerScreen<FertilizerMak
             int barYBottom = y + 73;
             int barYTop = barYBottom - progress;
 
-            guiGraphics.fill(barX, barYTop, barX + 4, barYBottom, 0xFFFF0000);
+            guiGraphics.fillGradient(barX, barYTop, barX + 4, barYBottom, 0xFFA9FF90, 0xFF004D00);
 
         }
     }
