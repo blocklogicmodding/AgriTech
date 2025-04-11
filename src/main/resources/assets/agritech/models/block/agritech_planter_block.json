@@ -197,7 +197,7 @@
 		},
 		"ground": {
 			"translation": [0, 2, 0],
-			"scale": [0.4, 0.4, 0.4]
+			"scale": [0.3, 0.3, 0.3]
 		},
 		"gui": {
 			"translation": [0, 1, 0],

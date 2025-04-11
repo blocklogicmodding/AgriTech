@@ -70,12 +70,12 @@ public class AgritechHoppingPlanterBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity planter) {
+        if (level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity agritechPlanterBlockEntity) {
             if (!level.isClientSide()) {
                 MenuProvider menuProvider = new SimpleMenuProvider(
                         (containerId, playerInventory, playerEntity) ->
-                                new AgritechPlanterMenu(containerId, playerInventory, planter),
-                        Component.literal("Agritech Planter")
+                                new AgritechPlanterMenu(containerId, playerInventory, agritechPlanterBlockEntity),
+                        Component.literal("Agritech Hopping Planter")
                 );
 
                 ((ServerPlayer) player).openMenu(menuProvider, pos);
