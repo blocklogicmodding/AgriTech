@@ -17,8 +17,8 @@
   "tooltip.agritech.agritech_fertile_mulch": "Increases crop growth in Agritech Planters by §l100%§r",
   "tooltip.agritech.agritech_premium_mulch": "Increases crop growth in Agritech Planters by §l250%§r",
   "tooltip.agritech.agritech_pristine_mulch": "Increases crop growth in Agritech Planters by §l500%§r",
-  "tooltip.agritech.agritech_premium_fertilizer": "Fertilizer used for creating §lPremium Mulch§r",
-  "tooltip.agritech.agritech_pristine_fertilizer": "Fertilizer used for creating §lPristine Mulch§r",
+  "tooltip.agritech.agritech_premium_fertilizer": "Fertilizer used for creating §lPremium Mulch§r. Can greatly accelerate plant growth.",
+  "tooltip.agritech.agritech_pristine_fertilizer": "Fertilizer used for creating §lPristine Mulch§r. Instantly grows plants to maturity.",
   "tooltip.agritech.agritech_planter_block": "A planter box to grow crops in!",
   "tooltip.agritech.agritech_hopping_planter_block": "A planter box with a hopper to grow crops in!",
   "tooltip.agritech.agritech_fertilizer_maker_block": "Used to create Agritech Fertilizer."

@@ -1,6 +1,8 @@
 package com.blocklogic.agritech.item;
 
 import com.blocklogic.agritech.AgriTech;
+import com.blocklogic.agritech.item.custom.PremiumFertilizerItem;
+import com.blocklogic.agritech.item.custom.PristineFertilizerItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +17,7 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(AgriTech.MODID);
 
     public static final DeferredItem<Item> AGRITECH_PREMIUM_FERTILIZER = ITEMS.register("agritech_premium_fertilizer",
-            () -> new Item(new Item.Properties()) {
+            () -> new PremiumFertilizerItem(new Item.Properties()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_premium_fertilizer"));
@@ -24,7 +26,7 @@ public class ModItems {
             });
 
     public static final DeferredItem<Item> AGRITECH_PRISTINE_FERTILIZER = ITEMS.register("agritech_pristine_fertilizer",
-            () -> new Item(new Item.Properties()) {
+            () -> new PristineFertilizerItem(new Item.Properties()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_pristine_fertilizer"));
