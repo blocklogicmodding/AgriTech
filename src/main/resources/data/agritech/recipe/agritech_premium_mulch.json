@@ -9,7 +9,7 @@
       "item": "agritech:agritech_fertile_mulch"
     },
     "D": {
-      "item": "minecraft:diamond_block"
+      "item": "agritech:agritech_premium_fertilizer"
     }
   },
   "pattern": [

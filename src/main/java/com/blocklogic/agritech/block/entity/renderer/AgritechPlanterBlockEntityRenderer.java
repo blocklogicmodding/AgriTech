@@ -90,6 +90,10 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
         } else if (seedItem == Items.NETHER_WART) {
             int netherStage = Math.min(growthStage, 3); // Nether Wart max age is 3
             return Blocks.NETHER_WART.defaultBlockState().setValue(NetherWartBlock.AGE, netherStage);
+        } else if (seedItem == Items.SUGAR_CANE) {
+            return Blocks.SUGAR_CANE.defaultBlockState();
+        } else if (seedItem == Items.BAMBOO) {
+            return Blocks.BAMBOO.defaultBlockState();
         }
 
         return null;

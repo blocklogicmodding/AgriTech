@@ -50,6 +50,8 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
                     item == Items.BEETROOT_SEEDS ||
                     item == Items.POTATO ||
                     item == Items.CARROT ||
+                    item == Items.SUGAR_CANE ||
+                    item == Items.BAMBOO ||
                     item == Items.NETHER_WART) {
                 return true;
             }

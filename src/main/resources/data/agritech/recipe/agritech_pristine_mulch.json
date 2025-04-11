@@ -8,17 +8,14 @@
     "P": {
       "item": "agritech:agritech_premium_mulch"
     },
-    "R": {
-      "item": "minecraft:redstone_block"
-    },
     "E": {
-      "item": "minecraft:emerald_block"
+      "item": "agritech:agritech_pristine_fertilizer"
     }
   },
   "pattern": [
-    "LRL",
+    "LEL",
     "EPE",
-    "LRL"
+    "LEL"
   ],
   "result": {
     "id": "agritech:agritech_pristine_mulch",

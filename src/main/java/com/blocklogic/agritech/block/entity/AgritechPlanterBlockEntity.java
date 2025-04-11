@@ -209,15 +209,12 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
             drops.add(new ItemStack(Items.PUMPKIN, 1));
         } else if (seedItem == Items.MELON_SEEDS) {
             drops.add(new ItemStack(Items.MELON_SLICE, random.nextInt(5) + 3));
-        }
-        else if (seedItem == Items.OAK_SAPLING) {
-            drops.add(new ItemStack(Items.OAK_LOG, random.nextInt(3) + 3));
-            drops.add(new ItemStack(Items.OAK_SAPLING, random.nextInt(2) + 1));
-            if (random.nextFloat() < 0.1f) {
-                drops.add(new ItemStack(Items.APPLE, 1));
-            }
         } else if (seedItem == Items.NETHER_WART) {
             drops.add(new ItemStack(Items.NETHER_WART, random.nextInt(3) + 2));
+        } else if (seedItem == Items.SUGAR_CANE) {
+            drops.add(new ItemStack(Items.SUGAR_CANE, random.nextInt(3) + 2));
+        } else if (seedItem == Items.BAMBOO) {
+            drops.add(new ItemStack(Items.BAMBOO, random.nextInt(3) + 2));
         }
 
         return drops;
