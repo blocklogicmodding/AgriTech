@@ -90,16 +90,28 @@ public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvi
     }
 
     private boolean hasRecipe() {
-        boolean hasOrganicMaterials = hasOrganicMaterials();
-        boolean hasMineralItem = hasMineralItem();
-        boolean hasOutputSpace = hasOutputSpace();
+        if (!hasOrganicMaterials() || !hasMineralItem()) {
+            return false;
+        }
 
-        return hasOrganicMaterials && hasMineralItem && hasOutputSpace;
+        ItemStack mineralStack = this.inventory.getStackInSlot(3);
+        Item outputItem;
+
+        if (mineralStack.getItem() == Items.EMERALD_BLOCK) {
+            outputItem = ModItems.AGRITECH_PREMIUM_FERTILIZER.get();
+        } else if (mineralStack.getItem() == Items.NETHERITE_INGOT) {
+            outputItem = ModItems.AGRITECH_PRISTINE_FERTILIZER.get();
+        } else {
+            return false;
+        }
+
+        return hasOutputSpace(outputItem);
     }
 
-    private boolean hasOutputSpace() {
-        return this.inventory.getStackInSlot(4).isEmpty() ||
-                this.inventory.getStackInSlot(4).getCount() < this.inventory.getStackInSlot(4).getMaxStackSize();
+    private boolean hasOutputSpace(Item expectedOutput) {
+        ItemStack outputSlot = this.inventory.getStackInSlot(4);
+        return outputSlot.isEmpty() ||
+                (outputSlot.getItem() == expectedOutput && outputSlot.getCount() < outputSlot.getMaxStackSize());
     }
 
     private boolean hasOrganicMaterials() {
@@ -114,7 +126,7 @@ public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvi
     private boolean hasMineralItem() {
         ItemStack mineralStack = this.inventory.getStackInSlot(3);
         Item mineralItem = mineralStack.getItem();
-        return !mineralStack.isEmpty() && (mineralItem == Items.DIAMOND || mineralItem == Items.EMERALD);
+        return !mineralStack.isEmpty() && (mineralItem == Items.EMERALD_BLOCK || mineralItem == Items.NETHERITE_INGOT);
     }
 
     private boolean isOrganicMaterial(Item item) {
@@ -150,9 +162,9 @@ public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvi
             ItemStack mineralStack = this.inventory.getStackInSlot(3);
             Item outputItem;
 
-            if (mineralStack.getItem() == Items.DIAMOND) {
+            if (mineralStack.getItem() == Items.EMERALD_BLOCK) {
                 outputItem = ModItems.AGRITECH_PREMIUM_FERTILIZER.get();
-            } else if (mineralStack.getItem() == Items.EMERALD) {
+            } else if (mineralStack.getItem() == Items.NETHERITE_INGOT) {
                 outputItem = ModItems.AGRITECH_PRISTINE_FERTILIZER.get();
             } else {
                 return;
@@ -239,7 +251,7 @@ public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvi
             return index >= 0 && index <= 2;
         }
 
-        if ((side == Direction.NORTH || side == Direction.SOUTH) && (stack.getItem() == Items.DIAMOND || stack.getItem() == Items.EMERALD)) {
+        if ((side == Direction.NORTH || side == Direction.SOUTH) && (stack.getItem() == Items.EMERALD_BLOCK || stack.getItem() == Items.NETHERITE_INGOT)) {
             return index == 3;
         }
 

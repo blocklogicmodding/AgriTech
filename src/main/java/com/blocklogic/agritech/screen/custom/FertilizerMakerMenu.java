@@ -67,7 +67,7 @@ public class FertilizerMakerMenu extends AbstractContainerMenu {
         @Override
         public boolean mayPlace(ItemStack stack) {
             Item item = stack.getItem();
-            return item == Items.DIAMOND || item == Items.EMERALD;
+            return item == Items.EMERALD_BLOCK || item == Items.NETHERITE_INGOT;
         }
     }
 
@@ -154,7 +154,7 @@ public class FertilizerMakerMenu extends AbstractContainerMenu {
         ItemStack copyOfSourceStack = sourceStack.copy();
 
         if (index < 36) {
-            if (sourceStack.getItem() == Items.DIAMOND || sourceStack.getItem() == Items.EMERALD) {
+            if (sourceStack.getItem() == Items.EMERALD_BLOCK || sourceStack.getItem() == Items.NETHERITE_INGOT) {
                 if (!moveItemStackTo(sourceStack, 39, 40, false)) {
                     return ItemStack.EMPTY;
                 }

@@ -65,7 +65,7 @@ public class FertilizerMakerBlock extends BaseEntityBlock {
                 MenuProvider menuProvider = new SimpleMenuProvider(
                         (containerId, playerInventory, playerEntity) ->
                                 new FertilizerMakerMenu(containerId, playerInventory, fertilizerMakerBlockEntity, ContainerLevelAccess.create(level, pos)),
-                        Component.literal("Fertilizer Maker")
+                        Component.literal("Agritech Fertilizer Maker")
                 );
 
                 ((ServerPlayer) player).openMenu(menuProvider, pos);
