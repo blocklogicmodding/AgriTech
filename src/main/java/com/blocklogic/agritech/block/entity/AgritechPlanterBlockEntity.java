@@ -3,6 +3,7 @@ package com.blocklogic.agritech.block.entity;
 import com.blocklogic.agritech.block.ModBlocks;
 import com.blocklogic.agritech.screen.custom.AgritechPlanterMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,6 +22,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -111,6 +115,53 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
 
         if (blockEntity.readyToHarvest && blockEntity.hasOutputSpace()) {
             blockEntity.harvestCrop();
+        }
+
+        if (state.is(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get())) {
+            tryOutputItemsBelow(level, pos, blockEntity);
+        }
+    }
+
+    private static void tryOutputItemsBelow(Level level, BlockPos pos, AgritechPlanterBlockEntity blockEntity) {
+        // Check the block below for an inventory
+        BlockPos belowPos = pos.below();
+        BlockEntity targetEntity = level.getBlockEntity(belowPos);
+
+        if (targetEntity == null) {
+            return; // No block entity below
+        }
+
+        // Get the inventory capability from the block below (from its top face)
+        IItemHandler targetInventory = level.getCapability(Capabilities.ItemHandler.BLOCK,
+                belowPos,
+                Direction.UP);
+
+        if (targetInventory == null) {
+            return; // No valid inventory capability
+        }
+
+        boolean changed = false;
+
+        // Only transfer from output slots (2-7), not from seed or soil slots
+        for (int slot = 2; slot < 8; slot++) {
+            if (!blockEntity.inventory.getStackInSlot(slot).isEmpty()) {
+                var extractedItem = blockEntity.inventory.extractItem(slot, 64, true);
+
+                if (!extractedItem.isEmpty()) {
+                    var remaining = ItemHandlerHelper.insertItemStacked(targetInventory, extractedItem, false);
+                    int insertedAmount = extractedItem.getCount() - remaining.getCount();
+
+                    if (insertedAmount > 0) {
+                        blockEntity.inventory.extractItem(slot, insertedAmount, false);
+                        changed = true;
+                    }
+                }
+            }
+        }
+
+        if (changed) {
+            blockEntity.setChanged();
+            level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
         }
     }
 

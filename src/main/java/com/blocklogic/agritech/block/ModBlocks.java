@@ -85,7 +85,7 @@ public class ModBlocks {
                     .noOcclusion()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_planter_block"));
+                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_hopping_planter_block"));
                     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
                 }
             });
