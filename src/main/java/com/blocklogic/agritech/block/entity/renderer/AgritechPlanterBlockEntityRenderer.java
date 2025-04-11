@@ -51,10 +51,10 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
             if (growthStage > 0) {
                 pPoseStack.pushPose();
 
-                pPoseStack.translate(0.25, 0.65, 0.25);
+                pPoseStack.translate(0.1725, 0.65, 0.1725);
 
-                float growthScale = 0.2f + (growthStage / 7.0f) * 0.4f;
-                pPoseStack.scale(0.5f, growthScale, 0.5f);
+                float growthScale = 0.2f + (growthStage / 7.0f) * 0.5f;
+                pPoseStack.scale(0.65f, growthScale, 0.65f);
 
                 BlockState cropState = getCropBlockState(seedStack, growthStage);
 

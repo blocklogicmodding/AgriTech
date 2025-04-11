@@ -75,18 +75,8 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity planterBlockEntity) {
             if (!level.isClientSide()) {
-                if (planterBlockEntity.isReadyToHarvest() && stack.getItem() instanceof HoeItem) {
-                    planterBlockEntity.harvestCrop();
-
-                    level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
-
-                    if (!player.getAbilities().instabuild) {
-                        stack.hurtAndBreak(1, player, null);
-                    }
-
-                    return ItemInteractionResult.SUCCESS;
-                }
-
+                // Remove the manual harvesting code with hoe
+                // Simply open the menu when right-clicked
                 MenuProvider menuProvider = new SimpleMenuProvider(
                         (containerId, playerInventory, playerEntity) -> new AgritechPlanterMenu(containerId, playerInventory, planterBlockEntity),
                         Component.literal("Agritech Planter")

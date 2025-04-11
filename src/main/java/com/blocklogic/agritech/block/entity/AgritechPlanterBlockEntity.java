@@ -24,9 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -117,12 +115,52 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
     }
 
     public boolean hasOutputSpace() {
+        List<ItemStack> potentialDrops = getHarvestDrops(inventory.getStackInSlot(0));
+
+        Map<Integer, ItemStack> simulatedSlots = new HashMap<>();
         for (int slot = 2; slot < 8; slot++) {
-            if (inventory.getStackInSlot(slot).isEmpty()) {
-                return true;
+            ItemStack stack = inventory.getStackInSlot(slot);
+            simulatedSlots.put(slot, stack.isEmpty() ? ItemStack.EMPTY : stack.copy());
+        }
+
+        for (ItemStack drop : potentialDrops) {
+            int remainingToPlace = drop.getCount();
+
+            for (int slot = 2; slot < 8; slot++) {
+                ItemStack existingStack = simulatedSlots.get(slot);
+                if (!existingStack.isEmpty() && existingStack.is(drop.getItem()) &&
+                        existingStack.getCount() < existingStack.getMaxStackSize()) {
+
+                    int spaceAvailable = existingStack.getMaxStackSize() - existingStack.getCount();
+                    int itemsToAdd = Math.min(spaceAvailable, remainingToPlace);
+
+                    existingStack.grow(itemsToAdd);
+                    remainingToPlace -= itemsToAdd;
+
+                    if (remainingToPlace <= 0) {
+                        break;
+                    }
+                }
+            }
+
+            if (remainingToPlace > 0) {
+                for (int slot = 2; slot < 8; slot++) {
+                    ItemStack existingStack = simulatedSlots.get(slot);
+                    if (existingStack.isEmpty()) {
+                        // Simulate creating a new stack
+                        simulatedSlots.put(slot, new ItemStack(drop.getItem(), remainingToPlace));
+                        remainingToPlace = 0;
+                        break;
+                    }
+                }
+            }
+
+            if (remainingToPlace > 0) {
+                return false;
             }
         }
-        return false;
+
+        return true;
     }
 
     private float getGrowthModifier(ItemStack soilStack) {
@@ -155,29 +193,61 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
 
         List<ItemStack> drops = getHarvestDrops(seedStack);
 
-        for (ItemStack drop : drops) {
-            boolean distributed = false;
+        boolean allItemsPlaced = true;
 
-            for (int slot = 2; slot < 8; slot++) {
-                ItemStack existingStack = inventory.getStackInSlot(slot);
+        for (ItemStack dropStack : drops) {
+            int remainingItemsToPlace = dropStack.getCount();
 
-                if (existingStack.isEmpty()) {
-                    inventory.setStackInSlot(slot, drop.copy());
-                    distributed = true;
-                    break;
-                } else if (existingStack.is(drop.getItem()) &&
-                        existingStack.getCount() + drop.getCount() <= existingStack.getMaxStackSize()) {
-                    existingStack.grow(drop.getCount());
-                    inventory.setStackInSlot(slot, existingStack);
-                    distributed = true;
+            while (remainingItemsToPlace > 0) {
+                boolean itemPlaced = false;
+
+                for (int slot = 2; slot < 8; slot++) {
+                    ItemStack existingStack = inventory.getStackInSlot(slot);
+
+                    if (!existingStack.isEmpty() &&
+                            existingStack.is(dropStack.getItem()) &&
+                            existingStack.getCount() < existingStack.getMaxStackSize()) {
+
+                        int spaceAvailable = existingStack.getMaxStackSize() - existingStack.getCount();
+                        int itemsToAdd = Math.min(spaceAvailable, remainingItemsToPlace);
+
+                        existingStack.grow(itemsToAdd);
+                        inventory.setStackInSlot(slot, existingStack);
+
+                        remainingItemsToPlace -= itemsToAdd;
+                        itemPlaced = true;
+
+                        if (remainingItemsToPlace <= 0) {
+                            break;
+                        }
+                    }
+                }
+
+                if (remainingItemsToPlace > 0) {
+                    for (int slot = 2; slot < 8; slot++) {
+                        ItemStack existingStack = inventory.getStackInSlot(slot);
+
+                        if (existingStack.isEmpty()) {
+                            ItemStack newStack = new ItemStack(dropStack.getItem(), remainingItemsToPlace);
+                            inventory.setStackInSlot(slot, newStack);
+
+                            remainingItemsToPlace = 0;
+                            itemPlaced = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!itemPlaced) {
+                    allItemsPlaced = false;
                     break;
                 }
             }
 
-            if (!distributed) {
+            if (remainingItemsToPlace > 0) {
+                allItemsPlaced = false;
                 break;
             }
-
         }
 
         resetGrowth();
