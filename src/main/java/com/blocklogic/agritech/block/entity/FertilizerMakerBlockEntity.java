@@ -40,7 +40,7 @@ public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvi
     };
 
     private int progress = 0;
-    private int maxProgress = 100;
+    private int maxProgress = 1200;
 
     public FertilizerMakerBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.FERTILIZER_MAKER_BLOCK_ENTITY.get(), pos, blockState);
