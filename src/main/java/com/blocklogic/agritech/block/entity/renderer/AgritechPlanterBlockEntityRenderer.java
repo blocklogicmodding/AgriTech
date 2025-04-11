@@ -8,12 +8,16 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 
 public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<AgritechPlanterBlockEntity> {
 
@@ -70,6 +74,43 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
         }
     }
 
+    private BlockState getCropBlockState(ItemStack stack, int age) {
+        if (!(stack.getItem() instanceof BlockItem blockItem)) return null;
+
+        Block cropBlock = blockItem.getBlock();
+        BlockState state = cropBlock.defaultBlockState();
+
+        if (state.hasProperty(BlockStateProperties.AGE_1)) {
+            return state.setValue(BlockStateProperties.AGE_1, Math.min(age, 1));
+        } else if (state.hasProperty(BlockStateProperties.AGE_2)) {
+            return state.setValue(BlockStateProperties.AGE_2, Math.min(age, 2));
+        } else if (state.hasProperty(BlockStateProperties.AGE_3)) {
+            return state.setValue(BlockStateProperties.AGE_3, Math.min(age, 3));
+        } else if (state.hasProperty(BlockStateProperties.AGE_5)) {
+            return state.setValue(BlockStateProperties.AGE_5, Math.min(age, 5));
+        } else if (state.hasProperty(BlockStateProperties.AGE_7)) {
+            return state.setValue(BlockStateProperties.AGE_7, Math.min(age, 7));
+        }
+
+        return state;
+    }
+
+    /*
+
+    private BlockState getCropBlockState(Block block, int age) {
+        BlockState state = block.defaultBlockState();
+        for (Property<?> property : state.getProperties()) {
+            if (property.getName().equals("age") && property instanceof IntegerProperty intProp) {
+                int clampedAge = Mth.clamp(age, intProp.getPossibleValues().stream().min(Integer::compareTo).orElse(0),
+                        intProp.getPossibleValues().stream().max(Integer::compareTo).orElse(0));
+                return state.setValue(intProp, clampedAge);
+            }
+        }
+        return state;
+    }
+
+
+
     private BlockState getCropBlockState(ItemStack seedStack, int growthStage) {
         Item seedItem = seedStack.getItem();
 
@@ -98,4 +139,6 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
 
         return null;
     }
+
+     */
 }

@@ -19,17 +19,9 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.AGRITECH_PLANTER_BLOCK.get()))
                     .title(Component.translatable("creativetab.agritech.agritech"))
                     .displayItems((ItemDisplayParameters, output) -> {
-                        output.accept(ModBlocks.AGRITECH_SIMPLE_MULCH);
-                        output.accept(ModBlocks.AGRITECH_FERTILE_MULCH);
-                        output.accept(ModBlocks.AGRITECH_PREMIUM_MULCH);
-                        output.accept(ModBlocks.AGRITECH_PRISTINE_MULCH);
-                        output.accept(ModBlocks.AGRITECH_FERTILIZER_MAKER_BLOCK);
 
                         output.accept(ModBlocks.AGRITECH_PLANTER_BLOCK);
                         output.accept(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK);
-
-                        output.accept(ModItems.AGRITECH_PREMIUM_FERTILIZER);
-                        output.accept(ModItems.AGRITECH_PRISTINE_FERTILIZER);
                     })
                     .build());
 

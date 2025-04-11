@@ -16,10 +16,12 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -49,8 +51,6 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
             }
         }
     };
-
-   private float rotation;
 
     private int growthStage = 0;
     private int maxGrowthStage = 7;
@@ -122,27 +122,34 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         }
     }
 
+    public float getGrowthModifier(ItemStack soilStack) {
+        if (soilStack.is(Items.DIRT)) {
+            return 1.0f;
+        } else if (soilStack.is(Items.FARMLAND)) {
+            return 1.5f;
+        }
+
+        return 1.0f;
+    }
+
     private static void tryOutputItemsBelow(Level level, BlockPos pos, AgritechPlanterBlockEntity blockEntity) {
-        // Check the block below for an inventory
         BlockPos belowPos = pos.below();
         BlockEntity targetEntity = level.getBlockEntity(belowPos);
 
         if (targetEntity == null) {
-            return; // No block entity below
+            return;
         }
 
-        // Get the inventory capability from the block below (from its top face)
         IItemHandler targetInventory = level.getCapability(Capabilities.ItemHandler.BLOCK,
                 belowPos,
                 Direction.UP);
 
         if (targetInventory == null) {
-            return; // No valid inventory capability
+            return;
         }
 
         boolean changed = false;
 
-        // Only transfer from output slots (2-7), not from seed or soil slots
         for (int slot = 2; slot < 8; slot++) {
             if (!blockEntity.inventory.getStackInSlot(slot).isEmpty()) {
                 var extractedItem = blockEntity.inventory.extractItem(slot, 64, true);
@@ -198,7 +205,6 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
                 for (int slot = 2; slot < 8; slot++) {
                     ItemStack existingStack = simulatedSlots.get(slot);
                     if (existingStack.isEmpty()) {
-                        // Simulate creating a new stack
                         simulatedSlots.put(slot, new ItemStack(drop.getItem(), remainingToPlace));
                         remainingToPlace = 0;
                         break;
@@ -214,22 +220,6 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         return true;
     }
 
-    private float getGrowthModifier(ItemStack soilStack) {
-        if (soilStack.isEmpty()) return 1.0f;
-
-        if (soilStack.getItem() == ModBlocks.AGRITECH_SIMPLE_MULCH.get().asItem()) {
-            return 1.5f;
-        } else if (soilStack.getItem() == ModBlocks.AGRITECH_FERTILE_MULCH.get().asItem()) {
-            return 2.0f;
-        } else if (soilStack.getItem() == ModBlocks.AGRITECH_PREMIUM_MULCH.get().asItem()) {
-            return 3.5f;
-        } else if (soilStack.getItem() == ModBlocks.AGRITECH_PRISTINE_MULCH.get().asItem()) {
-            return 6.0f;
-        }
-
-        return 1.0f;
-    }
-
     public void resetGrowth() {
         growthStage = 0;
         growthTicks = 0;
@@ -243,8 +233,6 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         ItemStack seedStack = inventory.getStackInSlot(0);
 
         List<ItemStack> drops = getHarvestDrops(seedStack);
-
-        boolean allItemsPlaced = true;
 
         for (ItemStack dropStack : drops) {
             int remainingItemsToPlace = dropStack.getCount();
@@ -290,13 +278,11 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
                 }
 
                 if (!itemPlaced) {
-                    allItemsPlaced = false;
                     break;
                 }
             }
 
             if (remainingItemsToPlace > 0) {
-                allItemsPlaced = false;
                 break;
             }
         }

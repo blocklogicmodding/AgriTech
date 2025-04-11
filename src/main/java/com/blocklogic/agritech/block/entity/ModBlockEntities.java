@@ -18,11 +18,6 @@ public class ModBlockEntities {
                     ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get()
             ).build(null));
 
-    public static final Supplier<BlockEntityType<FertilizerMakerBlockEntity>> FERTILIZER_MAKER_BLOCK_ENTITY =
-            BLOCK_ENTITIES.register("fertilizer_maker_be", () -> BlockEntityType.Builder.of(
-                    FertilizerMakerBlockEntity::new, ModBlocks.AGRITECH_FERTILIZER_MAKER_BLOCK.get()
-            ).build(null));
-
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

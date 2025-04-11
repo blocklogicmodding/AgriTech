@@ -2,7 +2,6 @@ package com.blocklogic.agritech.screen;
 
 import com.blocklogic.agritech.AgriTech;
 import com.blocklogic.agritech.screen.custom.AgritechPlanterMenu;
-import com.blocklogic.agritech.screen.custom.FertilizerMakerMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -16,9 +15,6 @@ public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, AgriTech.MODID);
 
     public static final DeferredHolder<MenuType<?>, MenuType<AgritechPlanterMenu>> AGRITECH_PLANTER_MENU = registerMenuType("agritech_planter_menu", AgritechPlanterMenu::new);
-
-    public static final DeferredHolder<MenuType<?>, MenuType<FertilizerMakerMenu>> FERTILIZER_MAKER_MENU =
-            registerMenuType("fertilizer_maker_menu", FertilizerMakerMenu::new);
 
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IMenuTypeExtension.create(factory));

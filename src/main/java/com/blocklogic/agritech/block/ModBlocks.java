@@ -3,7 +3,6 @@ package com.blocklogic.agritech.block;
 import com.blocklogic.agritech.AgriTech;
 import com.blocklogic.agritech.block.custom.AgritechHoppingPlanterBlock;
 import com.blocklogic.agritech.block.custom.AgritechPlanterBlock;
-import com.blocklogic.agritech.block.custom.FertilizerMakerBlock;
 import com.blocklogic.agritech.item.ModItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -22,50 +21,6 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(AgriTech.MODID);
-
-    public static final DeferredBlock<Block> AGRITECH_SIMPLE_MULCH = registerBlock("agritech_simple_mulch",
-            () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(2f)
-                    .sound(SoundType.ROOTED_DIRT)) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_simple_mulch"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
-
-    public static final DeferredBlock<Block> AGRITECH_FERTILE_MULCH = registerBlock("agritech_fertile_mulch",
-            () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(2f)
-                    .sound(SoundType.ROOTED_DIRT)) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_fertile_mulch"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
-
-    public static final DeferredBlock<Block> AGRITECH_PREMIUM_MULCH = registerBlock("agritech_premium_mulch",
-            () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(2f)
-                    .sound(SoundType.ROOTED_DIRT)) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_premium_mulch"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
-
-    public static final DeferredBlock<Block> AGRITECH_PRISTINE_MULCH = registerBlock("agritech_pristine_mulch",
-            () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(2f)
-                    .sound(SoundType.ROOTED_DIRT)) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_pristine_mulch"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
 
     public static final DeferredBlock<Block> AGRITECH_PLANTER_BLOCK = registerBlock("agritech_planter_block",
             () -> new AgritechPlanterBlock(BlockBehaviour.Properties.of()
@@ -87,18 +42,6 @@ public class ModBlocks {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_hopping_planter_block"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
-
-    public static final DeferredBlock<Block> AGRITECH_FERTILIZER_MAKER_BLOCK = registerBlock("agritech_fertilizer_maker_block",
-            () -> new FertilizerMakerBlock(BlockBehaviour.Properties.of()
-                    .strength(3f)
-                    .sound(SoundType.WOOD)
-                    .noOcclusion()) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_fertilizer_maker_block"));
                     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
                 }
             });
