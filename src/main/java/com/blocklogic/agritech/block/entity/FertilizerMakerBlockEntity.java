@@ -3,6 +3,7 @@ package com.blocklogic.agritech.block.entity;
 import com.blocklogic.agritech.item.ModItems;
 import com.blocklogic.agritech.screen.custom.FertilizerMakerMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -12,6 +13,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -25,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvider {
+public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvider, WorldlyContainer {
 
     public final ItemStackHandler inventory = new ItemStackHandler(5) {
         @Override
@@ -209,5 +211,95 @@ public class FertilizerMakerBlockEntity extends BlockEntity implements MenuProvi
         super.loadAdditional(tag, registries);
         inventory.deserializeNBT(registries, tag.getCompound("inventory"));
         progress = tag.getInt("fertilizer_maker.progress");
+    }
+
+    private static final int[] ORGANIC_SLOTS = new int[] {0, 1, 2};
+    private static final int[] MINERAL_SLOT = new int[] {3};
+    private static final int[] OUTPUT_SLOT = new int[] {4};
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        if (side == Direction.DOWN) {
+            return OUTPUT_SLOT;
+        } else if (side == Direction.NORTH || side == Direction.SOUTH) {
+            return MINERAL_SLOT;
+        } else if (side == Direction.EAST || side == Direction.WEST) {
+            return ORGANIC_SLOTS;
+        }
+        return new int[0];
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction side) {
+        if (side == Direction.DOWN) {
+            return false;
+        }
+
+        if ((side == Direction.EAST || side == Direction.WEST) && isOrganicMaterial(stack.getItem())) {
+            return index >= 0 && index <= 2;
+        }
+
+        if ((side == Direction.NORTH || side == Direction.SOUTH) && (stack.getItem() == Items.DIAMOND || stack.getItem() == Items.EMERALD)) {
+            return index == 3;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction side) {
+        return side == Direction.DOWN && index == 4;
+    }
+
+    @Override
+    public int getContainerSize() {
+        return inventory.getSlots();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            if (!inventory.getStackInSlot(i).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack getItem(int index) {
+        return inventory.getStackInSlot(index);
+    }
+
+    @Override
+    public ItemStack removeItem(int index, int count) {
+        ItemStack result = inventory.extractItem(index, count, false);
+        if (!result.isEmpty()) setChanged();
+        return result;
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int index) {
+        ItemStack stack = inventory.getStackInSlot(index);
+        inventory.setStackInSlot(index, ItemStack.EMPTY);
+        return stack;
+    }
+
+    @Override
+    public void setItem(int index, ItemStack stack) {
+        inventory.setStackInSlot(index, stack);
+        setChanged();
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return true;
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
+        }
     }
 }
