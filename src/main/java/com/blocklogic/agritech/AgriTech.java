@@ -3,6 +3,7 @@ package com.blocklogic.agritech;
 import com.blocklogic.agritech.block.ModBlocks;
 import com.blocklogic.agritech.block.entity.ModBlockEntities;
 import com.blocklogic.agritech.block.entity.renderer.AgritechPlanterBlockEntityRenderer;
+import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.item.ModCreativeModeTabs;
 import com.blocklogic.agritech.item.ModItems;
 import com.blocklogic.agritech.screen.ModMenuTypes;
@@ -44,6 +45,8 @@ public class AgriTech
         ModCreativeModeTabs.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+
+        AgritechCropConfig.loadConfig();
 
         modEventBus.addListener(this::addCreative);
 

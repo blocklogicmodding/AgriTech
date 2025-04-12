@@ -2,7 +2,9 @@ package com.blocklogic.agritech.screen.custom;
 
 import com.blocklogic.agritech.block.ModBlocks;
 import com.blocklogic.agritech.block.entity.AgritechPlanterBlockEntity;
+import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.screen.ModMenuTypes;
+import com.blocklogic.agritech.util.RegistryHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,48 +37,60 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
     }
 
     public static class SeedSlot extends SlotItemHandler {
-        public SeedSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+        private final AgritechPlanterBlockEntity blockEntity;
+
+        public SeedSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, AgritechPlanterBlockEntity blockEntity) {
             super(itemHandler, index, xPosition, yPosition);
+            this.blockEntity = blockEntity;
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            Item item = stack.getItem();
-            if (item instanceof BlockItem blockItem &&
-                    (blockItem.getBlock() instanceof CropBlock ||
-                            blockItem.getBlock() instanceof FlowerBlock)) {
-                return true;
+            String seedId = RegistryHelper.getItemId(stack);
+
+            // First check if it's a valid seed at all
+            if (!AgritechCropConfig.isValidSeed(seedId)) {
+                return false;
             }
 
-            if (item == Items.PUMPKIN_SEEDS ||
-                    item == Items.MELON_SEEDS ||
-                    item == Items.WHEAT_SEEDS ||
-                    item == Items.BEETROOT_SEEDS ||
-                    item == Items.POTATO ||
-                    item == Items.CARROT ||
-                    item == Items.SUGAR_CANE ||
-                    item == Items.BAMBOO ||
-                    item == Items.NETHER_WART) {
-                return true;
+            // If there's soil already, check compatibility
+            ItemStack soilStack = blockEntity.inventory.getStackInSlot(1);
+            if (!soilStack.isEmpty()) {
+                String soilId = RegistryHelper.getItemId(soilStack);
+                return AgritechCropConfig.isSoilValidForSeed(soilId, seedId);
             }
 
-            return false;
+            // If no soil yet, allow any valid seed
+            return true;
         }
     }
 
     public static class SoilSlot extends SlotItemHandler {
-        public SoilSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+        private final AgritechPlanterBlockEntity blockEntity;
+
+        public SoilSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, AgritechPlanterBlockEntity blockEntity) {
             super(itemHandler, index, xPosition, yPosition);
+            this.blockEntity = blockEntity;
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() instanceof BlockItem blockItem &&
-                    (blockItem.getBlock() instanceof FarmBlock ||
-                            blockItem.getBlock() == Blocks.DIRT ||
-                            blockItem.getBlock() == Blocks.GRASS_BLOCK ||
-                            blockItem.getBlock() == Blocks.SOUL_SAND ||
-                            blockItem.getBlock().getDescriptionId().contains("mulch"));
+            String soilId = RegistryHelper.getItemId(stack);
+
+            // First check if it's a valid soil at all
+            if (!AgritechCropConfig.isValidSoil(soilId)) {
+                return false;
+            }
+
+            // If there's a seed already, check compatibility
+            ItemStack seedStack = blockEntity.inventory.getStackInSlot(0);
+            if (!seedStack.isEmpty()) {
+                String seedId = RegistryHelper.getItemId(seedStack);
+                return AgritechCropConfig.isSoilValidForSeed(soilId, seedId);
+            }
+
+            // If no seed yet, allow any valid soil
+            return true;
         }
 
         @Override
@@ -109,9 +123,9 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.addSlot(new SeedSlot(this.blockEntity.inventory, 0, 44, 30));
-
-        this.addSlot(new SoilSlot(this.blockEntity.inventory, 1, 44, 48));
+        // Pass the blockEntity to the slots
+        this.addSlot(new SeedSlot(this.blockEntity.inventory, 0, 44, 30, this.blockEntity));
+        this.addSlot(new SoilSlot(this.blockEntity.inventory, 1, 44, 48, this.blockEntity));
 
         int outputSlotIndex = 2;
         for (int row = 0; row < 2; row++) {

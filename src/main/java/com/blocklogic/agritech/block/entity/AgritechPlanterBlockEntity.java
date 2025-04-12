@@ -1,7 +1,9 @@
 package com.blocklogic.agritech.block.entity;
 
 import com.blocklogic.agritech.block.ModBlocks;
+import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.screen.custom.AgritechPlanterMenu;
+import com.blocklogic.agritech.util.RegistryHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -123,13 +125,10 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
     }
 
     public float getGrowthModifier(ItemStack soilStack) {
-        if (soilStack.is(Items.DIRT)) {
-            return 1.0f;
-        } else if (soilStack.is(Items.FARMLAND)) {
-            return 1.5f;
-        }
+        if (soilStack.isEmpty()) return 1.0f;
 
-        return 1.0f;
+        String soilId = RegistryHelper.getItemId(soilStack);
+        return AgritechCropConfig.getSoilGrowthModifier(soilId);
     }
 
     private static void tryOutputItemsBelow(Level level, BlockPos pos, AgritechPlanterBlockEntity blockEntity) {
@@ -296,32 +295,21 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
 
         if (seedStack.isEmpty()) return drops;
 
-        Item seedItem = seedStack.getItem();
+        String seedId = RegistryHelper.getItemId(seedStack);
+        List<AgritechCropConfig.DropInfo> configDrops = AgritechCropConfig.getCropDrops(seedId);
 
-        if (seedItem == Items.WHEAT_SEEDS) {
-            drops.add(new ItemStack(Items.WHEAT, 1));
-            drops.add(new ItemStack(Items.WHEAT_SEEDS, random.nextInt(3) + 1));
-        } else if (seedItem == Items.POTATO) {
-            int count = random.nextInt(4) + 1;
-            drops.add(new ItemStack(Items.POTATO, count));
-            if (random.nextFloat() < 0.02f) {
-                drops.add(new ItemStack(Items.POISONOUS_POTATO, 1));
+        for (AgritechCropConfig.DropInfo dropInfo : configDrops) {
+            if (random.nextFloat() <= dropInfo.chance) {
+                int count = dropInfo.minCount;
+                if (dropInfo.maxCount > dropInfo.minCount) {
+                    count = dropInfo.minCount + random.nextInt(dropInfo.maxCount - dropInfo.minCount + 1);
+                }
+
+                Item item = RegistryHelper.getItem(dropInfo.item);
+                if (item != null) {
+                    drops.add(new ItemStack(item, count));
+                }
             }
-        } else if (seedItem == Items.CARROT) {
-            drops.add(new ItemStack(Items.CARROT, random.nextInt(4) + 1));
-        } else if (seedItem == Items.BEETROOT_SEEDS) {
-            drops.add(new ItemStack(Items.BEETROOT, 1));
-            drops.add(new ItemStack(Items.BEETROOT_SEEDS, random.nextInt(3) + 1));
-        } else if (seedItem == Items.PUMPKIN_SEEDS) {
-            drops.add(new ItemStack(Items.PUMPKIN, 1));
-        } else if (seedItem == Items.MELON_SEEDS) {
-            drops.add(new ItemStack(Items.MELON_SLICE, random.nextInt(5) + 3));
-        } else if (seedItem == Items.NETHER_WART) {
-            drops.add(new ItemStack(Items.NETHER_WART, random.nextInt(3) + 2));
-        } else if (seedItem == Items.SUGAR_CANE) {
-            drops.add(new ItemStack(Items.SUGAR_CANE, random.nextInt(3) + 2));
-        } else if (seedItem == Items.BAMBOO) {
-            drops.add(new ItemStack(Items.BAMBOO, random.nextInt(3) + 2));
         }
 
         return drops;

@@ -8,11 +8,8 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -30,6 +27,7 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
 
         if (pBlockEntity.inventory.getSlots() > 1 && !pBlockEntity.inventory.getStackInSlot(1).isEmpty()) {
             ItemStack soilStack = pBlockEntity.inventory.getStackInSlot(1);
+
 
             if (soilStack.getItem() instanceof BlockItem blockItem) {
                 BlockState soilState = blockItem.getBlock().defaultBlockState();
@@ -80,6 +78,7 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
         Block cropBlock = blockItem.getBlock();
         BlockState state = cropBlock.defaultBlockState();
 
+        // Try to set the age property based on common properties
         if (state.hasProperty(BlockStateProperties.AGE_1)) {
             return state.setValue(BlockStateProperties.AGE_1, Math.min(age, 1));
         } else if (state.hasProperty(BlockStateProperties.AGE_2)) {
@@ -92,53 +91,24 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
             return state.setValue(BlockStateProperties.AGE_7, Math.min(age, 7));
         }
 
-        return state;
-    }
-
-    /*
-
-    private BlockState getCropBlockState(Block block, int age) {
-        BlockState state = block.defaultBlockState();
+        // For properties named "age" that don't use BlockStateProperties constants
         for (Property<?> property : state.getProperties()) {
             if (property.getName().equals("age") && property instanceof IntegerProperty intProp) {
-                int clampedAge = Mth.clamp(age, intProp.getPossibleValues().stream().min(Integer::compareTo).orElse(0),
-                        intProp.getPossibleValues().stream().max(Integer::compareTo).orElse(0));
-                return state.setValue(intProp, clampedAge);
+                int maxAge = intProp.getPossibleValues().stream()
+                        .max(Integer::compareTo)
+                        .orElse(0);
+                int clampedAge = Math.min(age, maxAge);
+                // We have to use setValue with generics handling
+                return setAgeProperty(state, intProp, clampedAge);
             }
         }
+
         return state;
     }
 
-
-
-    private BlockState getCropBlockState(ItemStack seedStack, int growthStage) {
-        Item seedItem = seedStack.getItem();
-
-        int stage = Math.min(growthStage, 7);
-
-        if (seedItem == Items.WHEAT_SEEDS) {
-            return Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, stage);
-        } else if (seedItem == Items.POTATO) {
-            return Blocks.POTATOES.defaultBlockState().setValue(CropBlock.AGE, stage);
-        } else if (seedItem == Items.CARROT) {
-            return Blocks.CARROTS.defaultBlockState().setValue(CropBlock.AGE, stage);
-        } else if (seedItem == Items.BEETROOT_SEEDS) {
-            return Blocks.BEETROOTS.defaultBlockState().setValue(BeetrootBlock.AGE, stage);
-        } else if (seedItem == Items.PUMPKIN_SEEDS) {
-            return Blocks.PUMPKIN_STEM.defaultBlockState().setValue(StemBlock.AGE, stage);
-        } else if (seedItem == Items.MELON_SEEDS) {
-            return Blocks.MELON_STEM.defaultBlockState().setValue(StemBlock.AGE, stage);
-        } else if (seedItem == Items.NETHER_WART) {
-            int netherStage = Math.min(growthStage, 3); // Nether Wart max age is 3
-            return Blocks.NETHER_WART.defaultBlockState().setValue(NetherWartBlock.AGE, netherStage);
-        } else if (seedItem == Items.SUGAR_CANE) {
-            return Blocks.SUGAR_CANE.defaultBlockState();
-        } else if (seedItem == Items.BAMBOO) {
-            return Blocks.BAMBOO.defaultBlockState();
-        }
-
-        return null;
+    @SuppressWarnings("unchecked")
+    private <T extends Comparable<T>> BlockState setAgeProperty(BlockState state, Property<T> property, int age) {
+        // This will fail at runtime if the property type doesn't match Integer
+        return state.setValue(property, (T)(Integer)age);
     }
-
-     */
 }
