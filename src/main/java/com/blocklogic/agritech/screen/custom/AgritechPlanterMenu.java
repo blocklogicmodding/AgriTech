@@ -5,26 +5,19 @@ import com.blocklogic.agritech.block.entity.AgritechPlanterBlockEntity;
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.screen.ModMenuTypes;
 import com.blocklogic.agritech.util.RegistryHelper;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.function.BiPredicate;
 
 public class AgritechPlanterMenu extends AbstractContainerMenu {
 
@@ -48,19 +41,16 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
         public boolean mayPlace(ItemStack stack) {
             String seedId = RegistryHelper.getItemId(stack);
 
-            // First check if it's a valid seed at all
             if (!AgritechCropConfig.isValidSeed(seedId)) {
                 return false;
             }
 
-            // If there's soil already, check compatibility
             ItemStack soilStack = blockEntity.inventory.getStackInSlot(1);
             if (!soilStack.isEmpty()) {
                 String soilId = RegistryHelper.getItemId(soilStack);
                 return AgritechCropConfig.isSoilValidForSeed(soilId, seedId);
             }
 
-            // If no soil yet, allow any valid seed
             return true;
         }
     }
@@ -77,19 +67,16 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
         public boolean mayPlace(ItemStack stack) {
             String soilId = RegistryHelper.getItemId(stack);
 
-            // First check if it's a valid soil at all
             if (!AgritechCropConfig.isValidSoil(soilId)) {
                 return false;
             }
 
-            // If there's a seed already, check compatibility
             ItemStack seedStack = blockEntity.inventory.getStackInSlot(0);
             if (!seedStack.isEmpty()) {
                 String seedId = RegistryHelper.getItemId(seedStack);
                 return AgritechCropConfig.isSoilValidForSeed(soilId, seedId);
             }
 
-            // If no seed yet, allow any valid soil
             return true;
         }
 
@@ -123,7 +110,6 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        // Pass the blockEntity to the slots
         this.addSlot(new SeedSlot(this.blockEntity.inventory, 0, 44, 30, this.blockEntity));
         this.addSlot(new SoilSlot(this.blockEntity.inventory, 1, 44, 48, this.blockEntity));
 

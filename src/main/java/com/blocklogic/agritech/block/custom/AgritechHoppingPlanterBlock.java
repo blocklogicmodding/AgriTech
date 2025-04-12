@@ -6,7 +6,6 @@ import com.blocklogic.agritech.screen.custom.AgritechPlanterMenu;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -78,7 +77,7 @@ public class AgritechHoppingPlanterBlock extends BaseEntityBlock {
                         Component.literal("Agritech Hopping Planter")
                 );
 
-                ((ServerPlayer) player).openMenu(menuProvider, pos);
+                player.openMenu(menuProvider, pos);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }

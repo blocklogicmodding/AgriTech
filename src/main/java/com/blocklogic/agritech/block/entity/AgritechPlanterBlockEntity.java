@@ -18,12 +18,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -55,7 +52,7 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
     };
 
     private int growthStage = 0;
-    private int maxGrowthStage = 7;
+    private int maxGrowthStage = 8;
     private int growthTicks = 0;
     private int ticksToNextStage = 100;
     private boolean readyToHarvest = false;
@@ -342,7 +339,6 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         readyToHarvest = tag.getBoolean("readyToHarvest");
     }
 
-    // Getters for renderer
     public int getGrowthStage() {
         return growthStage;
     }

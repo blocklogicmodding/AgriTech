@@ -12,9 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-/**
- * Handles loading crop and soil configuration from JSON
- */
 public class AgritechCropConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -53,10 +50,8 @@ public class AgritechCropConfig {
     private static CropConfigData getDefaultConfig() {
         CropConfigData config = new CropConfigData();
 
-        // Add default crops
         List<CropEntry> defaultCrops = new ArrayList<>();
 
-        // Wheat
         CropEntry wheat = new CropEntry();
         wheat.seed = "minecraft:wheat_seeds";
         wheat.validSoils = List.of("minecraft:farmland");
@@ -75,7 +70,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(wheat);
 
-        // Beetroot
         CropEntry beetroot = new CropEntry();
         beetroot.seed = "minecraft:beetroot_seeds";
         beetroot.validSoils = List.of("minecraft:farmland");
@@ -94,7 +88,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(beetroot);
 
-        // Carrot
         CropEntry carrot = new CropEntry();
         carrot.seed = "minecraft:carrot";
         carrot.validSoils = List.of("minecraft:farmland");
@@ -107,7 +100,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(carrot);
 
-        // Potato
         CropEntry potato = new CropEntry();
         potato.seed = "minecraft:potato";
         potato.validSoils = List.of("minecraft:farmland");
@@ -126,7 +118,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(potato);
 
-        // Melons
         CropEntry melon = new CropEntry();
         melon.seed = "minecraft:melon_seeds";
         melon.validSoils = List.of("minecraft:farmland");
@@ -139,7 +130,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(melon);
 
-        // Pumpkins
         CropEntry pumpkin = new CropEntry();
         pumpkin.seed = "minecraft:pumpkin_seeds";
         pumpkin.validSoils = List.of("minecraft:farmland");
@@ -152,7 +142,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(pumpkin);
 
-        // Sugar Cane
         CropEntry sugarCane = new CropEntry();
         sugarCane.seed = "minecraft:sugar_cane";
         sugarCane.validSoils = List.of(
@@ -170,7 +159,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(sugarCane);
 
-        // Cactus
         CropEntry cactus = new CropEntry();
         cactus.seed = "minecraft:cactus";
         cactus.validSoils = List.of(
@@ -186,7 +174,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(cactus);
 
-        // Bamboo
         CropEntry bamboo = new CropEntry();
         bamboo.seed = "minecraft:bamboo";
         bamboo.validSoils = List.of(
@@ -209,7 +196,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(bamboo);
 
-        // Sweet Berry
         CropEntry sweetBerries = new CropEntry();
         sweetBerries.seed = "minecraft:sweet_berries";
         sweetBerries.validSoils = List.of(
@@ -233,7 +219,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(sweetBerries);
 
-        // Nether Wart
         CropEntry netherWart = new CropEntry();
         netherWart.seed = "minecraft:nether_wart";
         netherWart.validSoils = List.of("minecraft:soul_sand");
@@ -246,7 +231,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(netherWart);
 
-        // Chorus Flowers
         CropEntry chorusFlower = new CropEntry();
         chorusFlower.seed = "minecraft:chorus_flower";
         chorusFlower.validSoils = List.of("minecraft:end_stone");
@@ -265,7 +249,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(chorusFlower);
 
-        // Kelp
         CropEntry kelp = new CropEntry();
         kelp.seed = "minecraft:kelp";
         kelp.validSoils = List.of("minecraft:mud");
@@ -278,7 +261,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(kelp);
 
-        // Brown Mushrooms
         CropEntry brownMushroom = new CropEntry();
         brownMushroom.seed = "minecraft:brown_mushroom";
         brownMushroom.validSoils = List.of(
@@ -294,7 +276,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(brownMushroom);
 
-        // Red Mushrooms
         CropEntry redMushroom = new CropEntry();
         redMushroom.seed = "minecraft:red_mushroom";
         redMushroom.validSoils = List.of(
@@ -310,7 +291,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(redMushroom);
 
-        // Cocoa
         CropEntry cocoa = new CropEntry();
         cocoa.seed = "minecraft:cocoa_beans";
         cocoa.validSoils = List.of(
@@ -328,9 +308,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(cocoa);
 
-        //=============== Flowers =================
-
-        // Pitcher Crop
         CropEntry pitcherCrop = new CropEntry();
         pitcherCrop.seed = "minecraft:pitcher_pod";
         pitcherCrop.validSoils = List.of("minecraft:farmland");
@@ -343,7 +320,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(pitcherCrop);
 
-        // Torchflower
         CropEntry torchFlower = new CropEntry();
         torchFlower.seed = "minecraft:torchflower_seeds";
         torchFlower.validSoils = List.of("minecraft:farmland");
@@ -356,8 +332,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(torchFlower);
 
-
-        // allium
         CropEntry allium = new CropEntry();
         allium.seed = "minecraft:allium";
         allium.validSoils = List.of(
@@ -381,8 +355,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(allium);
 
-
-        // azure_bluet
         CropEntry azureBluet = new CropEntry();
         azureBluet.seed = "minecraft:azure_bluet";
         azureBluet.validSoils = List.of(
@@ -406,8 +378,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(azureBluet);
 
-
-        // blue_orchid
         CropEntry blueOrchid = new CropEntry();
         blueOrchid.seed = "minecraft:blue_orchid";
         blueOrchid.validSoils = List.of(
@@ -431,8 +401,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(blueOrchid);
 
-
-        // cornflower
         CropEntry cornflower = new CropEntry();
         cornflower.seed = "minecraft:cornflower";
         cornflower.validSoils = List.of(
@@ -456,8 +424,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(cornflower);
 
-
-        // cornflower
         CropEntry dandelion = new CropEntry();
         dandelion.seed = "minecraft:dandelion";
         dandelion.validSoils = List.of(
@@ -481,8 +447,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(dandelion);
 
-
-        // lily_of_the_valley
         CropEntry lilyOfTheValley = new CropEntry();
         lilyOfTheValley.seed = "minecraft:lily_of_the_valley";
         lilyOfTheValley.validSoils = List.of(
@@ -506,8 +470,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(lilyOfTheValley);
 
-
-        // oxeye_daisy
         CropEntry oxeyeDaisy = new CropEntry();
         oxeyeDaisy.seed = "minecraft:oxeye_daisy";
         oxeyeDaisy.validSoils = List.of(
@@ -531,8 +493,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(oxeyeDaisy);
 
-
-        // Poppy
         CropEntry poppy = new CropEntry();
         poppy.seed = "minecraft:poppy";
         poppy.validSoils = List.of(
@@ -556,8 +516,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(poppy);
 
-
-        // red_tulip
         CropEntry redTulip = new CropEntry();
         redTulip.seed = "minecraft:red_tulip";
         redTulip.validSoils = List.of(
@@ -581,8 +539,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(redTulip);
 
-
-        // orange_tulip
         CropEntry orangeTulip = new CropEntry();
         orangeTulip.seed = "minecraft:orange_tulip";
         orangeTulip.validSoils = List.of(
@@ -606,8 +562,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(orangeTulip);
 
-
-        // white_tulip
         CropEntry whiteTulip = new CropEntry();
         whiteTulip.seed = "minecraft:white_tulip";
         whiteTulip.validSoils = List.of(
@@ -631,8 +585,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(whiteTulip);
 
-
-        // pink_tulip
         CropEntry pinkTulip = new CropEntry();
         pinkTulip.seed = "minecraft:pink_tulip";
         pinkTulip.validSoils = List.of(
@@ -656,8 +608,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(pinkTulip);
 
-
-        // wither_rose
         CropEntry witherRose = new CropEntry();
         witherRose.seed = "minecraft:wither_rose";
         witherRose.validSoils = List.of(
@@ -681,8 +631,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(witherRose);
 
-
-        // lilac
         CropEntry lilac = new CropEntry();
         lilac.seed = "minecraft:lilac";
         lilac.validSoils = List.of(
@@ -706,8 +654,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(lilac);
 
-
-        // peony
         CropEntry peony = new CropEntry();
         peony.seed = "minecraft:peony";
         peony.validSoils = List.of(
@@ -731,8 +677,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(peony);
 
-
-        // rose_bush
         CropEntry roseBush = new CropEntry();
         roseBush.seed = "minecraft:rose_bush";
         roseBush.validSoils = List.of(
@@ -756,8 +700,6 @@ public class AgritechCropConfig {
 
         defaultCrops.add(roseBush);
 
-
-        // sunflower
         CropEntry sunflower = new CropEntry();
         sunflower.seed = "minecraft:sunflower";
         sunflower.validSoils = List.of(
@@ -781,11 +723,8 @@ public class AgritechCropConfig {
 
         defaultCrops.add(sunflower);
 
-
-        // Add more default crops...
         config.allowedCrops = defaultCrops;
 
-        // Add default soils
         List<SoilEntry> defaultSoils = new ArrayList<>();
 
         SoilEntry dirt = new SoilEntry();
@@ -893,7 +832,6 @@ public class AgritechCropConfig {
                     CropInfo cropInfo = new CropInfo();
                     cropInfo.drops = new ArrayList<>();
 
-                    // Handle both validSoils array and legacy soil string
                     if (entry.validSoils != null && !entry.validSoils.isEmpty()) {
                         cropInfo.validSoils.addAll(entry.validSoils);
                     } else if (entry.soil != null && !entry.soil.isEmpty()) {
@@ -927,7 +865,6 @@ public class AgritechCropConfig {
 
         LOGGER.info("Loaded {} crops and {} soils from config", crops.size(), soils.size());
     }
-    // Public API methods
 
     public static boolean isSoilValidForSeed(String soilId, String seedId) {
         CropInfo cropInfo = crops.get(seedId);
@@ -956,8 +893,6 @@ public class AgritechCropConfig {
         CropInfo info = crops.get(seedId);
         return info != null ? info.drops : Collections.emptyList();
     }
-
-    // Inner classes for JSON parsing
 
     public static class CropConfigData {
         public List<CropEntry> allowedCrops;
@@ -996,8 +931,6 @@ public class AgritechCropConfig {
         public String soil;
         public float growthModifier;
     }
-
-    // Internal storage classes
 
     public static class CropInfo {
         public List<DropInfo> drops;

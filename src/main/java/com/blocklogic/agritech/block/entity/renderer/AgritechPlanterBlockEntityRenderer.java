@@ -78,7 +78,6 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
         Block cropBlock = blockItem.getBlock();
         BlockState state = cropBlock.defaultBlockState();
 
-        // Try to set the age property based on common properties
         if (state.hasProperty(BlockStateProperties.AGE_1)) {
             return state.setValue(BlockStateProperties.AGE_1, Math.min(age, 1));
         } else if (state.hasProperty(BlockStateProperties.AGE_2)) {
@@ -91,14 +90,12 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
             return state.setValue(BlockStateProperties.AGE_7, Math.min(age, 7));
         }
 
-        // For properties named "age" that don't use BlockStateProperties constants
         for (Property<?> property : state.getProperties()) {
             if (property.getName().equals("age") && property instanceof IntegerProperty intProp) {
                 int maxAge = intProp.getPossibleValues().stream()
                         .max(Integer::compareTo)
                         .orElse(0);
                 int clampedAge = Math.min(age, maxAge);
-                // We have to use setValue with generics handling
                 return setAgeProperty(state, intProp, clampedAge);
             }
         }
@@ -108,7 +105,6 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
 
     @SuppressWarnings("unchecked")
     private <T extends Comparable<T>> BlockState setAgeProperty(BlockState state, Property<T> property, int age) {
-        // This will fail at runtime if the property type doesn't match Integer
         return state.setValue(property, (T)(Integer)age);
     }
 }
