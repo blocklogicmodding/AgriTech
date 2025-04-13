@@ -48,6 +48,10 @@ public class Config
             .comment("Enable Silent Gear. Default: true")
             .define("enableSilentGear", true);
 
+    private static final ModConfigSpec.BooleanValue ENABLE_JUST_DIRE_THINGS_SOIL = BUILDER
+            .comment("Enable Just Dire Things Soils. Default: true")
+            .define("enableJustDireThingsSoils", true);
+
     static final ModConfigSpec SPEC = BUILDER.build();
 
     // Mod compatibility flags
@@ -56,6 +60,7 @@ public class Config
     public static boolean enableFarmersDelight;
     public static boolean enableArsNouveau;
     public static boolean enableSilentGear;
+    public static boolean enableJustDireThingSoils;
 
     private static boolean validateItemName(final Object obj)
     {
@@ -73,6 +78,7 @@ public class Config
         enableFarmersDelight = ENABLE_FARMERS_DELIGHT.get() && ModList.get().isLoaded("farmersdelight");
         enableArsNouveau = ENABLE_ARS_NOUVEAU.get() && ModList.get().isLoaded("ars_nouveau");
         enableSilentGear = ENABLE_SILENT_GEAR.get() && ModList.get().isLoaded("silentgear");
+        enableJustDireThingSoils = ENABLE_JUST_DIRE_THINGS_SOIL.get() && ModList.get().isLoaded("justdirethings");
 
         AgritechCropConfig.loadConfig();
     }

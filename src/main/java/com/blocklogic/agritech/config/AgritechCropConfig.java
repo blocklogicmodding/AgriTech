@@ -95,6 +95,11 @@ public class AgritechCropConfig {
             addFarmersDelightSoils(defaultSoils);
         }
 
+        if(Config.enableJustDireThingSoils) {
+            LOGGER.info("Adding Just Dire Things soils to AgriTech config");
+            addJustDireThingsSoils(defaultSoils);
+        }
+
         config.allowedSoils = defaultSoils;
 
         return config;
@@ -1881,6 +1886,28 @@ public class AgritechCropConfig {
         flax.drops.add(flaxFlowersDrop);
 
         crops.add(flax);
+    }
+
+    private static void addJustDireThingsSoils(List<SoilEntry> soils) {
+        SoilEntry goosoilTier1 = new SoilEntry();
+        goosoilTier1.soil = "justdirethings:goosoil_tier1";
+        goosoilTier1.growthModifier = 2.0f;
+        soils.add(goosoilTier1);
+
+        SoilEntry goosoilTier2 = new SoilEntry();
+        goosoilTier2.soil = "justdirethings:goosoil_tier2";
+        goosoilTier2.growthModifier = 2.5f;
+        soils.add(goosoilTier2);
+
+        SoilEntry goosoilTier3 = new SoilEntry();
+        goosoilTier3.soil = "justdirethings:goosoil_tier3";
+        goosoilTier3.growthModifier = 3.0f;
+        soils.add(goosoilTier3);
+
+        SoilEntry goosoilTier4 = new SoilEntry();
+        goosoilTier4.soil = "justdirethings:goosoil_tier4";
+        goosoilTier4.growthModifier = 3.5f;
+        soils.add(goosoilTier4);
     }
 
     private static void processConfig(CropConfigData configData) {
