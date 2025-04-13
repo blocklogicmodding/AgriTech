@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class AgritechPlanterBlock extends BaseEntityBlock {
 
-    public static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.1, 15.0, 13.0, 15.00);
+    public static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.1, 15.0, 9.0, 15.0);
     public static final MapCodec<AgritechPlanterBlock> CODEC = simpleCodec(AgritechPlanterBlock::new);
 
     public AgritechPlanterBlock(Properties properties) {

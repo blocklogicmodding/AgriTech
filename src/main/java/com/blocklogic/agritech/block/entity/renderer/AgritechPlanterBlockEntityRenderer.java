@@ -34,8 +34,8 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
 
                 pPoseStack.pushPose();
 
-                pPoseStack.translate(0.2, 0.6, 0.2);
-                pPoseStack.scale(0.6f, 0.05f, 0.6f);
+                pPoseStack.translate(0.175, 0.4, 0.175);
+                pPoseStack.scale(0.65f, 0.05f, 0.65f);
 
                 BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
 
@@ -53,7 +53,7 @@ public class AgritechPlanterBlockEntityRenderer implements BlockEntityRenderer<A
             if (growthStage > 0) {
                 pPoseStack.pushPose();
 
-                pPoseStack.translate(0.1725, 0.65, 0.1725);
+                pPoseStack.translate(0.1725, 0.45, 0.1725);
 
                 float growthScale = 0.2f + (growthStage / 7.0f) * 0.5f;
                 pPoseStack.scale(0.65f, growthScale, 0.65f);

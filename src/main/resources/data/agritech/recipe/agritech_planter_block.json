@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "O": {
-      "item": "minecraft:oak_planks"
+      "tag": "minecraft:planks"
     },
     "S": {
-      "item": "minecraft:oak_slab"
+      "tag": "minecraft:slabs"
     },
     "D": {
       "item": "minecraft:dirt"
     },
     "L": {
-      "item": "minecraft:oak_log"
+      "tag": "minecraft:logs"
     }
   },
   "pattern": [
