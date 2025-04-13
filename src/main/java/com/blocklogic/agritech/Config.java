@@ -4,13 +4,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.blocklogic.agritech.config.AgritechCropConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import static com.mojang.text2speech.Narrator.LOGGER;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Neo's config APIs
@@ -19,29 +23,39 @@ public class Config
 {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    private static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
+    private static final ModConfigSpec.BooleanValue MESSAGE = BUILDER
+            .comment("INFO: If you change any of the values below, delete 'config/agritech/crops_and_soils.json' and restart your client to regenerate the crop config!")
+            .define("infoIs", true);
 
-    private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
+    // Mod compatibility section
+    private static final ModConfigSpec.BooleanValue ENABLE_MYSTICAL_AGRICULTURE = BUILDER
+            .comment("Enable Mystical Agriculture. Default: true")
+            .define("enableMysticalAgriculture", true);
 
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
+    private static final ModConfigSpec.BooleanValue ENABLE_MYSTICAL_AGRADDITIONS = BUILDER
+            .comment("Enable Mystical Agradditions. Default: true")
+            .define("enableMysticalAgradditions", true);
 
-    // a list of strings that are treated as resource locations for items
-    private static final ModConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), Config::validateItemName);
+    private static final ModConfigSpec.BooleanValue ENABLE_FARMERS_DELIGHT = BUILDER
+            .comment("Enable Farmer's Delight. Default: true")
+            .define("enableFarmersDelight", true);
+
+    private static final ModConfigSpec.BooleanValue ENABLE_ARS_NOUVEAU = BUILDER
+            .comment("Enable Ars Nouveau. Default: true")
+            .define("enableArsNouveau", true);
+
+    private static final ModConfigSpec.BooleanValue ENABLE_SILENT_GEAR = BUILDER
+            .comment("Enable Silent Gear. Default: true")
+            .define("enableSilentGear", true);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
-    public static boolean logDirtBlock;
-    public static int magicNumber;
-    public static String magicNumberIntroduction;
-    public static Set<Item> items;
+    // Mod compatibility flags
+    public static boolean enableMysticalAgriculture;
+    public static boolean enableMysticalAgradditions;
+    public static boolean enableFarmersDelight;
+    public static boolean enableArsNouveau;
+    public static boolean enableSilentGear;
 
     private static boolean validateItemName(final Object obj)
     {
@@ -51,13 +65,15 @@ public class Config
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
-        logDirtBlock = LOG_DIRT_BLOCK.get();
-        magicNumber = MAGIC_NUMBER.get();
-        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
+        LOGGER.info("Config onLoad() invoked.");
+        // Load mod compatibility settings
+        // Only enable if the mod is actually present
+        enableMysticalAgriculture = ENABLE_MYSTICAL_AGRICULTURE.get() && ModList.get().isLoaded("mysticalagriculture");
+        enableMysticalAgradditions = ENABLE_MYSTICAL_AGRADDITIONS.get() && ModList.get().isLoaded("mysticalagradditions");
+        enableFarmersDelight = ENABLE_FARMERS_DELIGHT.get() && ModList.get().isLoaded("farmersdelight");
+        enableArsNouveau = ENABLE_ARS_NOUVEAU.get() && ModList.get().isLoaded("ars_nouveau");
+        enableSilentGear = ENABLE_SILENT_GEAR.get() && ModList.get().isLoaded("silentgear");
 
-        // convert the list of strings into a set of items
-        items = ITEM_STRINGS.get().stream()
-                .map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)))
-                .collect(Collectors.toSet());
+        AgritechCropConfig.loadConfig();
     }
 }

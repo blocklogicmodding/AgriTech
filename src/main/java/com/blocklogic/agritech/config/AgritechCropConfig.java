@@ -1,5 +1,6 @@
 package com.blocklogic.agritech.config;
 
+import com.blocklogic.agritech.Config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -20,6 +21,7 @@ public class AgritechCropConfig {
     private static Map<String, SoilInfo> soils = new HashMap<>();
 
     public static void loadConfig() {
+        LOGGER.info("AgritechCropConfig.loadConfig() invoked.");
         Path configPath = FMLPaths.CONFIGDIR.get().resolve("agritech/crops_and_soil.json");
         if (!Files.exists(configPath)) {
             createDefaultConfig(configPath);
@@ -48,13 +50,78 @@ public class AgritechCropConfig {
     }
 
     private static CropConfigData getDefaultConfig() {
+        LOGGER.info("Generating default crop config.");
+
         CropConfigData config = new CropConfigData();
 
         List<CropEntry> defaultCrops = new ArrayList<>();
 
+        // Add vanilla Minecraft crops
+        addVanillaCrops(defaultCrops);
+
+        // Add mod crops based on config settings
+        if (Config.enableMysticalAgriculture) {
+            LOGGER.info("Adding Mystical Agriculture crops to AgriTech config");
+            addMysticalAgricultureCrops(defaultCrops);
+        }
+
+        if (Config.enableFarmersDelight) {
+            LOGGER.info("Adding Farmer's Delight crops to AgriTech config");
+            addFarmersDelightCrops(defaultCrops);
+        }
+
+        if (Config.enableArsNouveau) {
+            LOGGER.info("Adding Ars Nouveau crops to AgriTech config");
+            addArsNouveauCrops(defaultCrops);
+        }
+
+        if (Config.enableSilentGear) {
+            LOGGER.info("Adding Silent Gear crops to AgriTech config");
+            addSilentGearCrops(defaultCrops);
+        }
+
+        config.allowedCrops = defaultCrops;
+
+        List<SoilEntry> defaultSoils = new ArrayList<>();
+        addVanillaSoils(defaultSoils);
+
+        if (Config.enableMysticalAgriculture) {
+            LOGGER.info("Adding Mystical Agriculture soils to AgriTech config");
+            addMysticalAgricultureSoils(defaultSoils);
+        }
+
+        if (Config.enableFarmersDelight) {
+            LOGGER.info("Adding Farmer's Delight soils to AgriTech config");
+            addFarmersDelightSoils(defaultSoils);
+        }
+
+        config.allowedSoils = defaultSoils;
+
+        return config;
+    }
+
+    // Helper method to add vanilla crops
+    private static void addVanillaCrops(List<CropEntry> crops) {
+        // Wheat
         CropEntry wheat = new CropEntry();
         wheat.seed = "minecraft:wheat_seeds";
-        wheat.validSoils = List.of("minecraft:farmland");
+        wheat.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland");
         wheat.drops = new ArrayList<>();
 
         DropEntry wheatDrop = new DropEntry();
@@ -68,11 +135,28 @@ public class AgritechCropConfig {
         wheatSeedsDrop.chance = 0.5f;
         wheat.drops.add(wheatSeedsDrop);
 
-        defaultCrops.add(wheat);
+        crops.add(wheat);
 
+        // Beetroot
         CropEntry beetroot = new CropEntry();
         beetroot.seed = "minecraft:beetroot_seeds";
-        beetroot.validSoils = List.of("minecraft:farmland");
+        beetroot.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland");
         beetroot.drops = new ArrayList<>();
 
         DropEntry beetrootDrop = new DropEntry();
@@ -86,11 +170,28 @@ public class AgritechCropConfig {
         beetrootSeedsDrop.chance = 0.5f;
         beetroot.drops.add(beetrootSeedsDrop);
 
-        defaultCrops.add(beetroot);
+        crops.add(beetroot);
 
+        // Carrot
         CropEntry carrot = new CropEntry();
         carrot.seed = "minecraft:carrot";
-        carrot.validSoils = List.of("minecraft:farmland");
+        carrot.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland");
         carrot.drops = new ArrayList<>();
 
         DropEntry carrotDrop = new DropEntry();
@@ -98,11 +199,28 @@ public class AgritechCropConfig {
         carrotDrop.count = new CountRange(2, 5);
         carrot.drops.add(carrotDrop);
 
-        defaultCrops.add(carrot);
+        crops.add(carrot);
 
+        // Potato
         CropEntry potato = new CropEntry();
         potato.seed = "minecraft:potato";
-        potato.validSoils = List.of("minecraft:farmland");
+        potato.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland");
         potato.drops = new ArrayList<>();
 
         DropEntry potatoDrop = new DropEntry();
@@ -116,11 +234,29 @@ public class AgritechCropConfig {
         poisonousPotatoDrop.chance = 0.02f;
         potato.drops.add(poisonousPotatoDrop);
 
-        defaultCrops.add(potato);
+        crops.add(potato);
 
+        // Melon
         CropEntry melon = new CropEntry();
         melon.seed = "minecraft:melon_seeds";
-        melon.validSoils = List.of("minecraft:farmland");
+        melon.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
+        );
         melon.drops = new ArrayList<>();
 
         DropEntry melonSliceDrop = new DropEntry();
@@ -128,11 +264,29 @@ public class AgritechCropConfig {
         melonSliceDrop.count = new CountRange(3, 7);
         melon.drops.add(melonSliceDrop);
 
-        defaultCrops.add(melon);
+        crops.add(melon);
 
+        // Pumpkin
         CropEntry pumpkin = new CropEntry();
         pumpkin.seed = "minecraft:pumpkin_seeds";
-        pumpkin.validSoils = List.of("minecraft:farmland");
+        pumpkin.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
+        );
         pumpkin.drops = new ArrayList<>();
 
         DropEntry pumpkinDrop = new DropEntry();
@@ -140,8 +294,9 @@ public class AgritechCropConfig {
         pumpkinDrop.count = new CountRange(1, 1);
         pumpkin.drops.add(pumpkinDrop);
 
-        defaultCrops.add(pumpkin);
+        crops.add(pumpkin);
 
+        // Sugar Cane
         CropEntry sugarCane = new CropEntry();
         sugarCane.seed = "minecraft:sugar_cane";
         sugarCane.validSoils = List.of(
@@ -157,8 +312,9 @@ public class AgritechCropConfig {
         sugarCaneDrop.count = new CountRange(1, 3);
         sugarCane.drops.add(sugarCaneDrop);
 
-        defaultCrops.add(sugarCane);
+        crops.add(sugarCane);
 
+        // Cactus
         CropEntry cactus = new CropEntry();
         cactus.seed = "minecraft:cactus";
         cactus.validSoils = List.of(
@@ -172,8 +328,9 @@ public class AgritechCropConfig {
         cactusDrop.count = new CountRange(1, 3);
         cactus.drops.add(cactusDrop);
 
-        defaultCrops.add(cactus);
+        crops.add(cactus);
 
+        // Bamboo
         CropEntry bamboo = new CropEntry();
         bamboo.seed = "minecraft:bamboo";
         bamboo.validSoils = List.of(
@@ -194,8 +351,9 @@ public class AgritechCropConfig {
         bambooDrop.count = new CountRange(2, 4);
         bamboo.drops.add(bambooDrop);
 
-        defaultCrops.add(bamboo);
+        crops.add(bamboo);
 
+        // Sweet Berries
         CropEntry sweetBerries = new CropEntry();
         sweetBerries.seed = "minecraft:sweet_berries";
         sweetBerries.validSoils = List.of(
@@ -208,7 +366,24 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         sweetBerries.drops = new ArrayList<>();
 
@@ -217,8 +392,9 @@ public class AgritechCropConfig {
         sweetBerriesDrop.count = new CountRange(2, 4);
         sweetBerries.drops.add(sweetBerriesDrop);
 
-        defaultCrops.add(sweetBerries);
+        crops.add(sweetBerries);
 
+        // Nether Wart
         CropEntry netherWart = new CropEntry();
         netherWart.seed = "minecraft:nether_wart";
         netherWart.validSoils = List.of("minecraft:soul_sand");
@@ -229,8 +405,9 @@ public class AgritechCropConfig {
         netherWartDrop.count = new CountRange(1, 3);
         netherWart.drops.add(netherWartDrop);
 
-        defaultCrops.add(netherWart);
+        crops.add(netherWart);
 
+        // Chorus Fruit
         CropEntry chorusFlower = new CropEntry();
         chorusFlower.seed = "minecraft:chorus_flower";
         chorusFlower.validSoils = List.of("minecraft:end_stone");
@@ -247,8 +424,9 @@ public class AgritechCropConfig {
         chorusFlowerDrop.chance = 0.02f;
         chorusFlower.drops.add(chorusFlowerDrop);
 
-        defaultCrops.add(chorusFlower);
+        crops.add(chorusFlower);
 
+        // Kelp
         CropEntry kelp = new CropEntry();
         kelp.seed = "minecraft:kelp";
         kelp.validSoils = List.of("minecraft:mud");
@@ -259,8 +437,9 @@ public class AgritechCropConfig {
         kelpDrop.count = new CountRange(1, 2);
         kelp.drops.add(kelpDrop);
 
-        defaultCrops.add(kelp);
+        crops.add(kelp);
 
+        // Brown Mushroom
         CropEntry brownMushroom = new CropEntry();
         brownMushroom.seed = "minecraft:brown_mushroom";
         brownMushroom.validSoils = List.of(
@@ -274,8 +453,9 @@ public class AgritechCropConfig {
         brownMushroomDrop.count = new CountRange(1, 1);
         brownMushroom.drops.add(brownMushroomDrop);
 
-        defaultCrops.add(brownMushroom);
+        crops.add(brownMushroom);
 
+        // Red Mushroom
         CropEntry redMushroom = new CropEntry();
         redMushroom.seed = "minecraft:red_mushroom";
         redMushroom.validSoils = List.of(
@@ -289,8 +469,9 @@ public class AgritechCropConfig {
         redMushroomDrop.count = new CountRange(1, 1);
         redMushroom.drops.add(redMushroomDrop);
 
-        defaultCrops.add(redMushroom);
+        crops.add(redMushroom);
 
+        // Cocoa
         CropEntry cocoa = new CropEntry();
         cocoa.seed = "minecraft:cocoa_beans";
         cocoa.validSoils = List.of(
@@ -306,11 +487,29 @@ public class AgritechCropConfig {
         cocoaDrop.count = new CountRange(1, 3);
         cocoa.drops.add(cocoaDrop);
 
-        defaultCrops.add(cocoa);
+        crops.add(cocoa);
 
+        //pitcher_plant
         CropEntry pitcherCrop = new CropEntry();
         pitcherCrop.seed = "minecraft:pitcher_pod";
-        pitcherCrop.validSoils = List.of("minecraft:farmland");
+        pitcherCrop.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
+        );
         pitcherCrop.drops = new ArrayList<>();
 
         DropEntry pitcherCropDrop = new DropEntry();
@@ -318,11 +517,29 @@ public class AgritechCropConfig {
         pitcherCropDrop.count = new CountRange(1, 1);
         pitcherCrop.drops.add(pitcherCropDrop);
 
-        defaultCrops.add(pitcherCrop);
+        crops.add(pitcherCrop);
 
+        //torchflower
         CropEntry torchFlower = new CropEntry();
         torchFlower.seed = "minecraft:torchflower_seeds";
-        torchFlower.validSoils = List.of("minecraft:farmland");
+        torchFlower.validSoils = List.of(
+                "minecraft:farmland",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
+                );
         torchFlower.drops = new ArrayList<>();
 
         DropEntry torchFlowerDrop = new DropEntry();
@@ -330,8 +547,9 @@ public class AgritechCropConfig {
         torchFlowerDrop.count = new CountRange(1, 1);
         torchFlower.drops.add(torchFlowerDrop);
 
-        defaultCrops.add(torchFlower);
+        crops.add(torchFlower);
 
+        // Flowers Start
         CropEntry allium = new CropEntry();
         allium.seed = "minecraft:allium";
         allium.validSoils = List.of(
@@ -344,7 +562,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         allium.drops = new ArrayList<>();
 
@@ -353,7 +586,7 @@ public class AgritechCropConfig {
         alliumDrop.count = new CountRange(1, 1);
         allium.drops.add(alliumDrop);
 
-        defaultCrops.add(allium);
+        crops.add(allium);
 
         CropEntry azureBluet = new CropEntry();
         azureBluet.seed = "minecraft:azure_bluet";
@@ -367,7 +600,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         azureBluet.drops = new ArrayList<>();
 
@@ -376,7 +624,7 @@ public class AgritechCropConfig {
         azureBluetDrop.count = new CountRange(1, 1);
         azureBluet.drops.add(azureBluetDrop);
 
-        defaultCrops.add(azureBluet);
+        crops.add(azureBluet);
 
         CropEntry blueOrchid = new CropEntry();
         blueOrchid.seed = "minecraft:blue_orchid";
@@ -390,7 +638,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         blueOrchid.drops = new ArrayList<>();
 
@@ -399,7 +662,7 @@ public class AgritechCropConfig {
         blueOrchidDrop.count = new CountRange(1, 1);
         blueOrchid.drops.add(blueOrchidDrop);
 
-        defaultCrops.add(blueOrchid);
+        crops.add(blueOrchid);
 
         CropEntry cornflower = new CropEntry();
         cornflower.seed = "minecraft:cornflower";
@@ -413,7 +676,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         cornflower.drops = new ArrayList<>();
 
@@ -422,7 +700,7 @@ public class AgritechCropConfig {
         cornflowerDrop.count = new CountRange(1, 1);
         cornflower.drops.add(cornflowerDrop);
 
-        defaultCrops.add(cornflower);
+        crops.add(cornflower);
 
         CropEntry dandelion = new CropEntry();
         dandelion.seed = "minecraft:dandelion";
@@ -436,7 +714,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         dandelion.drops = new ArrayList<>();
 
@@ -445,7 +738,7 @@ public class AgritechCropConfig {
         dandelionDrop.count = new CountRange(1, 1);
         dandelion.drops.add(dandelionDrop);
 
-        defaultCrops.add(dandelion);
+        crops.add(dandelion);
 
         CropEntry lilyOfTheValley = new CropEntry();
         lilyOfTheValley.seed = "minecraft:lily_of_the_valley";
@@ -459,7 +752,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         lilyOfTheValley.drops = new ArrayList<>();
 
@@ -468,7 +776,7 @@ public class AgritechCropConfig {
         lilyOfTheValleyDrop.count = new CountRange(1, 1);
         lilyOfTheValley.drops.add(lilyOfTheValleyDrop);
 
-        defaultCrops.add(lilyOfTheValley);
+        crops.add(lilyOfTheValley);
 
         CropEntry oxeyeDaisy = new CropEntry();
         oxeyeDaisy.seed = "minecraft:oxeye_daisy";
@@ -482,7 +790,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         oxeyeDaisy.drops = new ArrayList<>();
 
@@ -491,7 +814,7 @@ public class AgritechCropConfig {
         oxeyeDaisyDrop.count = new CountRange(1, 1);
         oxeyeDaisy.drops.add(oxeyeDaisyDrop);
 
-        defaultCrops.add(oxeyeDaisy);
+        crops.add(oxeyeDaisy);
 
         CropEntry poppy = new CropEntry();
         poppy.seed = "minecraft:poppy";
@@ -505,7 +828,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         poppy.drops = new ArrayList<>();
 
@@ -514,7 +852,7 @@ public class AgritechCropConfig {
         poppyDrop.count = new CountRange(1, 1);
         poppy.drops.add(poppyDrop);
 
-        defaultCrops.add(poppy);
+        crops.add(poppy);
 
         CropEntry redTulip = new CropEntry();
         redTulip.seed = "minecraft:red_tulip";
@@ -528,7 +866,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         redTulip.drops = new ArrayList<>();
 
@@ -537,7 +890,7 @@ public class AgritechCropConfig {
         redTulipDrop.count = new CountRange(1, 1);
         redTulip.drops.add(redTulipDrop);
 
-        defaultCrops.add(redTulip);
+        crops.add(redTulip);
 
         CropEntry orangeTulip = new CropEntry();
         orangeTulip.seed = "minecraft:orange_tulip";
@@ -551,7 +904,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         orangeTulip.drops = new ArrayList<>();
 
@@ -560,7 +928,7 @@ public class AgritechCropConfig {
         orangeTulipDrop.count = new CountRange(1, 1);
         orangeTulip.drops.add(orangeTulipDrop);
 
-        defaultCrops.add(orangeTulip);
+        crops.add(orangeTulip);
 
         CropEntry whiteTulip = new CropEntry();
         whiteTulip.seed = "minecraft:white_tulip";
@@ -574,7 +942,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         whiteTulip.drops = new ArrayList<>();
 
@@ -583,7 +966,7 @@ public class AgritechCropConfig {
         whiteTulipDrop.count = new CountRange(1, 1);
         whiteTulip.drops.add(whiteTulipDrop);
 
-        defaultCrops.add(whiteTulip);
+        crops.add(whiteTulip);
 
         CropEntry pinkTulip = new CropEntry();
         pinkTulip.seed = "minecraft:pink_tulip";
@@ -597,7 +980,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         pinkTulip.drops = new ArrayList<>();
 
@@ -606,7 +1004,7 @@ public class AgritechCropConfig {
         pinkTulipDrop.count = new CountRange(1, 1);
         pinkTulip.drops.add(pinkTulipDrop);
 
-        defaultCrops.add(pinkTulip);
+        crops.add(pinkTulip);
 
         CropEntry witherRose = new CropEntry();
         witherRose.seed = "minecraft:wither_rose";
@@ -620,7 +1018,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         witherRose.drops = new ArrayList<>();
 
@@ -629,7 +1042,7 @@ public class AgritechCropConfig {
         witherRoseDrop.count = new CountRange(1, 1);
         witherRose.drops.add(witherRoseDrop);
 
-        defaultCrops.add(witherRose);
+        crops.add(witherRose);
 
         CropEntry lilac = new CropEntry();
         lilac.seed = "minecraft:lilac";
@@ -643,7 +1056,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         lilac.drops = new ArrayList<>();
 
@@ -652,7 +1080,7 @@ public class AgritechCropConfig {
         lilacDrop.count = new CountRange(1, 1);
         lilac.drops.add(lilacDrop);
 
-        defaultCrops.add(lilac);
+        crops.add(lilac);
 
         CropEntry peony = new CropEntry();
         peony.seed = "minecraft:peony";
@@ -666,7 +1094,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         peony.drops = new ArrayList<>();
 
@@ -675,7 +1118,7 @@ public class AgritechCropConfig {
         peonyDrop.count = new CountRange(1, 1);
         peony.drops.add(peonyDrop);
 
-        defaultCrops.add(peony);
+        crops.add(peony);
 
         CropEntry roseBush = new CropEntry();
         roseBush.seed = "minecraft:rose_bush";
@@ -689,7 +1132,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         roseBush.drops = new ArrayList<>();
 
@@ -698,7 +1156,7 @@ public class AgritechCropConfig {
         roseBushDrop.count = new CountRange(1, 1);
         roseBush.drops.add(roseBushDrop);
 
-        defaultCrops.add(roseBush);
+        crops.add(roseBush);
 
         CropEntry sunflower = new CropEntry();
         sunflower.seed = "minecraft:sunflower";
@@ -712,7 +1170,22 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+
+                "mysticalagradditions:insanium_farmland",
+
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+
+                "farmersdelight:rich_soil_farmland"
         );
         sunflower.drops = new ArrayList<>();
 
@@ -721,105 +1194,693 @@ public class AgritechCropConfig {
         sunflowerDrop.count = new CountRange(1, 1);
         sunflower.drops.add(sunflowerDrop);
 
-        defaultCrops.add(sunflower);
+        crops.add(sunflower);
 
-        config.allowedCrops = defaultCrops;
+        // Flowers END
 
-        List<SoilEntry> defaultSoils = new ArrayList<>();
+        // Add more vanilla crops as needed
+    }
 
+    // Helper method to add vanilla soils
+    private static void addVanillaSoils(List<SoilEntry> soils) {
         SoilEntry dirt = new SoilEntry();
         dirt.soil = "minecraft:dirt";
         dirt.growthModifier = 1.0f;
-        defaultSoils.add(dirt);
+        soils.add(dirt);
 
         SoilEntry coarseDirt = new SoilEntry();
         coarseDirt.soil = "minecraft:coarse_dirt";
         coarseDirt.growthModifier = 1.0f;
-        defaultSoils.add(coarseDirt);
+        soils.add(coarseDirt);
 
         SoilEntry podzol = new SoilEntry();
         podzol.soil = "minecraft:podzol";
         podzol.growthModifier = 1.0f;
-        defaultSoils.add(podzol);
+        soils.add(podzol);
 
         SoilEntry mycelium = new SoilEntry();
         mycelium.soil = "minecraft:mycelium";
         mycelium.growthModifier = 1.0f;
-        defaultSoils.add(mycelium);
+        soils.add(mycelium);
 
         SoilEntry mud = new SoilEntry();
         mud.soil = "minecraft:mud";
         mud.growthModifier = 1.5f;
-        defaultSoils.add(mud);
+        soils.add(mud);
 
         SoilEntry muddyMangroveRoots = new SoilEntry();
         muddyMangroveRoots.soil = "minecraft:muddy_mangrove_roots";
         muddyMangroveRoots.growthModifier = 1.5f;
-        defaultSoils.add(muddyMangroveRoots);
+        soils.add(muddyMangroveRoots);
 
         SoilEntry rootedDirt = new SoilEntry();
         rootedDirt.soil = "minecraft:rooted_dirt";
         rootedDirt.growthModifier = 1.0f;
-        defaultSoils.add(rootedDirt);
+        soils.add(rootedDirt);
 
         SoilEntry moss = new SoilEntry();
         moss.soil = "minecraft:moss_block";
         moss.growthModifier = 1.0f;
-        defaultSoils.add(moss);
+        soils.add(moss);
 
         SoilEntry farmland = new SoilEntry();
         farmland.soil = "minecraft:farmland";
         farmland.growthModifier = 1.5f;
-        defaultSoils.add(farmland);
+        soils.add(farmland);
 
         SoilEntry sand = new SoilEntry();
         sand.soil = "minecraft:sand";
         sand.growthModifier = 1f;
-        defaultSoils.add(sand);
+        soils.add(sand);
 
         SoilEntry redSand = new SoilEntry();
         redSand.soil = "minecraft:red_sand";
         redSand.growthModifier = 1f;
-        defaultSoils.add(redSand);
+        soils.add(redSand);
 
         SoilEntry grass = new SoilEntry();
         grass.soil = "minecraft:grass_block";
         grass.growthModifier = 1f;
-        defaultSoils.add(grass);
+        soils.add(grass);
 
         SoilEntry soulSand = new SoilEntry();
         soulSand.soil = "minecraft:soul_sand";
         soulSand.growthModifier = 1.5f;
-        defaultSoils.add(soulSand);
+        soils.add(soulSand);
 
         SoilEntry endStone = new SoilEntry();
         endStone.soil = "minecraft:end_stone";
         endStone.growthModifier = 1f;
-        defaultSoils.add(endStone);
+        soils.add(endStone);
 
         SoilEntry jungleLog = new SoilEntry();
         jungleLog.soil = "minecraft:jungle_log";
         jungleLog.growthModifier = 1f;
-        defaultSoils.add(jungleLog);
+        soils.add(jungleLog);
 
         SoilEntry jungleWood = new SoilEntry();
         jungleWood.soil = "minecraft:jungle_wood";
         jungleWood.growthModifier = 1f;
-        defaultSoils.add(jungleWood);
+        soils.add(jungleWood);
 
         SoilEntry strippedJungleLog = new SoilEntry();
         strippedJungleLog.soil = "minecraft:stripped_jungle_log";
         strippedJungleLog.growthModifier = 1f;
-        defaultSoils.add(strippedJungleLog);
+        soils.add(strippedJungleLog);
 
         SoilEntry strippedJungleWood = new SoilEntry();
         strippedJungleWood.soil = "minecraft:stripped_jungle_wood";
         strippedJungleWood.growthModifier = 1f;
-        defaultSoils.add(strippedJungleWood);
+        soils.add(strippedJungleWood);
+    }
 
-        config.allowedSoils = defaultSoils;
+    private static void addMysticalAgricultureCrops(List<CropEntry> crops) {
+        // Tier 1 crops - can grow on any valid MA farmland
+        String[] tier1Seeds = {
+                "mysticalagriculture:air_seeds",
+                "mysticalagriculture:earth_seeds",
+                "mysticalagriculture:water_seeds",
+                "mysticalagriculture:fire_seeds",
+                "mysticalagriculture:inferium_seeds",
+                "mysticalagriculture:stone_seeds",
+                "mysticalagriculture:dirt_seeds",
+                "mysticalagriculture:wood_seeds",
+                "mysticalagriculture:ice_seeds",
+                "mysticalagriculture:deepslate_seeds"
+        };
 
-        return config;
+        List<String> tier1Soils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+
+        for (String seedId : tier1Seeds) {
+            addMysticalAgricultureCrop(crops, seedId, tier1Soils);
+        }
+
+        // Tier 2 crops - require at least prudentium farmland
+        String[] tier2Seeds = {
+                "mysticalagriculture:nature_seeds",
+                "mysticalagriculture:dye_seeds",
+                "mysticalagriculture:nether_seeds",
+                "mysticalagriculture:coal_seeds",
+                "mysticalagriculture:coral_seeds",
+                "mysticalagriculture:honey_seeds",
+                "mysticalagriculture:amethyst_seeds",
+                "mysticalagriculture:pig_seeds",
+                "mysticalagriculture:chicken_seeds",
+                "mysticalagriculture:cow_seeds",
+                "mysticalagriculture:sheep_seeds",
+                "mysticalagriculture:squid_seeds",
+                "mysticalagriculture:fish_seeds",
+                "mysticalagriculture:slime_seeds",
+                "mysticalagriculture:turtle_seeds",
+                "mysticalagriculture:armadillo_seeds",
+                "mysticalagriculture:rubber_seeds",
+                "mysticalagriculture:silicon_seeds",
+                "mysticalagriculture:sulfur_seeds",
+                "mysticalagriculture:aluminum_seeds",
+                "mysticalagriculture:saltpeter_seeds",
+                "mysticalagriculture:apatite_seeds",
+                "mysticalagriculture:grains_of_infinity_seeds"
+        };
+
+        List<String> tier2Soils = List.of(
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4"
+        );
+
+        for (String seedId : tier2Seeds) {
+            addMysticalAgricultureCrop(crops, seedId, tier2Soils);
+        }
+
+        // Tier 3 crops - require at least tertium farmland
+        String[] tier3Seeds = {
+                "mysticalagriculture:mystical_flower_seeds",
+                "mysticalagriculture:marble_seeds",
+                "mysticalagriculture:limestone_seeds",
+                "mysticalagriculture:basalt_seeds",
+                "mysticalagriculture:menril_seeds",
+                "mysticalagriculture:iron_seeds",
+                "mysticalagriculture:copper_seeds",
+                "mysticalagriculture:nether_quartz_seeds",
+                "mysticalagriculture:glowstone_seeds",
+                "mysticalagriculture:redstone_seeds",
+                "mysticalagriculture:obsidian_seeds",
+                "mysticalagriculture:prismarine_seeds",
+                "mysticalagriculture:zombie_seeds",
+                "mysticalagriculture:skeleton_seeds",
+                "mysticalagriculture:creeper_seeds",
+                "mysticalagriculture:spider_seeds",
+                "mysticalagriculture:rabbit_seeds",
+                "mysticalagriculture:tin_seeds",
+                "mysticalagriculture:bronze_seeds",
+                "mysticalagriculture:zinc_seeds",
+                "mysticalagriculture:brass_seeds",
+                "mysticalagriculture:silver_seeds",
+                "mysticalagriculture:lead_seeds",
+                "mysticalagriculture:graphite_seeds",
+                "mysticalagriculture:blizz_seeds",
+                "mysticalagriculture:blitz_seeds",
+                "mysticalagriculture:basalz_seeds",
+                "mysticalagriculture:amethyst_bronze_seeds",
+                "mysticalagriculture:slimesteel_seeds",
+                "mysticalagriculture:pig_iron_seeds",
+                "mysticalagriculture:copper_alloy_seeds",
+                "mysticalagriculture:redstone_alloy_seeds",
+                "mysticalagriculture:conductive_alloy_seeds"
+        };
+
+        List<String> tier3Soils = List.of(
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4"
+        );
+
+        for (String seedId : tier3Seeds) {
+            addMysticalAgricultureCrop(crops, seedId, tier3Soils);
+        }
+
+        // Tier 4 crops - require at least imperium farmland
+        String[] tier4Seeds = {
+                "mysticalagriculture:manasteel_seeds",
+                "mysticalagriculture:steeleaf_seeds",
+                "mysticalagriculture:ironwood_seeds",
+                "mysticalagriculture:aquamarine_seeds",
+                "mysticalagriculture:sky_stone_seeds",
+                "mysticalagriculture:certus_quartz_seeds",
+                "mysticalagriculture:quartz_enriched_iron_seeds",
+                "mysticalagriculture:gold_seeds",
+                "mysticalagriculture:lapis_lazuli_seeds",
+                "mysticalagriculture:end_seeds",
+                "mysticalagriculture:experience_seeds",
+                "mysticalagriculture:breeze_seeds",
+                "mysticalagriculture:blaze_seeds",
+                "mysticalagriculture:ghast_seeds",
+                "mysticalagriculture:enderman_seeds",
+                "mysticalagriculture:steel_seeds",
+                "mysticalagriculture:nickel_seeds",
+                "mysticalagriculture:constantan_seeds",
+                "mysticalagriculture:electrum_seeds",
+                "mysticalagriculture:invar_seeds",
+                "mysticalagriculture:uranium_seeds",
+                "mysticalagriculture:ruby_seeds",
+                "mysticalagriculture:sapphire_seeds",
+                "mysticalagriculture:peridot_seeds",
+                "mysticalagriculture:soulium_seeds",
+                "mysticalagriculture:signalum_seeds",
+                "mysticalagriculture:lumium_seeds",
+                "mysticalagriculture:flux_infused_ingot_seeds",
+                "mysticalagriculture:hop_graphite_seeds",
+                "mysticalagriculture:cobalt_seeds",
+                "mysticalagriculture:rose_gold_seeds",
+                "mysticalagriculture:soularium_seeds",
+                "mysticalagriculture:dark_steel_seeds",
+                "mysticalagriculture:pulsating_alloy_seeds",
+                "mysticalagriculture:energetic_alloy_seeds",
+                "mysticalagriculture:elementium_seeds",
+                "mysticalagriculture:osmium_seeds",
+                "mysticalagriculture:fluorite_seeds",
+                "mysticalagriculture:refined_glowstone_seeds",
+                "mysticalagriculture:refined_obsidian_seeds"
+        };
+
+        List<String> tier4Soils = List.of(
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4"
+        );
+
+        for (String seedId : tier4Seeds) {
+            addMysticalAgricultureCrop(crops, seedId, tier4Soils);
+        }
+
+        // Tier 5 crops - require supremium farmland
+        String[] tier5Seeds = {
+                "mysticalagriculture:knightmetal_seeds",
+                "mysticalagriculture:fiery_ingot_seeds",
+                "mysticalagriculture:starmetal_seeds",
+                "mysticalagriculture:compressed_iron_seeds",
+                "mysticalagriculture:fluix_seeds",
+                "mysticalagriculture:energized_steel_seeds",
+                "mysticalagriculture:blazing_crystal_seeds",
+                "mysticalagriculture:diamond_seeds",
+                "mysticalagriculture:emerald_seeds",
+                "mysticalagriculture:netherite_seeds",
+                "mysticalagriculture:wither_skeleton_seeds",
+                "mysticalagriculture:platinum_seeds",
+                "mysticalagriculture:iridium_seeds",
+                "mysticalagriculture:enderium_seeds",
+                "mysticalagriculture:flux_infused_gem_seeds",
+                "mysticalagriculture:manyullyn_seeds",
+                "mysticalagriculture:queens_slime_seeds",
+                "mysticalagriculture:hepatizon_seeds",
+                "mysticalagriculture:vibrant_alloy_seeds",
+                "mysticalagriculture:end_steel_seeds",
+                "mysticalagriculture:terrasteel_seeds",
+                "mysticalagriculture:rock_crystal_seeds",
+                "mysticalagriculture:draconium_seeds",
+                "mysticalagriculture:yellorium_seeds",
+                "mysticalagriculture:cyanite_seeds",
+                "mysticalagriculture:niotic_crystal_seeds",
+                "mysticalagriculture:spirited_crystal_seeds",
+                "mysticalagriculture:uraninite_seeds"
+        };
+
+        List<String> tier5Soils = List.of(
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4"
+        );
+
+        for (String seedId : tier5Seeds) {
+            addMysticalAgricultureCrop(crops, seedId, tier5Soils);
+        }
+
+        // Special crops that require cruxes
+        if (Config.enableMysticalAgradditions) {
+            addSpecialCruxCrop(crops, "mysticalagriculture:nether_star_seeds", "mysticalagradditions:nether_star_crux");
+            addSpecialCruxCrop(crops, "mysticalagriculture:dragon_egg_seeds", "mysticalagradditions:dragon_egg_crux");
+            addSpecialCruxCrop(crops, "mysticalagriculture:gaia_spirit_seeds", "mysticalagradditions:gaia_spirit_crux");
+            addSpecialCruxCrop(crops, "mysticalagriculture:awakened_draconium_seeds", "mysticalagradditions:awakened_draconium_crux");
+            addSpecialCruxCrop(crops, "mysticalagriculture:neutronium_seeds", "mysticalagradditions:neutronium_crux");
+            addSpecialCruxCrop(crops, "mysticalagriculture:nitro_crystal_seeds", "mysticalagradditions:nitro_crystal_crux");
+        }
+    }
+
+    private static void addSpecialCruxCrop(List<CropEntry> crops, String seedId, String cruxId) {
+        CropEntry crop = new CropEntry();
+        crop.seed = seedId;
+        crop.validSoils = List.of(cruxId);
+        crop.drops = new ArrayList<>();
+
+        // Extract essence name from seed name
+        String essence = seedId.replace("_seeds", "_essence");
+
+        DropEntry essenceDrop = new DropEntry();
+        essenceDrop.item = essence;
+        essenceDrop.count = new CountRange(1, 1);
+        essenceDrop.chance = 1.0f;
+        crop.drops.add(essenceDrop);
+
+        crops.add(crop);
+    }
+
+    private static void addMysticalAgricultureCrop(List<CropEntry> crops, String seedId, List<String> validSoils) {
+        CropEntry crop = new CropEntry();
+        crop.seed = seedId;
+        crop.validSoils = new ArrayList<>(validSoils);
+        crop.drops = new ArrayList<>();
+
+        // Extract essence name from seed name
+        String essence = seedId.replace("_seeds", "_essence");
+
+        DropEntry essenceDrop = new DropEntry();
+        essenceDrop.item = essence;
+        essenceDrop.count = new CountRange(1, 1);
+        essenceDrop.chance = 1.0f;
+        crop.drops.add(essenceDrop);
+
+        DropEntry seedDrop = new DropEntry();
+        seedDrop.item = seedId;
+        seedDrop.count = new CountRange(1, 1);
+        seedDrop.chance = 0.2f;
+        crop.drops.add(seedDrop);
+
+        crops.add(crop);
+    }
+
+    private static void addMysticalAgricultureSoils(List<SoilEntry> soils) {
+        // Add MA soils with appropriate growth modifiers
+        SoilEntry inferiumFarmland = new SoilEntry();
+        inferiumFarmland.soil = "mysticalagriculture:inferium_farmland";
+        inferiumFarmland.growthModifier = 2.0f;
+        soils.add(inferiumFarmland);
+
+        SoilEntry prudentiumFarmland = new SoilEntry();
+        prudentiumFarmland.soil = "mysticalagriculture:prudentium_farmland";
+        prudentiumFarmland.growthModifier = 2.5f;
+        soils.add(prudentiumFarmland);
+
+        SoilEntry tertiumFarmland = new SoilEntry();
+        tertiumFarmland.soil = "mysticalagriculture:tertium_farmland";
+        tertiumFarmland.growthModifier = 3.0f;
+        soils.add(tertiumFarmland);
+
+        SoilEntry imperiumFarmland = new SoilEntry();
+        imperiumFarmland.soil = "mysticalagriculture:imperium_farmland";
+        imperiumFarmland.growthModifier = 3.5f;
+        soils.add(imperiumFarmland);
+
+        SoilEntry supremiumFarmland = new SoilEntry();
+        supremiumFarmland.soil = "mysticalagriculture:supremium_farmland";
+        supremiumFarmland.growthModifier = 4.0f;
+        soils.add(supremiumFarmland);
+
+        if (Config.enableMysticalAgradditions) {
+            SoilEntry insaniumFarmland = new SoilEntry();
+            insaniumFarmland.soil = "mysticalagradditions:insanium_farmland";
+            insaniumFarmland.growthModifier = 5.0f;
+            soils.add(insaniumFarmland);
+
+            // Add special cruxes
+            SoilEntry netherStarCrux = new SoilEntry();
+            netherStarCrux.soil = "mysticalagradditions:nether_star_crux";
+            netherStarCrux.growthModifier = 2.0f;
+            soils.add(netherStarCrux);
+
+            SoilEntry dragonEggCrux = new SoilEntry();
+            dragonEggCrux.soil = "mysticalagradditions:dragon_egg_crux";
+            dragonEggCrux.growthModifier = 2.0f;
+            soils.add(dragonEggCrux);
+
+            SoilEntry awakenedDraconiumCrux = new SoilEntry();
+            awakenedDraconiumCrux.soil = "mysticalagradditions:awakened_draconium_crux";
+            awakenedDraconiumCrux.growthModifier = 2.0f;
+            soils.add(awakenedDraconiumCrux);
+
+            SoilEntry neutroniumCrux = new SoilEntry();
+            neutroniumCrux.soil = "mysticalagradditions:neutronium_crux";
+            neutroniumCrux.growthModifier = 2.0f;
+            soils.add(neutroniumCrux);
+
+            SoilEntry nitroCrystalCrux = new SoilEntry();
+            nitroCrystalCrux.soil = "mysticalagradditions:nitro_crystal_crux";
+            nitroCrystalCrux.growthModifier = 2.0f;
+            soils.add(nitroCrystalCrux);
+        }
+    }
+
+    private static void addFarmersDelightCrops(List<CropEntry> crops) {
+        // Cabbage
+        CropEntry cabbage = new CropEntry();
+        cabbage.seed = "farmersdelight:cabbage_seeds";
+        cabbage.validSoils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+        cabbage.drops = new ArrayList<>();
+
+        DropEntry cabbageDrop = new DropEntry();
+        cabbageDrop.item = "farmersdelight:cabbage";
+        cabbageDrop.count = new CountRange(1, 1);
+        cabbageDrop.chance = 1.0f;
+        cabbage.drops.add(cabbageDrop);
+
+        DropEntry cabbageSeedsDrop = new DropEntry();
+        cabbageSeedsDrop.item = "farmersdelight:cabbage_seeds";
+        cabbageSeedsDrop.count = new CountRange(1, 2);
+        cabbageSeedsDrop.chance = 1.0f;
+        cabbage.drops.add(cabbageSeedsDrop);
+
+        crops.add(cabbage);
+
+        // Tomato
+        CropEntry tomato = new CropEntry();
+        tomato.seed = "farmersdelight:tomato_seeds";
+        tomato.validSoils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+        tomato.drops = new ArrayList<>();
+
+        DropEntry tomatoDrop = new DropEntry();
+        tomatoDrop.item = "farmersdelight:tomato";
+        tomatoDrop.count = new CountRange(1, 2);
+        tomatoDrop.chance = 1.0f;
+        tomato.drops.add(tomatoDrop);
+
+        crops.add(tomato);
+
+        // Onion
+        CropEntry onion = new CropEntry();
+        onion.seed = "farmersdelight:onion";
+        onion.validSoils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+        onion.drops = new ArrayList<>();
+
+        DropEntry onionDrop = new DropEntry();
+        onionDrop.item = "farmersdelight:onion";
+        onionDrop.count = new CountRange(1, 3);
+        onionDrop.chance = 1.0f;
+        onion.drops.add(onionDrop);
+
+        crops.add(onion);
+    }
+
+    private static void addFarmersDelightSoils(List<SoilEntry> soils) {
+        SoilEntry richSoil = new SoilEntry();
+        richSoil.soil = "farmersdelight:rich_soil";
+        richSoil.growthModifier = 2.0f;
+        soils.add(richSoil);
+
+        SoilEntry richSoilFarmland = new SoilEntry();
+        richSoilFarmland.soil = "farmersdelight:rich_soil_farmland";
+        richSoilFarmland.growthModifier = 2.0f;
+        soils.add(richSoilFarmland);
+
+        SoilEntry organicCompost = new SoilEntry();
+        organicCompost.soil = "farmersdelight:organic_compost";
+        organicCompost.growthModifier = 2.0f;
+        soils.add(organicCompost);
+    }
+
+    private static void addArsNouveauCrops(List<CropEntry> crops) {
+        // Magebloom
+        CropEntry magebloom = new CropEntry();
+        magebloom.seed = "ars_nouveau:magebloom_crop";
+        magebloom.validSoils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+        magebloom.drops = new ArrayList<>();
+
+        DropEntry magebloomDrop = new DropEntry();
+        magebloomDrop.item = "ars_nouveau:magebloom";
+        magebloomDrop.count = new CountRange(1, 1);
+        magebloomDrop.chance = 1.0f;
+        magebloom.drops.add(magebloomDrop);
+
+        crops.add(magebloom);
+
+        // Sourceberry Bush
+        CropEntry sourceberry = new CropEntry();
+        sourceberry.seed = "ars_nouveau:sourceberry_bush";
+        sourceberry.validSoils = List.of(
+                "minecraft:farmland",
+                "minecraft:dirt",
+                "minecraft:grass_block",
+                "minecraft:rooted_dirt",
+                "minecraft:coarse_dirt",
+                "minecraft:podzol",
+                "minecraft:mycelium",
+                "minecraft:mud",
+                "minecraft:moss_block",
+                "minecraft:muddy_mangrove_roots",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland",
+                "farmersdelight:organic_compost",
+                "farmersdelight:rich_soil"
+        );
+        sourceberry.drops = new ArrayList<>();
+
+        DropEntry sourceberryDrop = new DropEntry();
+        sourceberryDrop.item = "ars_nouveau:sourceberry_bush";
+        sourceberryDrop.count = new CountRange(2, 4);
+        sourceberryDrop.chance = 1.0f;
+        sourceberry.drops.add(sourceberryDrop);
+
+        crops.add(sourceberry);
+    }
+
+    private static void addSilentGearCrops(List<CropEntry> crops) {
+        // Fluffy Puff
+        CropEntry fluffyPuff = new CropEntry();
+        fluffyPuff.seed = "silentgear:fluffy_seeds";
+        fluffyPuff.validSoils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+        fluffyPuff.drops = new ArrayList<>();
+
+        DropEntry fluffyPuffDrop = new DropEntry();
+        fluffyPuffDrop.item = "silentgear:fluffy_puff";
+        fluffyPuffDrop.count = new CountRange(1, 4);
+        fluffyPuffDrop.chance = 1.0f;
+        fluffyPuff.drops.add(fluffyPuffDrop);
+
+        DropEntry fluffySeedsDrop = new DropEntry();
+        fluffySeedsDrop.item = "silentgear:fluffy_seeds";
+        fluffySeedsDrop.count = new CountRange(1, 1);
+        fluffySeedsDrop.chance = 1.0f;
+        fluffyPuff.drops.add(fluffySeedsDrop);
+
+        crops.add(fluffyPuff);
+
+        // Flax
+        CropEntry flax = new CropEntry();
+        flax.seed = "silentgear:flax_seeds";
+        flax.validSoils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+        flax.drops = new ArrayList<>();
+
+        DropEntry flaxFiberDrop = new DropEntry();
+        flaxFiberDrop.item = "silentgear:flax_fiber";
+        flaxFiberDrop.count = new CountRange(1, 4);
+        flaxFiberDrop.chance = 1.0f;
+        flax.drops.add(flaxFiberDrop);
+
+        DropEntry flaxSeedsDrop = new DropEntry();
+        flaxSeedsDrop.item = "silentgear:flax_seeds";
+        flaxSeedsDrop.count = new CountRange(1, 1);
+        flaxSeedsDrop.chance = 0.2f;
+        flax.drops.add(flaxSeedsDrop);
+
+        DropEntry flaxFlowersDrop = new DropEntry();
+        flaxFlowersDrop.item = "silentgear:flax_flowers";
+        flaxFlowersDrop.count = new CountRange(1, 1);
+        flaxFlowersDrop.chance = 0.2f;
+        flax.drops.add(flaxFlowersDrop);
+
+        crops.add(flax);
     }
 
     private static void processConfig(CropConfigData configData) {

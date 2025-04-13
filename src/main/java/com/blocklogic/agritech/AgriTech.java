@@ -46,11 +46,11 @@ public class AgriTech
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
 
-        AgritechCropConfig.loadConfig();
-
         modEventBus.addListener(this::addCreative);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        modEventBus.register(Config.class);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
