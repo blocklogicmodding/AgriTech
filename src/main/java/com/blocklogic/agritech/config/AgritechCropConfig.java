@@ -349,7 +349,9 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:mud",
                 "minecraft:moss_block",
-                "minecraft:muddy_mangrove_roots"
+                "minecraft:muddy_mangrove_roots",
+                "farmersdelight:rich_soil",
+                "farmersdelight:organic_compost"
         );
         bamboo.drops = new ArrayList<>();
 
@@ -375,8 +377,6 @@ public class AgritechCropConfig {
                 "minecraft:moss_block",
                 "minecraft:muddy_mangrove_roots",
 
-                "minecraft:farmland",
-
                 "mysticalagriculture:inferium_farmland",
                 "mysticalagriculture:prudentium_farmland",
                 "mysticalagriculture:tertium_farmland",
@@ -390,7 +390,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
 
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "farmersdelight:rich_soil",
+                "farmersdelight:organic_compost"
         );
         sweetBerries.drops = new ArrayList<>();
 
