@@ -56,10 +56,8 @@ public class AgritechCropConfig {
 
         List<CropEntry> defaultCrops = new ArrayList<>();
 
-        // Add vanilla Minecraft crops
         addVanillaCrops(defaultCrops);
 
-        // Add mod crops based on config settings
         if (Config.enableMysticalAgriculture) {
             LOGGER.info("Adding Mystical Agriculture crops to AgriTech config");
             addMysticalAgricultureCrops(defaultCrops);
@@ -110,7 +108,6 @@ public class AgritechCropConfig {
         return config;
     }
 
-    // Helper method to add vanilla crops
     private static void addVanillaCrops(List<CropEntry> crops) {
         // Wheat
         CropEntry wheat = new CropEntry();
@@ -1208,10 +1205,8 @@ public class AgritechCropConfig {
 
         // Flowers END
 
-        // Add more vanilla crops as needed
     }
 
-    // Helper method to add vanilla soils
     private static void addVanillaSoils(List<SoilEntry> soils) {
         SoilEntry dirt = new SoilEntry();
         dirt.soil = "minecraft:dirt";
@@ -1549,7 +1544,6 @@ public class AgritechCropConfig {
         crop.validSoils = List.of(cruxId);
         crop.drops = new ArrayList<>();
 
-        // Extract essence name from seed name
         String essence = seedId.replace("_seeds", "_essence");
 
         DropEntry essenceDrop = new DropEntry();
@@ -1567,7 +1561,6 @@ public class AgritechCropConfig {
         crop.validSoils = new ArrayList<>(validSoils);
         crop.drops = new ArrayList<>();
 
-        // Extract essence name from seed name
         String essence = seedId.replace("_seeds", "_essence");
 
         DropEntry essenceDrop = new DropEntry();
@@ -1618,7 +1611,6 @@ public class AgritechCropConfig {
             insaniumFarmland.growthModifier = 5.0f;
             soils.add(insaniumFarmland);
 
-            // Add special cruxes
             SoilEntry netherStarCrux = new SoilEntry();
             netherStarCrux.soil = "mysticalagradditions:nether_star_crux";
             netherStarCrux.growthModifier = 2.0f;
