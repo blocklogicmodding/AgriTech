@@ -451,7 +451,9 @@ public class AgritechCropConfig {
         brownMushroom.seed = "minecraft:brown_mushroom";
         brownMushroom.validSoils = List.of(
                 "minecraft:mycelium",
-                "minecraft:podzol"
+                "minecraft:podzol",
+                "farmersdelight:rich_soil",
+                "farmersdelight:organic_compost"
         );
         brownMushroom.drops = new ArrayList<>();
 
@@ -467,7 +469,9 @@ public class AgritechCropConfig {
         redMushroom.seed = "minecraft:red_mushroom";
         redMushroom.validSoils = List.of(
                 "minecraft:mycelium",
-                "minecraft:podzol"
+                "minecraft:podzol",
+                "farmersdelight:rich_soil",
+                "farmersdelight:organic_compost"
         );
         redMushroom.drops = new ArrayList<>();
 
