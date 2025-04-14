@@ -1,6 +1,6 @@
 ![AgriTech Banner](agritech_banner.png)
 
-AgriTech introduces customizable planters that streamline crop growing and autmomated harvesting.
+AgriTech introduces customizable planters that streamline crop growing and automated harvesting.
 
 Inspired by **Botany Pots by DarkhaxDev**
 
