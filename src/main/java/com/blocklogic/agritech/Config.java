@@ -52,6 +52,10 @@ public class Config
             .comment("Enable Just Dire Things Soils. Default: true")
             .define("enableJustDireThingsSoils", true);
 
+    private static final ModConfigSpec.BooleanValue ENABLE_IMMERSIVE_ENGINEERING = BUILDER
+            .comment("Enable Immersive Engineering Fiber. Default: true")
+            .define("enableImmersiveEngineering", true);
+
     static final ModConfigSpec SPEC = BUILDER.build();
 
     // Mod compatibility flags
@@ -61,6 +65,7 @@ public class Config
     public static boolean enableArsNouveau;
     public static boolean enableSilentGear;
     public static boolean enableJustDireThingSoils;
+    public static boolean enableImmersiveEngineering;
 
     private static boolean validateItemName(final Object obj)
     {
@@ -79,6 +84,7 @@ public class Config
         enableArsNouveau = ENABLE_ARS_NOUVEAU.get() && ModList.get().isLoaded("ars_nouveau");
         enableSilentGear = ENABLE_SILENT_GEAR.get() && ModList.get().isLoaded("silentgear");
         enableJustDireThingSoils = ENABLE_JUST_DIRE_THINGS_SOIL.get() && ModList.get().isLoaded("justdirethings");
+        enableImmersiveEngineering = ENABLE_IMMERSIVE_ENGINEERING.get() && ModList.get().isLoaded("immersiveengineering");
 
         AgritechCropConfig.loadConfig();
     }

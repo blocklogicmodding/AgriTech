@@ -100,6 +100,11 @@ public class AgritechCropConfig {
             addJustDireThingsSoils(defaultSoils);
         }
 
+        if(Config.enableImmersiveEngineering) {
+            LOGGER.info("Adding Immersive Engineering Hemp Fiber to AgriTech config");
+            addImmersiveEngineering(defaultCrops);
+        }
+
         config.allowedSoils = defaultSoils;
 
         return config;
@@ -1745,6 +1750,42 @@ public class AgritechCropConfig {
         organicCompost.soil = "farmersdelight:organic_compost";
         organicCompost.growthModifier = 2.0f;
         soils.add(organicCompost);
+    }
+
+    private static void addImmersiveEngineering(List<CropEntry> crops) {
+        // Immersive Engineering Hemp Fiber
+        CropEntry immersiveHempFiber = new CropEntry();
+        immersiveHempFiber.seed = "immersiveengineering:seed";
+        immersiveHempFiber.validSoils = List.of(
+                "minecraft:farmland",
+                "mysticalagriculture:inferium_farmland",
+                "mysticalagriculture:prudentium_farmland",
+                "mysticalagriculture:tertium_farmland",
+                "mysticalagriculture:imperium_farmland",
+                "mysticalagriculture:supremium_farmland",
+                "mysticalagradditions:insanium_farmland",
+                "justdirethings:goosoil_tier1",
+                "justdirethings:goosoil_tier2",
+                "justdirethings:goosoil_tier3",
+                "justdirethings:goosoil_tier4",
+                "farmersdelight:rich_soil_farmland"
+        );
+        immersiveHempFiber.drops = new ArrayList<>();
+
+        DropEntry immersiveHempDrop = new DropEntry();
+        immersiveHempDrop.item = "immersiveengineering:hemp_fiber";
+        immersiveHempDrop.count = new CountRange(4, 8);
+        immersiveHempDrop.chance = 1.0f;
+        immersiveHempFiber.drops.add(immersiveHempDrop);
+
+        DropEntry immersiveSeedDrop = new DropEntry();
+        immersiveSeedDrop.item = "immersiveengineering:seed";
+        immersiveSeedDrop.count = new CountRange(1, 1);
+        immersiveSeedDrop.chance = 0.5f;
+        immersiveHempFiber.drops.add(immersiveSeedDrop);
+
+        crops.add(immersiveHempFiber);
+
     }
 
     private static void addArsNouveauCrops(List<CropEntry> crops) {
