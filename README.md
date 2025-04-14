@@ -1,25 +1,47 @@
+![AgriTech Banner](agritech_banner.png)
 
-Installation information
-=======
+AgriTech introduces customizable planters that streamline crop growing and autmomated harvesting.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+Inspired by **Botany Pots by DarkhaxDev**
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## Features
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+- **Automated Crop Growth**: Plant seeds and watch them grow automatically
+- **Hopping Planters**: Automatically output harvested items to containers below
+- **Internal Storage**: Built-in inventory to store harvested crops
+- **Wide Crop Compatibility**: Works with vanilla crops and many modded crops
+- **Configurable Soil Types**: Different soils affect growth speed
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+## Supported Crops
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+AgriTech supports all vanilla crops including:
+- Wheat, Beetroot, Carrot, Potato
+- Melon, Pumpkin
+- Nether Wart, Chorus Fruit
+- Sugar Cane, Cactus, Bamboo
+- Sweet Berries
+- All flowers
+- And many more!
+
+## Mod Compatibility
+
+AgriTech integrates with:
+- **Mystical Agriculture**
+- **Farmer's Delight**
+- **Ars Nouveau**
+- **Silent Gear**
+- **Just Dire Things**
+- **Immersive Engineering**
+
+## Configuration
+
+- Enable/disable mod compatibility
+- Add custom crops and soils
+- Modify growth rates and drop chances
+- Customize planter behavior
+
+Configuration is located at `config/agritech/crops_and_soil.json`
+
+## License
+
+All Rights Reserved
