@@ -2,7 +2,6 @@ package com.blocklogic.agritech.compat.jei;
 
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.util.RegistryHelper;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -39,14 +38,10 @@ public class PlanterRecipe implements IRecipeCategoryExtension {
      * Factory method to create a recipe from seed and soil IDs
      */
     public static PlanterRecipe create(String seedId, String soilId) {
-        // Get the seed item
         Ingredient seedIngredient = Ingredient.of(RegistryHelper.getItem(seedId));
 
-        // Get the soil item
         Ingredient soilIngredient = Ingredient.of(RegistryHelper.getBlock(soilId).asItem());
 
-
-        // Get the outputs
         List<ItemStack> outputs = new ArrayList<>();
         List<AgritechCropConfig.DropInfo> drops = AgritechCropConfig.getCropDrops(seedId);
         LOGGER.info("Drops for Seed ID {}: {}", seedId, drops);

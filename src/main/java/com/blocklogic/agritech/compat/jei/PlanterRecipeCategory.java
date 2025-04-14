@@ -31,12 +31,12 @@ public class PlanterRecipeCategory implements IRecipeCategory<PlanterRecipe> {
 
     @Override
     public int getWidth() {
-        return 116; // Your texture width
+        return 116;
     }
 
     @Override
     public int getHeight() {
-        return 54; // Your texture height
+        return 54;
     }
 
 
@@ -69,15 +69,12 @@ public class PlanterRecipeCategory implements IRecipeCategory<PlanterRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, PlanterRecipe recipe, IFocusGroup focuses) {
-        // Seed slot
         builder.addSlot(RecipeIngredientRole.INPUT, 10, 10)
                 .addIngredients(VanillaTypes.ITEM_STACK, List.of(recipe.getSeedIngredient().getItems()));
 
-        // Soil slot
         builder.addSlot(RecipeIngredientRole.INPUT, 10, 28)
                 .addIngredients(recipe.getSoilIngredient());
 
-        // Output slots
         int outputIndex = 0;
         for (ItemStack output : recipe.getOutputs()) {
             int x = 54 + (outputIndex % 3) * 18;

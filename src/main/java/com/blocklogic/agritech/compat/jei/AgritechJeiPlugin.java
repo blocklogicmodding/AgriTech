@@ -7,19 +7,15 @@ import com.blocklogic.agritech.util.RegistryHelper;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +63,6 @@ public class AgritechJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        // Register our planter blocks as recipe catalysts
         registration.addRecipeCatalyst(
                 new ItemStack(ModBlocks.AGRITECH_PLANTER_BLOCK.get()),
                 PlanterRecipeCategory.PLANTER_RECIPE_RECIPE_TYPE
@@ -81,8 +76,6 @@ public class AgritechJeiPlugin implements IModPlugin {
     private List<PlanterRecipe> generatePlanterRecipes() {
         List<PlanterRecipe> recipes = new ArrayList<>();
 
-        // We'll need to get info from our config system to build recipes
-        // For each valid seed and soil combination in the config
         Map<String, List<String>> seedToSoilMap = AgritechCropConfig.getAllSeedToSoilMappings();
         LOGGER.info("Seed-to-Soil Map: {}", seedToSoilMap);
 
@@ -95,7 +88,7 @@ public class AgritechJeiPlugin implements IModPlugin {
                 Block soilBlock = RegistryHelper.getBlock(soilId);
                 if (soilBlock == null) {
                     LOGGER.warn("Skipping recipe: Soil block not found for soil ID {}", soilId);
-                    continue; // Skipping this combination gracefully
+                    continue;
                 }
                 PlanterRecipe recipe = PlanterRecipe.create(seedId, soilId);
                 if (!recipe.getOutputs().isEmpty()) {
