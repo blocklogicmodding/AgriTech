@@ -343,7 +343,4 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         return growthStage;
     }
 
-    public boolean isReadyToHarvest() {
-        return readyToHarvest;
-    }
 }

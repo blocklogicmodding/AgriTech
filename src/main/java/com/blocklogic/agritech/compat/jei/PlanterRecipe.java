@@ -2,19 +2,20 @@ package com.blocklogic.agritech.compat.jei;
 
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.util.RegistryHelper;
+import com.mojang.logging.LogUtils;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.mojang.text2speech.Narrator.LOGGER;
 
 public class PlanterRecipe implements IRecipeCategoryExtension {
     private final Ingredient seedIngredient;
     private final Ingredient soilIngredient;
     private final List<ItemStack> outputs;
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     public PlanterRecipe(Ingredient seedIngredient, Ingredient soilIngredient, List<ItemStack> outputs) {
         this.seedIngredient = seedIngredient;
@@ -44,17 +45,13 @@ public class PlanterRecipe implements IRecipeCategoryExtension {
 
         List<ItemStack> outputs = new ArrayList<>();
         List<AgritechCropConfig.DropInfo> drops = AgritechCropConfig.getCropDrops(seedId);
-        LOGGER.info("Drops for Seed ID {}: {}", seedId, drops);
 
         for (AgritechCropConfig.DropInfo dropInfo : drops) {
-            LOGGER.info("Processing Drop Info - Item: {}, Min: {}, Max: {}, Chance: {}",
-                    dropInfo.item, dropInfo.minCount, dropInfo.maxCount, dropInfo.chance);
             if (dropInfo.chance > 0) {
                 ItemStack outputStack = new ItemStack(
                         RegistryHelper.getItem(dropInfo.item),
                         (dropInfo.minCount + dropInfo.maxCount) / 2
                 );
-                LOGGER.info("Created Output Stack: {}", outputStack);
                 outputs.add(outputStack);
             }
         }

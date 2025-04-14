@@ -14,17 +14,19 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
-
 @JeiPlugin
 public class AgritechJeiPlugin implements IModPlugin {
     private static final ResourceLocation PLUGIN_ID =
             ResourceLocation.fromNamespaceAndPath(AgriTech.MODID, "jei_plugin");
+
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -43,12 +45,9 @@ public class AgritechJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
 
         List<PlanterRecipe> planterRecipes = generatePlanterRecipes();
-        LOGGER.info("Planter Recipes Generated: {}", planterRecipes.size());
         registration.addRecipes(PlanterRecipeCategory.PLANTER_RECIPE_RECIPE_TYPE, planterRecipes);
 
         for (PlanterRecipe recipe : planterRecipes) {
-            LOGGER.info("Registering Recipe with JEI - Seed: {}, Soil: {}, Outputs: {}",
-                    recipe.getSeedIngredient(), recipe.getSoilIngredient(), recipe.getOutputs());
             for (ItemStack seed : recipe.getSeedIngredient().getItems()) {
                 registration.addIngredientInfo(
                         seed,
@@ -57,8 +56,6 @@ public class AgritechJeiPlugin implements IModPlugin {
                 );
             }
         }
-
-        LOGGER.info("Registering {} planter recipes", planterRecipes.size());
     }
 
     @Override
@@ -82,12 +79,10 @@ public class AgritechJeiPlugin implements IModPlugin {
         String seedId;
         for (Map.Entry<String, List<String>> entry : seedToSoilMap.entrySet()) {
             seedId = entry.getKey();
-            LOGGER.info("Processing Seed ID: {}", seedId);
 
             for (String soilId : entry.getValue()) {
                 Block soilBlock = RegistryHelper.getBlock(soilId);
                 if (soilBlock == null) {
-                    LOGGER.warn("Skipping recipe: Soil block not found for soil ID {}", soilId);
                     continue;
                 }
                 PlanterRecipe recipe = PlanterRecipe.create(seedId, soilId);
