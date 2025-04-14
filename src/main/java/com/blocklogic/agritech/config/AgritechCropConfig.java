@@ -2046,4 +2046,19 @@ public class AgritechCropConfig {
             this.growthModifier = growthModifier;
         }
     }
+
+    public static Map<String, List<String>> getAllSeedToSoilMappings() {
+        Map<String, List<String>> seedToSoilMap = new HashMap<>();
+
+        for (Map.Entry<String, CropInfo> entry : crops.entrySet()) {
+            String seedId = entry.getKey();
+            CropInfo cropInfo = entry.getValue();
+
+            if (!cropInfo.validSoils.isEmpty()) {
+                seedToSoilMap.put(seedId, new ArrayList<>(cropInfo.validSoils));
+            }
+        }
+
+        return seedToSoilMap;
+    }
 }

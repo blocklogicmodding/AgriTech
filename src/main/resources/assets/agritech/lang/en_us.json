@@ -5,5 +5,8 @@
   "creativetab.agritech.agritech": "AgriTech",
 
   "tooltip.agritech.agritech_planter_block": "A planter box to grow crops in!",
-  "tooltip.agritech.agritech_hopping_planter_block": "A planter box with a hopper to grow crops in!"
+  "tooltip.agritech.agritech_hopping_planter_block": "A planter box with a hopper to grow crops in!",
+
+  "jei.agritech.planter.tooltip": "Used in Agritech Planters"
+
 }

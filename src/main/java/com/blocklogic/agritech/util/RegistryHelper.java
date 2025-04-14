@@ -6,6 +6,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 /**
  * Helper class for registry-related operations
  */
@@ -65,9 +67,13 @@ public class RegistryHelper {
      */
     public static Block getBlock(String id) {
         ResourceLocation resourceLocation = ResourceLocation.parse(id);
+
         if (BuiltInRegistries.BLOCK.containsKey(resourceLocation)) {
             return BuiltInRegistries.BLOCK.get(resourceLocation);
+        } else {
+            LOGGER.warn("Block lookup failed for ID: {}", id);
+            return null;
         }
-        return null;
     }
+
 }
