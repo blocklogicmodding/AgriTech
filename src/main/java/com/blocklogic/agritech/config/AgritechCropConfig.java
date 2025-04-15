@@ -1216,92 +1216,92 @@ public class AgritechCropConfig {
     private static void addVanillaSoils(List<SoilEntry> soils) {
         SoilEntry dirt = new SoilEntry();
         dirt.soil = "minecraft:dirt";
-        dirt.growthModifier = 1.0f;
+        dirt.growthModifier = 0.475f;
         soils.add(dirt);
 
         SoilEntry coarseDirt = new SoilEntry();
         coarseDirt.soil = "minecraft:coarse_dirt";
-        coarseDirt.growthModifier = 1.0f;
+        coarseDirt.growthModifier = 0.475f;
         soils.add(coarseDirt);
 
         SoilEntry podzol = new SoilEntry();
         podzol.soil = "minecraft:podzol";
-        podzol.growthModifier = 1.0f;
+        podzol.growthModifier = 0.475f;
         soils.add(podzol);
 
         SoilEntry mycelium = new SoilEntry();
         mycelium.soil = "minecraft:mycelium";
-        mycelium.growthModifier = 1.0f;
+        mycelium.growthModifier = 0.475f;
         soils.add(mycelium);
 
         SoilEntry mud = new SoilEntry();
         mud.soil = "minecraft:mud";
-        mud.growthModifier = 1.5f;
+        mud.growthModifier = 0.5f;
         soils.add(mud);
 
         SoilEntry muddyMangroveRoots = new SoilEntry();
         muddyMangroveRoots.soil = "minecraft:muddy_mangrove_roots";
-        muddyMangroveRoots.growthModifier = 1.5f;
+        muddyMangroveRoots.growthModifier = 0.5f;
         soils.add(muddyMangroveRoots);
 
         SoilEntry rootedDirt = new SoilEntry();
         rootedDirt.soil = "minecraft:rooted_dirt";
-        rootedDirt.growthModifier = 1.0f;
+        rootedDirt.growthModifier = 0.475f;
         soils.add(rootedDirt);
 
         SoilEntry moss = new SoilEntry();
         moss.soil = "minecraft:moss_block";
-        moss.growthModifier = 1.0f;
+        moss.growthModifier = 0.475f;
         soils.add(moss);
 
         SoilEntry farmland = new SoilEntry();
         farmland.soil = "minecraft:farmland";
-        farmland.growthModifier = 1.5f;
+        farmland.growthModifier = 0.5f;
         soils.add(farmland);
 
         SoilEntry sand = new SoilEntry();
         sand.soil = "minecraft:sand";
-        sand.growthModifier = 1f;
+        sand.growthModifier = 0.5f;
         soils.add(sand);
 
         SoilEntry redSand = new SoilEntry();
         redSand.soil = "minecraft:red_sand";
-        redSand.growthModifier = 1f;
+        redSand.growthModifier = 0.5f;
         soils.add(redSand);
 
         SoilEntry grass = new SoilEntry();
         grass.soil = "minecraft:grass_block";
-        grass.growthModifier = 1f;
+        grass.growthModifier = 0.475f;
         soils.add(grass);
 
         SoilEntry soulSand = new SoilEntry();
         soulSand.soil = "minecraft:soul_sand";
-        soulSand.growthModifier = 1.5f;
+        soulSand.growthModifier = 0.5f;
         soils.add(soulSand);
 
         SoilEntry endStone = new SoilEntry();
         endStone.soil = "minecraft:end_stone";
-        endStone.growthModifier = 1f;
+        endStone.growthModifier = 0.5f;
         soils.add(endStone);
 
         SoilEntry jungleLog = new SoilEntry();
         jungleLog.soil = "minecraft:jungle_log";
-        jungleLog.growthModifier = 1f;
+        jungleLog.growthModifier = 0.5f;
         soils.add(jungleLog);
 
         SoilEntry jungleWood = new SoilEntry();
         jungleWood.soil = "minecraft:jungle_wood";
-        jungleWood.growthModifier = 1f;
+        jungleWood.growthModifier = 0.5f;
         soils.add(jungleWood);
 
         SoilEntry strippedJungleLog = new SoilEntry();
         strippedJungleLog.soil = "minecraft:stripped_jungle_log";
-        strippedJungleLog.growthModifier = 1f;
+        strippedJungleLog.growthModifier = 0.5f;
         soils.add(strippedJungleLog);
 
         SoilEntry strippedJungleWood = new SoilEntry();
         strippedJungleWood.soil = "minecraft:stripped_jungle_wood";
-        strippedJungleWood.growthModifier = 1f;
+        strippedJungleWood.growthModifier = 0.5f;
         soils.add(strippedJungleWood);
     }
 
@@ -1587,58 +1587,58 @@ public class AgritechCropConfig {
         // Add MA soils with appropriate growth modifiers
         SoilEntry inferiumFarmland = new SoilEntry();
         inferiumFarmland.soil = "mysticalagriculture:inferium_farmland";
-        inferiumFarmland.growthModifier = 2.0f;
+        inferiumFarmland.growthModifier = 0.55f;
         soils.add(inferiumFarmland);
 
         SoilEntry prudentiumFarmland = new SoilEntry();
         prudentiumFarmland.soil = "mysticalagriculture:prudentium_farmland";
-        prudentiumFarmland.growthModifier = 2.5f;
+        prudentiumFarmland.growthModifier = 0.625f;
         soils.add(prudentiumFarmland);
 
         SoilEntry tertiumFarmland = new SoilEntry();
         tertiumFarmland.soil = "mysticalagriculture:tertium_farmland";
-        tertiumFarmland.growthModifier = 3.0f;
+        tertiumFarmland.growthModifier = 0.75f;
         soils.add(tertiumFarmland);
 
         SoilEntry imperiumFarmland = new SoilEntry();
         imperiumFarmland.soil = "mysticalagriculture:imperium_farmland";
-        imperiumFarmland.growthModifier = 3.5f;
+        imperiumFarmland.growthModifier = 0.875f;
         soils.add(imperiumFarmland);
 
         SoilEntry supremiumFarmland = new SoilEntry();
         supremiumFarmland.soil = "mysticalagriculture:supremium_farmland";
-        supremiumFarmland.growthModifier = 4.0f;
+        supremiumFarmland.growthModifier = 1f;
         soils.add(supremiumFarmland);
 
         if (Config.enableMysticalAgradditions) {
             SoilEntry insaniumFarmland = new SoilEntry();
             insaniumFarmland.soil = "mysticalagradditions:insanium_farmland";
-            insaniumFarmland.growthModifier = 5.0f;
+            insaniumFarmland.growthModifier = 1.75f;
             soils.add(insaniumFarmland);
 
             SoilEntry netherStarCrux = new SoilEntry();
             netherStarCrux.soil = "mysticalagradditions:nether_star_crux";
-            netherStarCrux.growthModifier = 2.0f;
+            netherStarCrux.growthModifier = 1.75f;
             soils.add(netherStarCrux);
 
             SoilEntry dragonEggCrux = new SoilEntry();
             dragonEggCrux.soil = "mysticalagradditions:dragon_egg_crux";
-            dragonEggCrux.growthModifier = 2.0f;
+            dragonEggCrux.growthModifier = 1.75f;
             soils.add(dragonEggCrux);
 
             SoilEntry awakenedDraconiumCrux = new SoilEntry();
             awakenedDraconiumCrux.soil = "mysticalagradditions:awakened_draconium_crux";
-            awakenedDraconiumCrux.growthModifier = 2.0f;
+            awakenedDraconiumCrux.growthModifier = 1.75f;
             soils.add(awakenedDraconiumCrux);
 
             SoilEntry neutroniumCrux = new SoilEntry();
             neutroniumCrux.soil = "mysticalagradditions:neutronium_crux";
-            neutroniumCrux.growthModifier = 2.0f;
+            neutroniumCrux.growthModifier = 1.75f;
             soils.add(neutroniumCrux);
 
             SoilEntry nitroCrystalCrux = new SoilEntry();
             nitroCrystalCrux.soil = "mysticalagradditions:nitro_crystal_crux";
-            nitroCrystalCrux.growthModifier = 2.0f;
+            nitroCrystalCrux.growthModifier = 1.75f;
             soils.add(nitroCrystalCrux);
         }
     }
@@ -1735,17 +1735,17 @@ public class AgritechCropConfig {
     private static void addFarmersDelightSoils(List<SoilEntry> soils) {
         SoilEntry richSoil = new SoilEntry();
         richSoil.soil = "farmersdelight:rich_soil";
-        richSoil.growthModifier = 2.0f;
+        richSoil.growthModifier = 0.525f;
         soils.add(richSoil);
 
         SoilEntry richSoilFarmland = new SoilEntry();
         richSoilFarmland.soil = "farmersdelight:rich_soil_farmland";
-        richSoilFarmland.growthModifier = 2.0f;
+        richSoilFarmland.growthModifier = 0.525f;
         soils.add(richSoilFarmland);
 
         SoilEntry organicCompost = new SoilEntry();
         organicCompost.soil = "farmersdelight:organic_compost";
-        organicCompost.growthModifier = 2.0f;
+        organicCompost.growthModifier = 0.525f;
         soils.add(organicCompost);
     }
 
@@ -1929,22 +1929,22 @@ public class AgritechCropConfig {
     private static void addJustDireThingsSoils(List<SoilEntry> soils) {
         SoilEntry goosoilTier1 = new SoilEntry();
         goosoilTier1.soil = "justdirethings:goosoil_tier1";
-        goosoilTier1.growthModifier = 2.0f;
+        goosoilTier1.growthModifier = 0.575f;
         soils.add(goosoilTier1);
 
         SoilEntry goosoilTier2 = new SoilEntry();
         goosoilTier2.soil = "justdirethings:goosoil_tier2";
-        goosoilTier2.growthModifier = 2.5f;
+        goosoilTier2.growthModifier = 0.75f;
         soils.add(goosoilTier2);
 
         SoilEntry goosoilTier3 = new SoilEntry();
         goosoilTier3.soil = "justdirethings:goosoil_tier3";
-        goosoilTier3.growthModifier = 3.0f;
+        goosoilTier3.growthModifier = 1.0f;
         soils.add(goosoilTier3);
 
         SoilEntry goosoilTier4 = new SoilEntry();
         goosoilTier4.soil = "justdirethings:goosoil_tier4";
-        goosoilTier4.growthModifier = 3.5f;
+        goosoilTier4.growthModifier = 1.5f;
         soils.add(goosoilTier4);
     }
 
