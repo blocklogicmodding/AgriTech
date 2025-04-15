@@ -1363,7 +1363,12 @@ public class AgritechCropConfig {
                 "mysticalagriculture:aluminum_seeds",
                 "mysticalagriculture:saltpeter_seeds",
                 "mysticalagriculture:apatite_seeds",
-                "mysticalagriculture:grains_of_infinity_seeds"
+                "mysticalagriculture:grains_of_infinity_seeds",
+                "mysticalagriculture:mystical_flower_seeds",
+                "mysticalagriculture:marble_seeds",
+                "mysticalagriculture:limestone_seeds",
+                "mysticalagriculture:basalt_seeds",
+                "mysticalagriculture:menril_seeds"
         };
 
         List<String> tier2Soils = List.of(
@@ -1384,11 +1389,6 @@ public class AgritechCropConfig {
 
         // Tier 3 crops - require at least tertium farmland
         String[] tier3Seeds = {
-                "mysticalagriculture:mystical_flower_seeds",
-                "mysticalagriculture:marble_seeds",
-                "mysticalagriculture:limestone_seeds",
-                "mysticalagriculture:basalt_seeds",
-                "mysticalagriculture:menril_seeds",
                 "mysticalagriculture:iron_seeds",
                 "mysticalagriculture:copper_seeds",
                 "mysticalagriculture:nether_quartz_seeds",
@@ -1416,7 +1416,14 @@ public class AgritechCropConfig {
                 "mysticalagriculture:pig_iron_seeds",
                 "mysticalagriculture:copper_alloy_seeds",
                 "mysticalagriculture:redstone_alloy_seeds",
-                "mysticalagriculture:conductive_alloy_seeds"
+                "mysticalagriculture:conductive_alloy_seeds",
+                "mysticalagriculture:steeleaf_seeds",
+                "mysticalagriculture:ironwood_seeds",
+                "mysticalagriculture:sky_stone_seeds",
+                "mysticalagriculture:certus_quartz_seeds",
+                "mysticalagriculture:quartz_enriched_iron_seeds",
+                "mysticalagriculture:manasteel_seeds",
+                "mysticalagriculture:aquamarine_seeds"
         };
 
         List<String> tier3Soils = List.of(
@@ -1435,13 +1442,6 @@ public class AgritechCropConfig {
 
         // Tier 4 crops - require at least imperium farmland
         String[] tier4Seeds = {
-                "mysticalagriculture:manasteel_seeds",
-                "mysticalagriculture:steeleaf_seeds",
-                "mysticalagriculture:ironwood_seeds",
-                "mysticalagriculture:aquamarine_seeds",
-                "mysticalagriculture:sky_stone_seeds",
-                "mysticalagriculture:certus_quartz_seeds",
-                "mysticalagriculture:quartz_enriched_iron_seeds",
                 "mysticalagriculture:gold_seeds",
                 "mysticalagriculture:lapis_lazuli_seeds",
                 "mysticalagriculture:end_seeds",
@@ -1474,7 +1474,14 @@ public class AgritechCropConfig {
                 "mysticalagriculture:osmium_seeds",
                 "mysticalagriculture:fluorite_seeds",
                 "mysticalagriculture:refined_glowstone_seeds",
-                "mysticalagriculture:refined_obsidian_seeds"
+                "mysticalagriculture:refined_obsidian_seeds",
+                "mysticalagriculture:knightmetal_seeds",
+                "mysticalagriculture:fiery_ingot_seeds",
+                "mysticalagriculture:compressed_iron_seeds",
+                "mysticalagriculture:starmetal_seeds",
+                "mysticalagriculture:fluix_seeds",
+                "mysticalagriculture:energized_steel_seeds",
+                "mysticalagriculture:blazing_crystal_seeds"
         };
 
         List<String> tier4Soils = List.of(
@@ -1492,13 +1499,6 @@ public class AgritechCropConfig {
 
         // Tier 5 crops - require supremium farmland
         String[] tier5Seeds = {
-                "mysticalagriculture:knightmetal_seeds",
-                "mysticalagriculture:fiery_ingot_seeds",
-                "mysticalagriculture:starmetal_seeds",
-                "mysticalagriculture:compressed_iron_seeds",
-                "mysticalagriculture:fluix_seeds",
-                "mysticalagriculture:energized_steel_seeds",
-                "mysticalagriculture:blazing_crystal_seeds",
                 "mysticalagriculture:diamond_seeds",
                 "mysticalagriculture:emerald_seeds",
                 "mysticalagriculture:netherite_seeds",
@@ -1525,7 +1525,6 @@ public class AgritechCropConfig {
         List<String> tier5Soils = List.of(
                 "mysticalagriculture:supremium_farmland",
                 "mysticalagradditions:insanium_farmland",
-                "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4"
         );
 
