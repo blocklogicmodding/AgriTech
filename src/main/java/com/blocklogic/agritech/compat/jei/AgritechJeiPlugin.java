@@ -14,8 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import com.mojang.logging.LogUtils;
-import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +24,8 @@ public class AgritechJeiPlugin implements IModPlugin {
     private static final ResourceLocation PLUGIN_ID =
             ResourceLocation.fromNamespaceAndPath(AgriTech.MODID, "jei_plugin");
 
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     @Override
     public ResourceLocation getPluginUid() {
-        LOGGER.info("JEI plugin loaded: {}", PLUGIN_ID);
         return PLUGIN_ID;
     }
 
@@ -74,7 +69,6 @@ public class AgritechJeiPlugin implements IModPlugin {
         List<PlanterRecipe> recipes = new ArrayList<>();
 
         Map<String, List<String>> seedToSoilMap = AgritechCropConfig.getAllSeedToSoilMappings();
-        LOGGER.info("Seed-to-Soil Map: {}", seedToSoilMap);
 
         String seedId;
         for (Map.Entry<String, List<String>> entry : seedToSoilMap.entrySet()) {

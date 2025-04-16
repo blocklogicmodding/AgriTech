@@ -2,7 +2,6 @@ package com.blocklogic.agritech.compat.jei;
 
 import com.blocklogic.agritech.AgriTech;
 import com.blocklogic.agritech.block.ModBlocks;
-import com.mojang.logging.LogUtils;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -16,12 +15,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.slf4j.Logger;
 
 import java.util.List;
 
 public class PlanterRecipeCategory implements IRecipeCategory<PlanterRecipe> {
-    private static final Logger LOGGER = LogUtils.getLogger();
     public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(AgriTech.MODID, "planter");
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(AgriTech.MODID, "textures/gui/jei/planter.png");
 
@@ -44,9 +41,7 @@ public class PlanterRecipeCategory implements IRecipeCategory<PlanterRecipe> {
     public PlanterRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(TEXTURE,0, 0, 116, 54);
         if (background == null) {
-            LOGGER.error("Background drawable failed to load for texture: {}", TEXTURE);
         } else {
-            LOGGER.info("Background drawable loaded successfully: {}", TEXTURE);
         }
 
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK,

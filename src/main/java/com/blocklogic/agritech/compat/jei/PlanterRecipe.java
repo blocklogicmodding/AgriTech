@@ -2,11 +2,9 @@ package com.blocklogic.agritech.compat.jei;
 
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.util.RegistryHelper;
-import com.mojang.logging.LogUtils;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,6 @@ public class PlanterRecipe implements IRecipeCategoryExtension {
     private final Ingredient seedIngredient;
     private final Ingredient soilIngredient;
     private final List<ItemStack> outputs;
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     public PlanterRecipe(Ingredient seedIngredient, Ingredient soilIngredient, List<ItemStack> outputs) {
         this.seedIngredient = seedIngredient;
