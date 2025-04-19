@@ -3,6 +3,7 @@ package com.blocklogic.agritech;
 import com.blocklogic.agritech.block.ModBlocks;
 import com.blocklogic.agritech.block.entity.ModBlockEntities;
 import com.blocklogic.agritech.block.entity.renderer.AgritechPlanterBlockEntityRenderer;
+import com.blocklogic.agritech.command.AgritechCommands;
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.item.ModCreativeModeTabs;
 import com.blocklogic.agritech.item.ModItems;
@@ -10,6 +11,7 @@ import com.blocklogic.agritech.screen.ModMenuTypes;
 import com.blocklogic.agritech.screen.custom.AgritechPlanterScreen;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -45,6 +47,7 @@ public class AgriTech
         ModCreativeModeTabs.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
 
         modEventBus.addListener(this::addCreative);
 
@@ -56,6 +59,10 @@ public class AgriTech
     private void commonSetup(final FMLCommonSetupEvent event)
     {
 
+    }
+
+    public void onRegisterCommands(RegisterCommandsEvent event) {
+        AgritechCommands.register(event.getDispatcher());
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
