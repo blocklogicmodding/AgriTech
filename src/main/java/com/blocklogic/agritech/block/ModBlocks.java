@@ -24,7 +24,7 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> AGRITECH_PLANTER_BLOCK = registerBlock("agritech_planter_block",
             () -> new AgritechPlanterBlock(BlockBehaviour.Properties.of()
-                    .strength(1f)
+                    .strength(2.0F, 3.0F)
                     .sound(SoundType.WOOD)
                     .noOcclusion()) {
                 @Override
@@ -36,7 +36,7 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> AGRITECH_HOPPING_PLANTER_BLOCK = registerBlock("agritech_hopping_planter_block",
             () -> new AgritechHoppingPlanterBlock(BlockBehaviour.Properties.of()
-                    .strength(1f)
+                    .strength(2.0F, 3.0F)
                     .sound(SoundType.WOOD)
                     .noOcclusion()) {
                 @Override
