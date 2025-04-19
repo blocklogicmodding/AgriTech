@@ -169,7 +169,7 @@ public class AgritechHoppingPlanterBlock extends BaseEntityBlock {
                 MenuProvider menuProvider = new SimpleMenuProvider(
                         (containerId, playerInventory, playerEntity) ->
                                 new AgritechPlanterMenu(containerId, playerInventory, agritechPlanterBlockEntity),
-                        Component.literal("Planter")
+                        Component.translatable("container.agritech.planter")
                 );
 
                 player.openMenu(menuProvider, pos);

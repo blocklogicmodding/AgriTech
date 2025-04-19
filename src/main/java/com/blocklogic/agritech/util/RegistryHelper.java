@@ -1,16 +1,18 @@
 package com.blocklogic.agritech.util;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import org.slf4j.Logger;
 
 /**
  * Helper class for registry-related operations
  */
 public class RegistryHelper {
-
+    private static final Logger LOGGER = LogUtils.getLogger();
     /**
      * Gets the registry ID for an item
      *
@@ -50,9 +52,13 @@ public class RegistryHelper {
      * @return The item, or null if not found
      */
     public static Item getItem(String id) {
-        ResourceLocation resourceLocation = ResourceLocation.parse(id);
-        if (BuiltInRegistries.ITEM.containsKey(resourceLocation)) {
-            return BuiltInRegistries.ITEM.get(resourceLocation);
+        try {
+            ResourceLocation resourceLocation = ResourceLocation.parse(id);
+            if (BuiltInRegistries.ITEM.containsKey(resourceLocation)) {
+                return BuiltInRegistries.ITEM.get(resourceLocation);
+            }
+        } catch (Exception e){
+            LOGGER.error("Invalid item ID in config: {}", id, e);
         }
         return null;
     }
@@ -64,13 +70,15 @@ public class RegistryHelper {
      * @return The block, or null if not found
      */
     public static Block getBlock(String id) {
-        ResourceLocation resourceLocation = ResourceLocation.parse(id);
-
-        if (BuiltInRegistries.BLOCK.containsKey(resourceLocation)) {
-            return BuiltInRegistries.BLOCK.get(resourceLocation);
-        } else {
-            return null;
+        try {
+            ResourceLocation resourceLocation = ResourceLocation.parse(id);
+            if (BuiltInRegistries.BLOCK.containsKey(resourceLocation)) {
+                return BuiltInRegistries.BLOCK.get(resourceLocation);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Invalid block ID in config: {}", id, e);
         }
+        return null;
     }
 
 }

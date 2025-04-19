@@ -7,6 +7,9 @@
   "tooltip.agritech.agritech_planter_block": "A Planter to grow crops in!",
   "tooltip.agritech.agritech_hopping_planter_block": "A Planter with a hopper to grow crops in!",
 
-  "jei.agritech.planter.tooltip": "Agritech Planters"
+  "container.agritech.hopping_planter": "Hopping Trees Planter",
+  "container.agritech.planter": "Trees Planter",
+
+  "jei.agritech.planter.tooltip": "Planters"
 
 }
