@@ -30,8 +30,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class AgritechPlanterBlock extends BaseEntityBlock {
@@ -78,39 +80,79 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof AgritechPlanterBlockEntity agritechPlanterBlockEntity) {
-            // Check if the player is holding a hoe
-            if (stack.getItem() instanceof HoeItem) {
-                // Get the soil item from slot 1
+            // Check if the player is holding essence
+            String heldItemId = RegistryHelper.getItemId(stack);
+
+            // Map essence types to their farmland versions
+            Map<String, String> essenceToFarmland = new HashMap<>();
+            essenceToFarmland.put("mysticalagriculture:inferium_essence", "mysticalagriculture:inferium_farmland");
+            essenceToFarmland.put("mysticalagriculture:prudentium_essence", "mysticalagriculture:prudentium_farmland");
+            essenceToFarmland.put("mysticalagriculture:tertium_essence", "mysticalagriculture:tertium_farmland");
+            essenceToFarmland.put("mysticalagriculture:imperium_essence", "mysticalagriculture:imperium_farmland");
+            essenceToFarmland.put("mysticalagriculture:supremium_essence", "mysticalagriculture:supremium_farmland");
+            essenceToFarmland.put("mysticalagradditions:insanium_essence", "mysticalagradditions:insanium_farmland");
+
+            if (essenceToFarmland.containsKey(heldItemId)) {
                 ItemStack soilStack = agritechPlanterBlockEntity.inventory.getStackInSlot(1);
 
                 if (!soilStack.isEmpty() && soilStack.getItem() instanceof BlockItem blockItem) {
                     Block soilBlock = blockItem.getBlock();
                     String soilId = RegistryHelper.getBlockId(soilBlock);
 
-                    // Map of tillable blocks to their farmland versions
-                    Map<String, String> tillableBlocks = Map.of(
-                            "minecraft:dirt", "minecraft:farmland",
-                            "minecraft:grass_block", "minecraft:farmland",
-                            "minecraft:mycelium", "minecraft:farmland",
-                            "minecraft:podzol", "minecraft:farmland",
-                            "minecraft:coarse_dirt", "minecraft:farmland",
-                            "minecraft:rooted_dirt", "minecraft:farmland",
-                            "farmersdelight:rich_soil", "farmersdelight:rich_soil_farmland",
-                            "farmersdelight:organic_compost", "farmersdelight:rich_soil_farmland"
-                    );
+                    // Check if the soil is regular farmland
+                    if (soilId.equals("minecraft:farmland")) {
+                        String farmlandId = essenceToFarmland.get(heldItemId);
+                        Block resultBlock = RegistryHelper.getBlock(farmlandId);
 
-                    // Check if the soil can be tilled
+                        if (resultBlock != null) {
+                            // Replace with MA farmland
+                            ItemStack maFarmlandStack = new ItemStack(resultBlock);
+                            agritechPlanterBlockEntity.inventory.setStackInSlot(1, maFarmlandStack);
+
+                            // Consume one essence
+                            if (!player.getAbilities().instabuild) {
+                                stack.shrink(1);
+                            }
+
+                            // Play magical transformation sound
+                            level.playSound(player, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                        }
+                    }
+                }
+            }
+            // Check if the player is holding a hoe
+            else if (stack.getItem() instanceof HoeItem) {
+                ItemStack soilStack = agritechPlanterBlockEntity.inventory.getStackInSlot(1);
+
+                if (!soilStack.isEmpty() && soilStack.getItem() instanceof BlockItem blockItem) {
+                    Block soilBlock = blockItem.getBlock();
+                    String soilId = RegistryHelper.getBlockId(soilBlock);
+
+                    Map<String, String> tillableBlocks = new HashMap<>();
+                    // Vanilla blocks
+                    tillableBlocks.put("minecraft:dirt", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:grass_block", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:mycelium", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:podzol", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:coarse_dirt", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:rooted_dirt", "minecraft:farmland");
+
+                    // Modded blocks - check if the mod is loaded
+                    if (ModList.get().isLoaded("farmersdelight")) {
+                        tillableBlocks.put("farmersdelight:rich_soil", "farmersdelight:rich_soil_farmland");
+                        tillableBlocks.put("farmersdelight:organic_compost", "farmersdelight:rich_soil_farmland");
+                    }
+
                     if (tillableBlocks.containsKey(soilId)) {
-                        // Replace with appropriate farmland
                         Block resultBlock = RegistryHelper.getBlock(tillableBlocks.get(soilId));
                         if (resultBlock != null) {
                             ItemStack farmlandStack = new ItemStack(resultBlock);
                             agritechPlanterBlockEntity.inventory.setStackInSlot(1, farmlandStack);
 
-                            // Play sound
                             level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 
-                            // Damage the hoe
                             if (!player.getAbilities().instabuild) {
                                 stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                             }
@@ -121,7 +163,7 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
                 }
             }
 
-            // If not hoeing, open the GUI
+            // If not hoeing or using essence, open the GUI
             if (!level.isClientSide()) {
                 MenuProvider menuProvider = new SimpleMenuProvider(
                         (containerId, playerInventory, playerEntity) ->
