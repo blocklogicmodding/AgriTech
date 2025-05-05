@@ -2,11 +2,15 @@ package com.blocklogic.agritech.compat.jei;
 
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.util.RegistryHelper;
+import com.mojang.logging.LogUtils;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlanterRecipe implements IRecipeCategoryExtension {
@@ -32,24 +36,38 @@ public class PlanterRecipe implements IRecipeCategoryExtension {
         return outputs;
     }
 
-    /**
-     * Factory method to create a recipe from seed and soil IDs
-     */
     public static PlanterRecipe create(String seedId, String soilId) {
-        Ingredient seedIngredient = Ingredient.of(RegistryHelper.getItem(seedId));
+        net.minecraft.world.item.Item seedItem = RegistryHelper.getItem(seedId);
+        if (seedItem == null) {
+            com.mojang.logging.LogUtils.getLogger().error("Failed to create planter recipe: Seed item not found for ID: {}", seedId);
+            throw new IllegalArgumentException("Seed item not found for ID: " + seedId);
+        }
 
-        Ingredient soilIngredient = Ingredient.of(RegistryHelper.getBlock(soilId).asItem());
+        net.minecraft.world.level.block.Block soilBlock = RegistryHelper.getBlock(soilId);
+        if (soilBlock == null) {
+            com.mojang.logging.LogUtils.getLogger().error("Failed to create planter recipe: Soil block not found for ID: {}", soilId);
+            throw new IllegalArgumentException("Soil block not found for ID: " + soilId);
+        }
+
+        Ingredient seedIngredient = Ingredient.of(seedItem);
+        Ingredient soilIngredient = Ingredient.of(soilBlock.asItem());
 
         List<ItemStack> outputs = new ArrayList<>();
         List<AgritechCropConfig.DropInfo> drops = AgritechCropConfig.getCropDrops(seedId);
 
         for (AgritechCropConfig.DropInfo dropInfo : drops) {
             if (dropInfo.chance > 0) {
-                ItemStack outputStack = new ItemStack(
-                        RegistryHelper.getItem(dropInfo.item),
-                        (dropInfo.minCount + dropInfo.maxCount) / 2
-                );
-                outputs.add(outputStack);
+                net.minecraft.world.item.Item dropItem = RegistryHelper.getItem(dropInfo.item);
+                if (dropItem != null) {
+                    ItemStack outputStack = new ItemStack(
+                            dropItem,
+                            (dropInfo.minCount + dropInfo.maxCount) / 2
+                    );
+                    outputs.add(outputStack);
+                } else {
+                    com.mojang.logging.LogUtils.getLogger().error("Drop item not found for ID: {} in recipe for seed {}", dropInfo.item, seedId);
+                    throw new IllegalArgumentException("Drop item not found for ID: " + dropInfo.item + " in recipe for seed " + seedId);
+                }
             }
         }
 
