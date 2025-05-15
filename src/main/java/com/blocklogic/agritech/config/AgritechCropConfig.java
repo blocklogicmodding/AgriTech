@@ -405,11 +405,11 @@ public class AgritechCropConfig {
 
         // Glow Berries
         CropEntry glowBerries = new CropEntry();
-        sweetBerries.seed = "minecraft:glow_berries";
-        sweetBerries.validSoils = List.of(
+        glowBerries.seed = "minecraft:glow_berries";
+        glowBerries.validSoils = List.of(
                 "minecraft:moss_block"
         );
-        sweetBerries.drops = new ArrayList<>();
+        glowBerries.drops = new ArrayList<>();
 
         DropEntry glowBerriesDrop = new DropEntry();
         glowBerriesDrop.item = "minecraft:glow_berries";
@@ -2042,7 +2042,7 @@ public class AgritechCropConfig {
 
     public static class CropEntry {
         public String seed;
-        public String soil;  // For backward compatibility
+        public String soil;
         public List<String> validSoils;
         public List<DropEntry> drops;
     }
