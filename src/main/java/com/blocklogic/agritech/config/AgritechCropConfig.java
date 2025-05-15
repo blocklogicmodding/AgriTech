@@ -403,6 +403,21 @@ public class AgritechCropConfig {
 
         crops.add(sweetBerries);
 
+        // Glow Berries
+        CropEntry glowBerries = new CropEntry();
+        sweetBerries.seed = "minecraft:glow_berries";
+        sweetBerries.validSoils = List.of(
+                "minecraft:moss_block"
+        );
+        sweetBerries.drops = new ArrayList<>();
+
+        DropEntry glowBerriesDrop = new DropEntry();
+        glowBerriesDrop.item = "minecraft:glow_berries";
+        glowBerriesDrop.count = new CountRange(2, 4);
+        glowBerries.drops.add(glowBerriesDrop);
+
+        crops.add(glowBerries);
+
         // Nether Wart
         CropEntry netherWart = new CropEntry();
         netherWart.seed = "minecraft:nether_wart";
