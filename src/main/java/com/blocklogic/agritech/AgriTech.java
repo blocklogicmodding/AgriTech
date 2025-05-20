@@ -11,6 +11,7 @@ import com.blocklogic.agritech.item.ModItems;
 import com.blocklogic.agritech.screen.ModMenuTypes;
 import com.blocklogic.agritech.screen.custom.AgritechPlanterScreen;
 import net.minecraft.core.Direction;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
@@ -100,22 +101,23 @@ public class AgriTech
 
         @SubscribeEvent
         public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-            // Register the IItemHandler capability for our planter block entity
-            event.registerBlockEntity(
-                    net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
-                    ModBlockEntities.AGRITECH_PLANTER_BLOCK_ENTITY.get(),
-                    (blockEntity, side) -> {
-                        if (side == Direction.UP) {
-                            // No access from top
-                            return null;
-                        } else if (side != null) {
-                            // From sides and bottom, only allow extraction from output slots
-                            return ((AgritechPlanterBlockEntity) blockEntity).getOutputHandler();
-                        } else {
-                            // No side = internal access to full inventory
-                            return ((AgritechPlanterBlockEntity) blockEntity).inventory;
+            event.registerBlock(
+                    Capabilities.ItemHandler.BLOCK,
+                    (level, pos, state, blockEntity, side) -> {
+                        if (state.is(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get())) {
+                            if (blockEntity instanceof AgritechPlanterBlockEntity planter) {
+                                if (side == Direction.UP) {
+                                    return null;
+                                } else if (side != null) {
+                                    return planter.getOutputHandler();
+                                } else {
+                                    return planter.inventory;
+                                }
+                            }
                         }
-                    }
+                        return null;
+                    },
+                    ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get()
             );
         }
     }

@@ -12,6 +12,12 @@
   "container.agritech.hopping_planter": "Hopping Planter",
   "container.agritech.planter": "Planter",
 
-  "jei.agritech.planter.tooltip": "Planters"
+  "jei.agritech.planter.tooltip": "Planters",
+
+  "message.agritech.invalid_seed_soil_combination": "This seed cannot grow in this soil!",
+  "message.agritech.invalid_soil": "This block cannot be used as soil!",
+  "message.agritech.slots_full": "The planter is full!",
+
+  "message.agritech.same_farmland": "This farmland is already of this type!"
 
 }
