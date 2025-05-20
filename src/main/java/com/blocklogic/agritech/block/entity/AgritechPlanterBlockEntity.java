@@ -23,16 +23,67 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvider {
 
+    // A wrapper that only allows extraction from output slots, not insertion
+    private class OutputOnlyItemHandler implements IItemHandler {
+        private final ItemStackHandler original;
+        private final int firstOutputSlot;
+        private final int lastOutputSlot;
+
+        public OutputOnlyItemHandler(ItemStackHandler original, int firstOutputSlot, int lastOutputSlot) {
+            this.original = original;
+            this.firstOutputSlot = firstOutputSlot;
+            this.lastOutputSlot = lastOutputSlot;
+        }
+
+        @Override
+        public int getSlots() {
+            return original.getSlots();
+        }
+
+        @NotNull
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return original.getStackInSlot(slot);
+        }
+
+        @NotNull
+        @Override
+        public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            // Don't allow insertion through this handler
+            return stack;
+        }
+
+        @NotNull
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if (slot >= firstOutputSlot && slot <= lastOutputSlot) {
+                return original.extractItem(slot, amount, simulate);
+            }
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return original.getSlotLimit(slot);
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return false; // Don't allow insertion
+        }
+    }
+
+    // Main inventory
     public final ItemStackHandler inventory = new ItemStackHandler(8) {
         @Override
         protected int getStackLimit(int slot, ItemStack stack) {
@@ -51,6 +102,14 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         }
     };
 
+    // Output-only handler that restricts access to output slots
+    private final OutputOnlyItemHandler outputHandler;
+
+    // Getter for the output handler
+    public IItemHandler getOutputHandler() {
+        return outputHandler;
+    }
+
     private int growthStage = 0;
     private int maxGrowthStage = 8;
     private int growthTicks = 0;
@@ -59,9 +118,10 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
 
     public AgritechPlanterBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.AGRITECH_PLANTER_BLOCK_ENTITY.get(), pos, blockState);
+        this.outputHandler = new OutputOnlyItemHandler(inventory, 2, 7);
     }
 
-     @Override
+    @Override
     public Component getDisplayName() {
         return Component.translatable("blockentity.agritech.name");
     }
@@ -136,7 +196,7 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
             return;
         }
 
-        IItemHandler targetInventory = level.getCapability(Capabilities.ItemHandler.BLOCK,
+        IItemHandler targetInventory = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
                 belowPos,
                 Direction.UP);
 
@@ -342,5 +402,4 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
     public int getGrowthStage() {
         return growthStage;
     }
-
 }

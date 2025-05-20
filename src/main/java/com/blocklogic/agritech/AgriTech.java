@@ -1,6 +1,7 @@
 package com.blocklogic.agritech;
 
 import com.blocklogic.agritech.block.ModBlocks;
+import com.blocklogic.agritech.block.entity.AgritechPlanterBlockEntity;
 import com.blocklogic.agritech.block.entity.ModBlockEntities;
 import com.blocklogic.agritech.block.entity.renderer.AgritechPlanterBlockEntityRenderer;
 import com.blocklogic.agritech.command.AgritechCommands;
@@ -9,6 +10,8 @@ import com.blocklogic.agritech.item.ModCreativeModeTabs;
 import com.blocklogic.agritech.item.ModItems;
 import com.blocklogic.agritech.screen.ModMenuTypes;
 import com.blocklogic.agritech.screen.custom.AgritechPlanterScreen;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -93,6 +96,27 @@ public class AgriTech
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(ModMenuTypes.AGRITECH_PLANTER_MENU.get(), AgritechPlanterScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+            // Register the IItemHandler capability for our planter block entity
+            event.registerBlockEntity(
+                    net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
+                    ModBlockEntities.AGRITECH_PLANTER_BLOCK_ENTITY.get(),
+                    (blockEntity, side) -> {
+                        if (side == Direction.UP) {
+                            // No access from top
+                            return null;
+                        } else if (side != null) {
+                            // From sides and bottom, only allow extraction from output slots
+                            return ((AgritechPlanterBlockEntity) blockEntity).getOutputHandler();
+                        } else {
+                            // No side = internal access to full inventory
+                            return ((AgritechPlanterBlockEntity) blockEntity).inventory;
+                        }
+                    }
+            );
         }
     }
 }
