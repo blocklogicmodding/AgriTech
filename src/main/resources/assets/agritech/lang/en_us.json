@@ -2,10 +2,12 @@
   "block.agritech.agritech_planter_block": "Agritech Planter",
   "block.agritech.agritech_hopping_planter_block": "Agritech Hopping Planter",
 
-  "creativetab.agritech.agritech": "AgriTech",
+  "blockentity.agritech.name": "Agritech Planter",
+
+  "creativetab.agritech.agritech": "Agritech",
 
   "tooltip.agritech.agritech_planter_block": "A Planter to grow crops in!",
-  "tooltip.agritech.agritech_hopping_planter_block": "A Planter with a hopper to grow crops in!",
+  "tooltip.agritech.agritech_hopping_planter_block": "A planter with a hopper to grow crops in!",
 
   "container.agritech.hopping_planter": "Hopping Planter",
   "container.agritech.planter": "Planter",

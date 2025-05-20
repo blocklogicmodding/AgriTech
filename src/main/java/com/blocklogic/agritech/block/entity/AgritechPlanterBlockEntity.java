@@ -63,7 +63,7 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
 
      @Override
     public Component getDisplayName() {
-        return Component.literal("Agritech Planter");
+        return Component.translatable("blockentity.agritech.name");
     }
 
     @Nullable

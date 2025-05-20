@@ -19,7 +19,6 @@ public class Config
             .comment("INFO: If you change any of the values below, delete 'config/agritech/crops_and_soils.json' and restart your client to regenerate the crop config!")
             .define("infoIs", true);
 
-    // Mod compatibility section
     private static final ModConfigSpec.BooleanValue ENABLE_MYSTICAL_AGRICULTURE = BUILDER
             .comment("Enable Mystical Agriculture. Default: true")
             .define("enableMysticalAgriculture", true);
