@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class AgritechPlanterScreen extends AbstractContainerScreen<AgritechPlanterMenu> {
 
-    public static final ResourceLocation AGRITECH_PLANTER_GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(AgriTech.MODID, "textures/gui/agritech_planter/agritech_planter_gui.png");
+    public static final ResourceLocation AGRITECH_PLANTER_GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(AgriTech.MODID, "textures/gui/agritech_planter/agritech_planter_gui2.png");
 
     public AgritechPlanterScreen(AgritechPlanterMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
