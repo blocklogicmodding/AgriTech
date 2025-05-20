@@ -33,7 +33,6 @@ import java.util.*;
 
 public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvider {
 
-    // A wrapper that only allows extraction from output slots, not insertion
     private class OutputOnlyItemHandler implements IItemHandler {
         private final ItemStackHandler original;
         private final int firstOutputSlot;
@@ -59,7 +58,6 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         @NotNull
         @Override
         public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            // Don't allow insertion through this handler
             return stack;
         }
 
@@ -79,18 +77,17 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return false; // Don't allow insertion
+            return false;
         }
     }
 
-    // Main inventory
     public final ItemStackHandler inventory = new ItemStackHandler(8) {
         @Override
-        protected int getStackLimit(int slot, ItemStack stack) {
+        public int getSlotLimit(int slot) {
             if (slot == 0) {
                 return 1;
             }
-            return super.getStackLimit(slot, stack);
+            return super.getSlotLimit(slot);
         }
 
         @Override
@@ -102,10 +99,8 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         }
     };
 
-    // Output-only handler that restricts access to output slots
     private final OutputOnlyItemHandler outputHandler;
 
-    // Getter for the output handler
     public IItemHandler getOutputHandler() {
         return outputHandler;
     }
