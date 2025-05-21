@@ -36,6 +36,8 @@ public class AgritechCropConfig {
             LOGGER.info("Loading default crop configuration instead");
             processConfig(getDefaultConfig());
         }
+
+        AgritechOverrideConfig.loadOverrides(crops, soils);
     }
 
     private static void createDefaultConfig(Path configPath) {
