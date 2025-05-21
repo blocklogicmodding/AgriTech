@@ -26,6 +26,10 @@ public class AgritechOverrideConfig {
     private static final Pattern ARRAY_PATTERN = Pattern.compile("\\[\\s*(.*)\\s*\\]");
     private static final Pattern STRING_PATTERN = Pattern.compile("\"([^\"]*)\"");
 
+    // Maps to store line numbers for entries
+    private static final Map<String, Integer> cropLineNumbers = new HashMap<>();
+    private static final Map<String, Integer> soilLineNumbers = new HashMap<>();
+
     public static void loadOverrides(Map<String, AgritechCropConfig.CropInfo> crops,
                                      Map<String, AgritechCropConfig.SoilInfo> soils) {
         Path configDir = FMLPaths.CONFIGDIR.get().resolve("agritech");
@@ -37,6 +41,10 @@ public class AgritechOverrideConfig {
 
         try {
             LOGGER.info("Loading crop and soil overrides from {}", overridePath);
+
+            // Clear the line number maps before parsing
+            cropLineNumbers.clear();
+            soilLineNumbers.clear();
 
             Map<String, Map<String, Map<String, Object>>> tables = parseTomlFile(overridePath);
 
@@ -63,8 +71,10 @@ public class AgritechOverrideConfig {
             String line;
             StringBuilder multilineValue = null;
             String pendingKey = null;
+            int lineNumber = 0;
 
             while ((line = reader.readLine()) != null) {
+                lineNumber++;
                 int commentPos = findUnquotedChar(line, '#');
                 if (commentPos >= 0) {
                     line = line.substring(0, commentPos);
@@ -90,6 +100,13 @@ public class AgritechOverrideConfig {
                 if (tableMatcher.matches()) {
                     currentSection = tableMatcher.group(1);
                     currentTable = tableMatcher.group(2);
+
+                    // Store the line number for the current entry
+                    if ("crops".equals(currentSection)) {
+                        cropLineNumbers.put(currentTable, lineNumber);
+                    } else if ("soils".equals(currentSection)) {
+                        soilLineNumbers.put(currentTable, lineNumber);
+                    }
 
                     currentSectionMap = result.computeIfAbsent(currentSection, k -> new HashMap<>());
                     currentTableMap = currentSectionMap.computeIfAbsent(currentTable, k -> new HashMap<>());
@@ -271,7 +288,9 @@ public class AgritechOverrideConfig {
             try {
                 Object seedObj = cropConfig.get("seed");
                 if (seedObj == null) {
-                    LOGGER.warn("Crop override '{}' is missing a seed ID, skipping", cropName);
+                    int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                    String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                    LOGGER.warn("Crop override '{}'{} is missing a seed ID, skipping", cropName, lineInfo);
                     continue;
                 }
 
@@ -279,7 +298,9 @@ public class AgritechOverrideConfig {
 
                 Item seedItem = RegistryHelper.getItem(seedId);
                 if (seedItem == null) {
-                    LOGGER.warn("Crop override '{}' uses non-existent seed item: {}, skipping", cropName, seedId);
+                    int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                    String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                    LOGGER.warn("Crop override '{}'{} uses non-existent seed item: {}, skipping", cropName, lineInfo, seedId);
                     continue;
                 }
 
@@ -290,8 +311,10 @@ public class AgritechOverrideConfig {
                         String soilId = soilObj.toString();
                         Block soilBlock = RegistryHelper.getBlock(soilId);
                         if (soilBlock == null) {
-                            LOGGER.warn("Crop override '{}' references non-existent soil block: {}, skipping this soil",
-                                    cropName, soilId);
+                            int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                            String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                            LOGGER.warn("Crop override '{}'{} references non-existent soil block: {}, skipping this soil",
+                                    cropName, lineInfo, soilId);
                             continue;
                         }
                         validSoils.add(soilId);
@@ -299,7 +322,9 @@ public class AgritechOverrideConfig {
                 }
 
                 if (validSoils.isEmpty()) {
-                    LOGGER.warn("Crop override '{}' has no valid soils, skipping", cropName);
+                    int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                    String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                    LOGGER.warn("Crop override '{}'{} has no valid soils, skipping", cropName, lineInfo);
                     continue;
                 }
 
@@ -333,7 +358,9 @@ public class AgritechOverrideConfig {
 
                             Object itemObj = dropMap.get("item");
                             if (itemObj == null) {
-                                LOGGER.warn("Crop override '{}' has drop without item ID, skipping", cropName);
+                                int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                                String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                                LOGGER.warn("Crop override '{}'{} has drop without item ID, skipping", cropName, lineInfo);
                                 continue;
                             }
 
@@ -356,8 +383,10 @@ public class AgritechOverrideConfig {
 
                         Item dropItem = RegistryHelper.getItem(dropId);
                         if (dropItem == null) {
-                            LOGGER.warn("Crop override '{}' references non-existent drop item: {}, skipping this drop",
-                                    cropName, dropId);
+                            int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                            String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                            LOGGER.warn("Crop override '{}'{} references non-existent drop item: {}, skipping this drop",
+                                    cropName, lineInfo, dropId);
                             continue;
                         }
 
@@ -366,7 +395,9 @@ public class AgritechOverrideConfig {
                 }
 
                 if (drops.isEmpty()) {
-                    LOGGER.warn("Crop override '{}' has no valid drops, skipping", cropName);
+                    int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                    String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                    LOGGER.warn("Crop override '{}'{} has no valid drops, skipping", cropName, lineInfo);
                     continue;
                 }
 
@@ -379,7 +410,9 @@ public class AgritechOverrideConfig {
                 LOGGER.info("Added crop override for '{}' with seed {}", cropName, seedId);
 
             } catch (Exception e) {
-                LOGGER.error("Error processing crop override '{}': {}", cropName, e.getMessage());
+                int lineNum = cropLineNumbers.getOrDefault(cropName, -1);
+                String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                LOGGER.error("Error processing crop override '{}'{}: {}", cropName, lineInfo, e.getMessage());
             }
         }
 
@@ -397,7 +430,9 @@ public class AgritechOverrideConfig {
             try {
                 Object blockObj = soilConfig.get("block");
                 if (blockObj == null) {
-                    LOGGER.warn("Soil override '{}' is missing a block ID, skipping", soilName);
+                    int lineNum = soilLineNumbers.getOrDefault(soilName, -1);
+                    String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                    LOGGER.warn("Soil override '{}'{} is missing a block ID, skipping", soilName, lineInfo);
                     continue;
                 }
 
@@ -405,7 +440,9 @@ public class AgritechOverrideConfig {
 
                 Block soilBlock = RegistryHelper.getBlock(soilId);
                 if (soilBlock == null) {
-                    LOGGER.warn("Soil override '{}' uses non-existent block: {}, skipping", soilName, soilId);
+                    int lineNum = soilLineNumbers.getOrDefault(soilName, -1);
+                    String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                    LOGGER.warn("Soil override '{}'{} uses non-existent block: {}, skipping", soilName, lineInfo, soilId);
                     continue;
                 }
 
@@ -422,7 +459,9 @@ public class AgritechOverrideConfig {
                 LOGGER.info("Added soil override for '{}' with block {}", soilName, soilId);
 
             } catch (Exception e) {
-                LOGGER.error("Error processing soil override '{}': {}", soilName, e.getMessage());
+                int lineNum = soilLineNumbers.getOrDefault(soilName, -1);
+                String lineInfo = lineNum > 0 ? " (line " + lineNum + ")" : "";
+                LOGGER.error("Error processing soil override '{}'{}: {}", soilName, lineInfo, e.getMessage());
             }
         }
 

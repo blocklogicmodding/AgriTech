@@ -14,6 +14,10 @@ public class Config
 {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
+    private static final ModConfigSpec.BooleanValue MESSAGE = BUILDER
+            .comment("INFO: If you change any of the values below, delete 'config/agritech/crops_and_soils.json' and restart your client to regenerate the crop config!")
+            .define("infoIs", true);
+
     private static final ModConfigSpec.BooleanValue ENABLE_MYSTICAL_AGRICULTURE = BUILDER
             .comment("Enable Mystical Agriculture. Default: true")
             .define("enableMysticalAgriculture", true);
@@ -57,9 +61,7 @@ public class Config
         return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
     }
 
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event)
-    {
+    public static void loadConfig() {
         enableMysticalAgriculture = ENABLE_MYSTICAL_AGRICULTURE.get() && ModList.get().isLoaded("mysticalagriculture");
         enableMysticalAgradditions = ENABLE_MYSTICAL_AGRADDITIONS.get() && ModList.get().isLoaded("mysticalagradditions");
         enableFarmersDelight = ENABLE_FARMERS_DELIGHT.get() && ModList.get().isLoaded("farmersdelight");
@@ -67,7 +69,12 @@ public class Config
         enableSilentGear = ENABLE_SILENT_GEAR.get() && ModList.get().isLoaded("silentgear");
         enableJustDireThingSoils = ENABLE_JUST_DIRE_THINGS_SOIL.get() && ModList.get().isLoaded("justdirethings");
         enableImmersiveEngineering = ENABLE_IMMERSIVE_ENGINEERING.get() && ModList.get().isLoaded("immersiveengineering");
+    }
 
+    @SubscribeEvent
+    static void onLoad(final ModConfigEvent event)
+    {
+        loadConfig();
         AgritechCropConfig.loadConfig();
     }
 }
