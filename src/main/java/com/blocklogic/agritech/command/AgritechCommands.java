@@ -2,6 +2,7 @@ package com.blocklogic.agritech.command;
 
 import com.blocklogic.agritech.Config;
 import com.blocklogic.agritech.config.AgritechCropConfig;
+import com.blocklogic.agritech.config.AgritechOverrideConfig;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
@@ -17,6 +18,7 @@ public class AgritechCommands {
                                 .then(Commands.literal("crops")
                                         .executes(context -> {
                                             try {
+                                                AgritechOverrideConfig.resetErrorFlag();
                                                 AgritechCropConfig.loadConfig();
                                                 context.getSource().sendSuccess(() ->
                                                         Component.literal("AgriTech crop config reloaded successfully!"), true);
@@ -45,6 +47,7 @@ public class AgritechCommands {
                                 .executes(context -> {
                                     try {
                                         Config.loadConfig();
+                                        AgritechOverrideConfig.resetErrorFlag();
                                         AgritechCropConfig.loadConfig();
                                         context.getSource().sendSuccess(() ->
                                                 Component.literal("All AgriTech configs reloaded successfully!"), true);
