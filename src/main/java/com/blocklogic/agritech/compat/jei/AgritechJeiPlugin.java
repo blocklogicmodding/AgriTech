@@ -39,19 +39,8 @@ public class AgritechJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-
         List<PlanterRecipe> planterRecipes = generatePlanterRecipes();
         registration.addRecipes(PlanterRecipeCategory.PLANTER_RECIPE_RECIPE_TYPE, planterRecipes);
-
-        for (PlanterRecipe recipe : planterRecipes) {
-            for (ItemStack seed : recipe.getSeedIngredient().getItems()) {
-                registration.addIngredientInfo(
-                        seed,
-                        VanillaTypes.ITEM_STACK,
-                        Component.translatable("jei.agritech.planter.tooltip")
-                );
-            }
-        }
     }
 
     @Override
