@@ -182,7 +182,6 @@ public class AgritechOverrideConfig {
                     currentSection = tableMatcher.group(1);
                     currentTable = tableMatcher.group(2);
 
-                    // Store the line number for the current entry
                     if ("crops".equals(currentSection)) {
                         cropLineNumbers.put(currentTable, lineNumber);
                     } else if ("soils".equals(currentSection)) {

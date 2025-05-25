@@ -211,7 +211,6 @@ public class AgritechHoppingPlanterBlock extends BaseEntityBlock {
                         Block soilBlock = blockItem.getBlock();
                         String soilId = RegistryHelper.getBlockId(soilBlock);
 
-                        // Allow vanilla farmland or any essence farmland to be transformed
                         if (soilId.equals("minecraft:farmland") ||
                                 soilId.startsWith("mysticalagriculture:") && soilId.endsWith("_farmland") ||
                                 soilId.startsWith("mysticalagradditions:") && soilId.endsWith("_farmland")) {
@@ -220,7 +219,6 @@ public class AgritechHoppingPlanterBlock extends BaseEntityBlock {
                             Block resultBlock = RegistryHelper.getBlock(farmlandId);
 
                             if (resultBlock != null) {
-                                // Don't transform if already the same type
                                 if (soilId.equals(farmlandId)) {
                                     if (!level.isClientSide()) {
                                         player.displayClientMessage(Component.translatable("message.agritech.same_farmland"), true);
