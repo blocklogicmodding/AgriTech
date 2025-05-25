@@ -40,7 +40,8 @@ AgriTech integrates with:
 - Modify growth rates and drop chances
 - Customize planter behavior
 
-Configuration is located at `config/agritech/crops_and_soil.json`
+## Wiki
+https://github.com/blocklogicmodding/AgriTech/wiki
 
 ## License
 
