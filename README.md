@@ -40,9 +40,15 @@ AgriTech integrates with:
 - Modify growth rates and drop chances
 - Customize planter behavior
 
-## Wiki
-https://github.com/blocklogicmodding/AgriTech/wiki
-
 ## License
 
-All Rights Reserved
+All rights reserved. This mod is protected by copyright and may not be redistributed or modified without explicit permission.
+
+**Permitted Uses:**
+
+-   Inclusion in modpacks (public or private)
+-   Content creation (videos, streams, reviews, etc.)
+
+----------
+
+[**Wiki**](https://github.com/blocklogicmodding/AgriTech/wiki) | [**Issue Tracker**](https://github.com/blocklogicmodding/AgriTech/issues) | [**BLM Discord**](https://discord.gg/YtdA3AMqsXe)
