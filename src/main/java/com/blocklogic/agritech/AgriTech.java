@@ -5,7 +5,6 @@ import com.blocklogic.agritech.block.entity.AgritechPlanterBlockEntity;
 import com.blocklogic.agritech.block.entity.ModBlockEntities;
 import com.blocklogic.agritech.block.entity.renderer.AgritechPlanterBlockEntityRenderer;
 import com.blocklogic.agritech.command.AgritechCommands;
-import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.item.ModCreativeModeTabs;
 import com.blocklogic.agritech.item.ModItems;
 import com.blocklogic.agritech.screen.ModMenuTypes;

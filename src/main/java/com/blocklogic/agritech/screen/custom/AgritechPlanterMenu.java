@@ -27,6 +27,9 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
 
     private final Level level;
 
+    private int progressTicks = 0;
+    private int maxProgressTicks = 0;
+
     public AgritechPlanterMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
     }
@@ -41,16 +44,20 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            String seedId = RegistryHelper.getItemId(stack);
+            String itemId = RegistryHelper.getItemId(stack);
 
-            if (!AgritechCropConfig.isValidSeed(seedId)) {
+            if (!AgritechCropConfig.isValidSeed(itemId)) {
+                return false;
+            }
+
+            if (AgritechCropConfig.isValidSoil(itemId)) {
                 return false;
             }
 
             ItemStack soilStack = blockEntity.inventory.getStackInSlot(1);
             if (!soilStack.isEmpty()) {
                 String soilId = RegistryHelper.getItemId(soilStack);
-                return AgritechCropConfig.isSoilValidForSeed(soilId, seedId);
+                return AgritechCropConfig.isSoilValidForSeed(soilId, itemId);
             }
 
             return true;
@@ -175,6 +182,16 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
         }
         sourceSlot.onTake(player, sourceStack);
         return copyOfSourceStack;
+    }
+
+    public void updateProgressData(int progressTicks, int maxProgressTicks) {
+        this.progressTicks = progressTicks;
+        this.maxProgressTicks = maxProgressTicks;
+    }
+
+    public float getProgressPercentage() {
+        if (maxProgressTicks <= 0) return 0.0f;
+        return (float) progressTicks / (float) maxProgressTicks;
     }
 
     @Override

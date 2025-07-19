@@ -7,11 +7,10 @@ import com.blocklogic.agritech.util.RegistryHelper;
 import com.mojang.logging.LogUtils;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.network.chat.Component;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -84,5 +83,16 @@ public class AgritechJeiPlugin implements IModPlugin {
 
         LogUtils.getLogger().info("Generated {} planter recipes for JEI", recipes.size());
         return recipes;
+    }
+
+    private static IJeiRuntime jeiRuntime;
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        AgritechJeiPlugin.jeiRuntime = jeiRuntime;
+    }
+
+    public static IJeiRuntime getJeiRuntime() {
+        return jeiRuntime;
     }
 }

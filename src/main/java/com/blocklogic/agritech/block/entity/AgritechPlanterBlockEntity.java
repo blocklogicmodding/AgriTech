@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -191,7 +192,7 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
             return;
         }
 
-        IItemHandler targetInventory = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
+        IItemHandler targetInventory = level.getCapability(Capabilities.ItemHandler.BLOCK,
                 belowPos,
                 Direction.UP);
 
@@ -365,6 +366,22 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
         }
 
         return drops;
+    }
+
+    public float getGrowthProgress() {
+        if (maxGrowthStage <= 0 || readyToHarvest) {
+            return 0.0f;
+        }
+
+        float stageProgress = (float) growthTicks / (ticksToNextStage / getGrowthModifier(inventory.getStackInSlot(1)));
+
+        float overallProgress = ((float) growthStage + stageProgress) / (float) maxGrowthStage;
+
+        return Math.min(overallProgress, 1.0f);
+    }
+
+    public int getProgressBarWidth(int maxWidth) {
+        return (int) (getGrowthProgress() * maxWidth);
     }
 
     public void drops() {

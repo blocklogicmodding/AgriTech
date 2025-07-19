@@ -1,6 +1,5 @@
 package com.blocklogic.agritech.config;
 
-import com.blocklogic.agritech.AgriTech;
 import com.blocklogic.agritech.util.RegistryHelper;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.Item;

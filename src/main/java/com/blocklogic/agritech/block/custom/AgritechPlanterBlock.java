@@ -97,7 +97,7 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
             ItemStack heldItem = player.getItemInHand(hand);
             String heldItemId = RegistryHelper.getItemId(heldItem);
 
-            if (AgritechCropConfig.isValidSeed(heldItemId)) {
+            if (AgritechCropConfig.isValidSeed(heldItemId) && !AgritechCropConfig.isValidSoil(heldItemId)) {
                 if (level.isClientSide()) {
                     return ItemInteractionResult.SUCCESS;
                 }

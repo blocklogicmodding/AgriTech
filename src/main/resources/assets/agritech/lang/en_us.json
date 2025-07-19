@@ -1,8 +1,8 @@
 {
-  "block.agritech.agritech_planter_block": "Agritech Planter",
-  "block.agritech.agritech_hopping_planter_block": "Agritech Hopping Planter",
+  "block.agritech.agritech_planter_block": "Planter",
+  "block.agritech.agritech_hopping_planter_block": "Hopping Planter",
 
-  "blockentity.agritech.name": "Agritech Planter",
+  "blockentity.agritech.name": "Planter",
 
   "creativetab.agritech.agritech": "Agritech",
 
@@ -18,6 +18,8 @@
   "message.agritech.invalid_soil": "This block cannot be used as soil!",
   "message.agritech.slots_full": "The planter is full!",
 
-  "message.agritech.same_farmland": "This farmland is already of this type!"
+  "message.agritech.same_farmland": "This farmland is already of this type!",
 
+  "tooltip.agritech.growth_progress": "Growth Progress",
+  "tooltip.agritech.view_recipes": "Click to view recipes"
 }

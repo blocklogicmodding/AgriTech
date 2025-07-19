@@ -23,7 +23,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -98,7 +97,7 @@ public class AgritechHoppingPlanterBlock extends BaseEntityBlock {
             ItemStack heldItem = player.getItemInHand(hand);
             String heldItemId = RegistryHelper.getItemId(heldItem);
 
-            if (AgritechCropConfig.isValidSeed(heldItemId)) {
+            if (AgritechCropConfig.isValidSeed(heldItemId) && !AgritechCropConfig.isValidSoil(heldItemId)) {
                 if (level.isClientSide()) {
                     return ItemInteractionResult.SUCCESS;
                 }
