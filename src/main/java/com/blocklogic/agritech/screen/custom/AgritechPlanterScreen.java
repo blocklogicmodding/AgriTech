@@ -13,8 +13,17 @@ public class AgritechPlanterScreen extends AbstractContainerScreen<AgritechPlant
 
     public static final ResourceLocation AGRITECH_PLANTER_GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(AgriTech.MODID, "textures/gui/agritech_planter/agritech_planter_gui.png");
 
+    @Override
+    protected void init() {
+        super.init();
+        this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
+    }
+
     public AgritechPlanterScreen(AgritechPlanterMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
+
+        this.imageHeight = 172;
+        this.inventoryLabelY = this.imageHeight - 96;
     }
 
     @Override

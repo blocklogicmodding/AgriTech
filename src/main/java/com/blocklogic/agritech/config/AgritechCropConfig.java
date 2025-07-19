@@ -125,6 +125,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -159,6 +162,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -195,6 +201,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -223,6 +232,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -259,6 +271,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -289,6 +304,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -312,7 +330,9 @@ public class AgritechCropConfig {
                 "minecraft:dirt",
                 "minecraft:grass_block",
                 "minecraft:sand",
-                "minecraft:red_sand"
+                "minecraft:red_sand",
+                "agritechevolved:mulch"
+
         );
         sugarCane.drops = new ArrayList<>();
 
@@ -353,7 +373,8 @@ public class AgritechCropConfig {
                 "minecraft:moss_block",
                 "minecraft:muddy_mangrove_roots",
                 "farmersdelight:rich_soil",
-                "farmersdelight:organic_compost"
+
+                "agritechevolved:mulch"
         );
         bamboo.drops = new ArrayList<>();
 
@@ -386,6 +407,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -472,7 +496,8 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:podzol",
                 "farmersdelight:rich_soil",
-                "farmersdelight:organic_compost"
+                "farmersdelight:organic_compost",
+                "agritechevolved:mulch"
         );
         brownMushroom.drops = new ArrayList<>();
 
@@ -490,7 +515,8 @@ public class AgritechCropConfig {
                 "minecraft:mycelium",
                 "minecraft:podzol",
                 "farmersdelight:rich_soil",
-                "farmersdelight:organic_compost"
+                "farmersdelight:organic_compost",
+                "agritechevolved:mulch"
         );
         redMushroom.drops = new ArrayList<>();
 
@@ -533,6 +559,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -562,6 +591,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -602,6 +634,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -639,6 +674,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -678,6 +716,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -715,6 +756,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -754,6 +798,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -791,6 +838,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -830,6 +880,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -867,6 +920,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -906,6 +962,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -943,6 +1002,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -982,6 +1044,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -1019,6 +1084,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -1058,6 +1126,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -1095,6 +1166,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -1134,6 +1208,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -1172,6 +1249,9 @@ public class AgritechCropConfig {
 
                 "mysticalagradditions:insanium_farmland",
 
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
+
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
@@ -1209,6 +1289,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:supremium_farmland",
 
                 "mysticalagradditions:insanium_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch",
 
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
@@ -1320,6 +1403,16 @@ public class AgritechCropConfig {
         strippedJungleWood.soil = "minecraft:stripped_jungle_wood";
         strippedJungleWood.growthModifier = 0.5f;
         soils.add(strippedJungleWood);
+
+        SoilEntry infusedFarmland = new SoilEntry();
+        infusedFarmland.soil = "agritechevolved:infused_farmland";
+        infusedFarmland.growthModifier = 2.0f;
+        soils.add(infusedFarmland);
+
+        SoilEntry agritechEvolvedMulch = new SoilEntry();
+        agritechEvolvedMulch.soil = "agritechevolved:mulch";
+        agritechEvolvedMulch.growthModifier = 1.5f;
+        soils.add(agritechEvolvedMulch);
     }
 
     private static void addMysticalAgricultureCrops(List<CropEntry> crops) {
@@ -1349,7 +1442,10 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
 
         for (String seedId : tier1Seeds) {
@@ -1397,7 +1493,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier1",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
-                "justdirethings:goosoil_tier4"
+                "justdirethings:goosoil_tier4",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
 
         for (String seedId : tier2Seeds) {
@@ -1450,7 +1548,9 @@ public class AgritechCropConfig {
                 "mysticalagradditions:insanium_farmland",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
-                "justdirethings:goosoil_tier4"
+                "justdirethings:goosoil_tier4",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
 
         for (String seedId : tier3Seeds) {
@@ -1507,7 +1607,9 @@ public class AgritechCropConfig {
                 "mysticalagradditions:insanium_farmland",
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
-                "justdirethings:goosoil_tier4"
+                "justdirethings:goosoil_tier4",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
 
         for (String seedId : tier4Seeds) {
@@ -1536,7 +1638,9 @@ public class AgritechCropConfig {
                 "mysticalagriculture:cyanite_seeds",
                 "mysticalagriculture:niotic_crystal_seeds",
                 "mysticalagriculture:spirited_crystal_seeds",
-                "mysticalagriculture:uraninite_seeds"
+                "mysticalagriculture:uraninite_seeds",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         };
 
         List<String> tier5Soils = List.of(
@@ -1676,7 +1780,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         cabbage.drops = new ArrayList<>();
 
@@ -1709,7 +1815,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         tomato.drops = new ArrayList<>();
 
@@ -1736,7 +1844,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         onion.drops = new ArrayList<>();
 
@@ -1782,7 +1892,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         immersiveHempFiber.drops = new ArrayList<>();
 
@@ -1818,7 +1930,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         magebloom.drops = new ArrayList<>();
 
@@ -1856,7 +1970,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier4",
                 "farmersdelight:rich_soil_farmland",
                 "farmersdelight:organic_compost",
-                "farmersdelight:rich_soil"
+                "farmersdelight:rich_soil",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         sourceberry.drops = new ArrayList<>();
 
@@ -1885,7 +2001,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         fluffyPuff.drops = new ArrayList<>();
 
@@ -1918,7 +2036,9 @@ public class AgritechCropConfig {
                 "justdirethings:goosoil_tier2",
                 "justdirethings:goosoil_tier3",
                 "justdirethings:goosoil_tier4",
-                "farmersdelight:rich_soil_farmland"
+                "farmersdelight:rich_soil_farmland",
+                "agritechevolved:infused_farmland",
+                "agritechevolved:mulch"
         );
         flax.drops = new ArrayList<>();
 

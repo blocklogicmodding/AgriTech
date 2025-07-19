@@ -29,17 +29,17 @@ public class PlanterRecipeCategory implements IRecipeCategory<PlanterRecipe> {
 
     @Override
     public int getWidth() {
-        return 116;
+        return 134;
     }
 
     @Override
     public int getHeight() {
-        return 54;
+        return 72;
     }
 
 
     public PlanterRecipeCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createDrawable(TEXTURE,0, 0, 116, 54);
+        this.background = guiHelper.createDrawable(TEXTURE,0, 0, 134, 72);
         if (background == null) {
         } else {
         }
@@ -68,13 +68,13 @@ public class PlanterRecipeCategory implements IRecipeCategory<PlanterRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 10, 10)
                 .addIngredients(VanillaTypes.ITEM_STACK, List.of(recipe.getSeedIngredient().getItems()));
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 10, 28)
+        builder.addSlot(RecipeIngredientRole.INPUT, 10, 46)
                 .addIngredients(recipe.getSoilIngredient());
 
         int outputIndex = 0;
         for (ItemStack output : recipe.getOutputs()) {
             int x = 54 + (outputIndex % 3) * 18;
-            int y = 10 + (outputIndex / 3) * 18;
+            int y = 19 + (outputIndex / 3) * 18;
             builder.addSlot(RecipeIngredientRole.OUTPUT, x, y)
                     .addItemStack(output);
             outputIndex++;

@@ -2,15 +2,11 @@ package com.blocklogic.agritech.compat.jei;
 
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.util.RegistryHelper;
-import com.mojang.logging.LogUtils;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PlanterRecipe implements IRecipeCategoryExtension {
