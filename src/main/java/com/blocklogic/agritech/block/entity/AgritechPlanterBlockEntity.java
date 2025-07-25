@@ -172,7 +172,19 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
             blockEntity.harvestCrop();
         }
 
-        if (state.is(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get())) {
+        if (state.is(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.ACACIA_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.BAMBOO_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.BIRCH_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.CHERRY_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.CRIMSON_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.DARK_OAK_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.JUNGLE_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.MANGROVE_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.SPRUCE_HOPPING_PLANTER_BLOCK.get()) ||
+                state.is(ModBlocks.WARPED_HOPPING_PLANTER_BLOCK.get())
+
+        ) {
             tryOutputItemsBelow(level, pos, blockEntity);
         }
     }

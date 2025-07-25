@@ -1,6 +1,8 @@
 package com.blocklogic.agritech.screen.custom;
 
 import com.blocklogic.agritech.block.ModBlocks;
+import com.blocklogic.agritech.block.custom.AgritechHoppingPlanterBlock;
+import com.blocklogic.agritech.block.custom.AgritechPlanterBlock;
 import com.blocklogic.agritech.block.entity.AgritechPlanterBlockEntity;
 import com.blocklogic.agritech.config.AgritechCropConfig;
 import com.blocklogic.agritech.screen.ModMenuTypes;
@@ -198,7 +200,7 @@ public class AgritechPlanterMenu extends AbstractContainerMenu {
     public boolean stillValid(Player player) {
         Block block = blockEntity.getBlockState().getBlock();
 
-        if (block == ModBlocks.AGRITECH_PLANTER_BLOCK.get() || block == ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get()) {
+        if (block instanceof AgritechPlanterBlock || block instanceof AgritechHoppingPlanterBlock) {
             return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, block);
         }
 

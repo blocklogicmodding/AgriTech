@@ -19,10 +19,29 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.agritech.agritech"))
                     .displayItems((ItemDisplayParameters, output) -> {
 
-                        output.accept(ModBlocks.AGRITECH_PLANTER_BLOCK);
                         output.accept(ModBlocks.ACACIA_PLANTER_BLOCK);
-                        output.accept(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.BAMBOO_PLANTER_BLOCK);
+                        output.accept(ModBlocks.BIRCH_PLANTER_BLOCK);
+                        output.accept(ModBlocks.CHERRY_PLANTER_BLOCK);
+                        output.accept(ModBlocks.CRIMSON_PLANTER_BLOCK);
+                        output.accept(ModBlocks.DARK_OAK_PLANTER_BLOCK);
+                        output.accept(ModBlocks.JUNGLE_PLANTER_BLOCK);
+                        output.accept(ModBlocks.MANGROVE_PLANTER_BLOCK);
+                        output.accept(ModBlocks.AGRITECH_PLANTER_BLOCK);
+                        output.accept(ModBlocks.SPRUCE_PLANTER_BLOCK);
+                        output.accept(ModBlocks.WARPED_PLANTER_BLOCK);
+
                         output.accept(ModBlocks.ACACIA_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.BAMBOO_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.BIRCH_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.CHERRY_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.CRIMSON_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.DARK_OAK_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.JUNGLE_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.MANGROVE_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.SPRUCE_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.WARPED_HOPPING_PLANTER_BLOCK);
                     })
                     .build());
 
