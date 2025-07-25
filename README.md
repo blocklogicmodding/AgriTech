@@ -11,6 +11,7 @@ Inspired by **Botany Pots by DarkhaxDev**
 - **Internal Storage**: Built-in inventory to store harvested crops
 - **Wide Crop Compatibility**: Works with vanilla crops and many modded crops
 - **Configurable Soil Types**: Different soils affect growth speed
+- **Jade Support**: Displays planter status and contents with Jade HUD tooltips
 
 ## Supported Crops
 
@@ -32,6 +33,9 @@ AgriTech integrates with:
 - **Silent Gear**
 - **Just Dire Things**
 - **Immersive Engineering**
+
+## Wood Variants
+- Planters are available in all 11 vanilla wood types
 
 ## Configuration
 
