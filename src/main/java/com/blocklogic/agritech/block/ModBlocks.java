@@ -29,7 +29,6 @@ public class ModBlocks {
                     .sound(SoundType.WOOD)
                     .noOcclusion()));
 
-    //WOODS
     public static final DeferredBlock<Block> ACACIA_PLANTER_BLOCK = registerBlock("acacia_planter",
             () -> new AcaciaPlanter(BlockBehaviour.Properties.of()
                     .strength(2.0F, 3.0F)
