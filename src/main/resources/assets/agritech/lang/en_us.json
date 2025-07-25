@@ -1,13 +1,10 @@
 {
-  "block.agritech.agritech_planter_block": "Planter",
-  "block.agritech.agritech_hopping_planter_block": "Hopping Planter",
+  "block.agritech.agritech_planter_block": "Oak Planter",
+  "block.agritech.agritech_hopping_planter_block": "Oak Hopping Planter",
 
   "blockentity.agritech.name": "Planter",
 
   "creativetab.agritech.agritech": "Agritech",
-
-  "tooltip.agritech.agritech_planter_block": "A Planter to grow crops in!",
-  "tooltip.agritech.agritech_hopping_planter_block": "A planter with a hopper to grow crops in!",
 
   "container.agritech.hopping_planter": "Hopping Planter",
   "container.agritech.planter": "Planter",
@@ -21,5 +18,8 @@
   "message.agritech.same_farmland": "This farmland is already of this type!",
 
   "tooltip.agritech.growth_progress": "Growth Progress",
-  "tooltip.agritech.view_recipes": "Click to view recipes"
+  "tooltip.agritech.view_recipes": "Click to view recipes",
+
+  "block.agritech.acacia_planter": "Acacia Planter",
+  "block.agritech.acacia_hopping_planter": "Acacia Hopping Planter"
 }

@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "agritech:block/oak_planter",
-		"1": "agritech:block/oak_planter_legs",
-		"particle": "agritech:block/oak_planter"
+		"0": "agritech:block/acacia_planter",
+		"1": "agritech:block/acacia_planter_legs",
+		"particle": "agritech:block/acacia_planter"
 	},
 	"elements": [
 		{

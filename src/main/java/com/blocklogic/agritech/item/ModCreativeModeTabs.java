@@ -20,7 +20,9 @@ public class ModCreativeModeTabs {
                     .displayItems((ItemDisplayParameters, output) -> {
 
                         output.accept(ModBlocks.AGRITECH_PLANTER_BLOCK);
+                        output.accept(ModBlocks.ACACIA_PLANTER_BLOCK);
                         output.accept(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModBlocks.ACACIA_HOPPING_PLANTER_BLOCK);
                     })
                     .build());
 

@@ -14,8 +14,12 @@ public class ModBlockEntities {
 
     public static final Supplier<BlockEntityType<AgritechPlanterBlockEntity>> AGRITECH_PLANTER_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("agritech_planter_be", () -> BlockEntityType.Builder.of(
-               AgritechPlanterBlockEntity::new, ModBlocks.AGRITECH_PLANTER_BLOCK.get(),
-                    ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get()
+               AgritechPlanterBlockEntity::new,
+                    ModBlocks.AGRITECH_PLANTER_BLOCK.get(),
+                    ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get(),
+
+                    ModBlocks.ACACIA_PLANTER_BLOCK.get(),
+                    ModBlocks.ACACIA_HOPPING_PLANTER_BLOCK.get()
             ).build(null));
 
     public static void register(IEventBus eventBus) {

@@ -1,6 +1,8 @@
 package com.blocklogic.agritech.block;
 
 import com.blocklogic.agritech.AgriTech;
+import com.blocklogic.agritech.block.custom.AcaciaHoppingPlanter;
+import com.blocklogic.agritech.block.custom.AcaciaPlanter;
 import com.blocklogic.agritech.block.custom.AgritechHoppingPlanterBlock;
 import com.blocklogic.agritech.block.custom.AgritechPlanterBlock;
 import com.blocklogic.agritech.item.ModItems;
@@ -26,25 +28,26 @@ public class ModBlocks {
             () -> new AgritechPlanterBlock(BlockBehaviour.Properties.of()
                     .strength(2.0F, 3.0F)
                     .sound(SoundType.WOOD)
-                    .noOcclusion()) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_planter_block"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
+                    .noOcclusion()));
 
     public static final DeferredBlock<Block> AGRITECH_HOPPING_PLANTER_BLOCK = registerBlock("agritech_hopping_planter_block",
             () -> new AgritechHoppingPlanterBlock(BlockBehaviour.Properties.of()
                     .strength(2.0F, 3.0F)
                     .sound(SoundType.WOOD)
-                    .noOcclusion()) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("tooltip.agritech.agritech_hopping_planter_block"));
-                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-                }
-            });
+                    .noOcclusion()));
+
+    //WOODS
+    public static final DeferredBlock<Block> ACACIA_PLANTER_BLOCK = registerBlock("acacia_planter",
+            () -> new AcaciaPlanter(BlockBehaviour.Properties.of()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
+
+    public static final DeferredBlock<Block> ACACIA_HOPPING_PLANTER_BLOCK = registerBlock("acacia_hopping_planter",
+            () -> new AcaciaHoppingPlanter(BlockBehaviour.Properties.of()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
 
     private static <T extends Block>DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
