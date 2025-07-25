@@ -1,4 +1,4 @@
-![AgriTech: Crops](https://deonjonker.com/blm/agritech/agritech_banner.png)
+![AgriTech: Crops](https://deonjonker.com/blm/agritech/agritech_banner_2.png)
 
 AgriTech introduces customizable planters that streamline crop growing and automated harvesting.
 
