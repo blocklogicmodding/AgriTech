@@ -107,7 +107,7 @@ public class AgritechPlanterBlockEntity extends BlockEntity implements MenuProvi
     }
 
     private int growthStage = 0;
-    private int maxGrowthStage = 8;
+    public int maxGrowthStage = 8;
     private int growthTicks = 0;
     private int ticksToNextStage = 100;
     private boolean readyToHarvest = false;

@@ -1311,6 +1311,20 @@ public class AgritechCropConfig {
 
         // Flowers END
 
+        CropEntry lilyPad = new CropEntry();
+        lilyPad.seed = "minecraft:lily_pad";
+        lilyPad.validSoils = List.of(
+                "minecraft:mud"
+        );
+        lilyPad.drops = new ArrayList<>();
+
+        DropEntry lilyPadDrop = new DropEntry();
+        lilyPadDrop.item = "minecraft:lily_pad";
+        lilyPadDrop.count = new CountRange(1, 1);
+        lilyPad.drops.add(lilyPadDrop);
+
+        crops.add(lilyPad);
+
     }
 
     private static void addVanillaSoils(List<SoilEntry> soils) {

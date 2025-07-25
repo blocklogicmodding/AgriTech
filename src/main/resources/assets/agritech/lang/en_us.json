@@ -48,5 +48,9 @@
   "message.agritech.same_farmland": "This farmland is already of this type!",
 
   "tooltip.agritech.growth_progress": "Growth Progress",
-  "tooltip.agritech.view_recipes": "Click to view recipes"
+  "tooltip.agritech.view_recipes": "Click to view recipes",
+
+  "jade.agritech.crop_progress": "%s (Stage %d/%d - %d%%)",
+  "jade.agritech.crop_ready": "%s (Ready to Harvest)",
+  "jade.agritech.soil_info": "Soil: %s (%s speed)"
 }
