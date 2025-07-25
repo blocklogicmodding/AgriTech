@@ -1,0 +1,26 @@
+{
+  "values": [
+    "agritech:agritech_planter_block",
+    "agritech:acacia_planter",
+    "agritech:bamboo_planter",
+    "agritech:birch_planter",
+    "agritech:cherry_planter",
+    "agritech:crimson_planter",
+    "agritech:dark_oak_planter",
+    "agritech:jungle_planter",
+    "agritech:mangrove_planter",
+    "agritech:spruce_planter",
+    "agritech:warped_planter",
+    "agritech:agritech_hopping_planter_block",
+    "agritech:acacia_hopping_planter",
+    "agritech:bamboo_hopping_planter",
+    "agritech:birch_hopping_planter",
+    "agritech:cherry_hopping_planter",
+    "agritech:crimson_hopping_planter",
+    "agritech:dark_oak_hopping_planter",
+    "agritech:jungle_hopping_planter",
+    "agritech:mangrove_hopping_planter",
+    "agritech:spruce_hopping_planter",
+    "agritech:warped_hopping_planter"
+  ]
+}

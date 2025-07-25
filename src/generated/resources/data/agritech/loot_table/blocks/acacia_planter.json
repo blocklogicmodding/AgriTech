@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "agritech:agritech_hopping_planter_block"
+          "name": "agritech:acacia_planter"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "agritech:agritech_hopping_planter_block"
+  "random_sequence": "agritech:blocks/acacia_planter"
 }

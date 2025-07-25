@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "agritech:agritech_planter_block"
+          "name": "agritech:cherry_hopping_planter"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "agritech:agritech_planter_block"
+  "random_sequence": "agritech:blocks/cherry_hopping_planter"
 }

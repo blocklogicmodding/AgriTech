@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "agritech:warped_hopping_planter"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "agritech:blocks/warped_hopping_planter"
+}
