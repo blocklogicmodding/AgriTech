@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:hopper"
+    },
+    {
+      "item": "agritech:jungle_planter"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "agritech:jungle_hopping_planter"
+  }
+}

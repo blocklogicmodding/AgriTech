@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:dirt"
+    },
+    "L": {
+      "tag": "minecraft:crimson_stems"
+    },
+    "P": {
+      "item": "minecraft:crimson_planks"
+    },
+    "S": {
+      "item": "minecraft:crimson_slab"
+    }
+  },
+  "pattern": [
+    "S S",
+    "PDP",
+    "LPL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agritech:crimson_planter"
+  }
+}

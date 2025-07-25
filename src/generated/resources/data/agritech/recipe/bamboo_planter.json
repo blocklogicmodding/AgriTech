@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:dirt"
+    },
+    "L": {
+      "tag": "minecraft:bamboo_blocks"
+    },
+    "P": {
+      "item": "minecraft:bamboo_planks"
+    },
+    "S": {
+      "item": "minecraft:bamboo_slab"
+    }
+  },
+  "pattern": [
+    "S S",
+    "PDP",
+    "LPL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agritech:bamboo_planter"
+  }
+}

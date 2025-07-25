@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:dirt"
+    },
+    "L": {
+      "tag": "minecraft:jungle_logs"
+    },
+    "P": {
+      "item": "minecraft:jungle_planks"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    }
+  },
+  "pattern": [
+    "S S",
+    "PDP",
+    "LPL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agritech:jungle_planter"
+  }
+}

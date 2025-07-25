@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dark_oak_planter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "agritech:dark_oak_planter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "agritech:dark_oak_hopping_planter"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dark_oak_planter"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "agritech:dark_oak_hopping_planter"
+    ]
+  }
+}

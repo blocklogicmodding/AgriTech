@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:dirt"
+    },
+    "L": {
+      "tag": "minecraft:warped_stems"
+    },
+    "P": {
+      "item": "minecraft:warped_planks"
+    },
+    "S": {
+      "item": "minecraft:warped_slab"
+    }
+  },
+  "pattern": [
+    "S S",
+    "PDP",
+    "LPL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "agritech:warped_planter"
+  }
+}

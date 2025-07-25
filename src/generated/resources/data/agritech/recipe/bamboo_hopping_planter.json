@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:hopper"
+    },
+    {
+      "item": "agritech:bamboo_planter"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "agritech:bamboo_hopping_planter"
+  }
+}
