@@ -1,4 +1,7 @@
 {
+  "item.agritech.hopping_upgrade": "Hopping Upgrade",
+  "item.agritech.hopping_upgrade.subtitle": "Upgrade a Planter to a Hopping Planter",
+
   "block.agritech.acacia_planter": "Acacia Planter",
   "block.agritech.acacia_hopping_planter": "Acacia Hopping Planter",
 

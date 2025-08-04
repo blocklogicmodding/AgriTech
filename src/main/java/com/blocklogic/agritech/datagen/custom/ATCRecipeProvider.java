@@ -1,6 +1,7 @@
 package com.blocklogic.agritech.datagen.custom;
 
 import com.blocklogic.agritech.block.ModBlocks;
+import com.blocklogic.agritech.item.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -142,6 +143,17 @@ public class ATCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_warped_stems", has(ItemTags.WARPED_STEMS))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.AGRITECH_PLANTER_BLOCK.get())
+                .pattern("S S")
+                .pattern("PDP")
+                .pattern("LPL")
+                .define('S', ItemTags.SLABS)
+                .define('L', ItemTags.LOGS)
+                .define('D', Items.DIRT)
+                .define('P', ItemTags.PLANKS)
+                .unlockedBy("has_planks", has(ItemTags.PLANKS))
+                .save(recipeOutput, "agritech:planter_from_all_wood");
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get())
                 .requires(Items.HOPPER)
                 .requires(ModBlocks.AGRITECH_PLANTER_BLOCK.get())
@@ -206,6 +218,15 @@ public class ATCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(Items.HOPPER)
                 .requires(ModBlocks.WARPED_PLANTER_BLOCK.get())
                 .unlockedBy("has_warped_planter", has(ModBlocks.WARPED_PLANTER_BLOCK.get()))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HOPPING_UPGRADE.get())
+                .pattern(" P ")
+                .pattern("PHP")
+                .pattern(" P ")
+                .define('H', Items.HOPPER)
+                .define('P', ItemTags.PLANKS)
+                .unlockedBy("has_hopper", has(Items.HOPPER))
                 .save(recipeOutput);
     }
 }

@@ -42,6 +42,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK);
                         output.accept(ModBlocks.SPRUCE_HOPPING_PLANTER_BLOCK);
                         output.accept(ModBlocks.WARPED_HOPPING_PLANTER_BLOCK);
+                        output.accept(ModItems.HOPPING_UPGRADE.get());
                     })
                     .build());
 
