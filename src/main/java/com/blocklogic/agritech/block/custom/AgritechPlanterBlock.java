@@ -16,7 +16,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -96,7 +98,7 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
                     MenuProvider menuProvider = new SimpleMenuProvider(
                             (containerId, playerInventory, playerEntity) ->
                                     new AgritechPlanterMenu(containerId, playerInventory, planterBlockEntity),
-                            Component.translatable("container.agritech.planter")
+                            Component.translatable("container.agritech.hopping_planter")
                     );
 
                     player.openMenu(menuProvider, pos);
@@ -114,85 +116,115 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
 
                 if (planterBlockEntity.inventory.getStackInSlot(0).isEmpty()) {
                     ItemStack soilStack = planterBlockEntity.inventory.getStackInSlot(1);
-                    String soilId = RegistryHelper.getItemId(soilStack);
-
-                    if (soilStack.isEmpty() || AgritechCropConfig.isSoilValidForSeed(heldItemId, soilId)) {
-                        ItemStack seedToInsert = heldItem.copy();
-                        seedToInsert.setCount(1);
-                        planterBlockEntity.inventory.setStackInSlot(0, seedToInsert);
-
-                        if (!player.getAbilities().instabuild) {
-                            heldItem.shrink(1);
+                    if (!soilStack.isEmpty()) {
+                        String soilId = RegistryHelper.getItemId(soilStack);
+                        if (!AgritechCropConfig.isSoilValidForSeed(soilId, heldItemId)) {
+                            player.displayClientMessage(Component.translatable("message.agritech.invalid_seed_soil_combination"), true);
+                            return ItemInteractionResult.SUCCESS;
                         }
-
-                        level.playSound(player, pos, SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        return ItemInteractionResult.sidedSuccess(level.isClientSide());
-                    } else {
-                        player.displayClientMessage(Component.translatable("message.agritech.invalid_seed_soil_combination"), true);
-                        return ItemInteractionResult.sidedSuccess(level.isClientSide());
                     }
-                } else {
-                    player.displayClientMessage(Component.translatable("message.agritech.slots_full"), true);
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
-                }
-            }
 
-            if (AgritechCropConfig.isValidSoil(heldItemId)) {
+                    ItemStack seedStack = heldItem.copyWithCount(1);
+                    planterBlockEntity.inventory.setStackInSlot(0, seedStack);
+                    heldItem.shrink(1);
+                    level.playSound(null, pos, SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                    level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
+                    planterBlockEntity.setChanged();
+                    return ItemInteractionResult.SUCCESS;
+                }
+            } else if (AgritechCropConfig.isValidSoil(heldItemId)) {
                 if (level.isClientSide()) {
                     return ItemInteractionResult.SUCCESS;
                 }
 
                 if (planterBlockEntity.inventory.getStackInSlot(1).isEmpty()) {
-                    ItemStack soilToInsert = heldItem.copy();
-                    soilToInsert.setCount(1);
-                    planterBlockEntity.inventory.setStackInSlot(1, soilToInsert);
-
-                    if (!player.getAbilities().instabuild) {
-                        heldItem.shrink(1);
+                    ItemStack seedStack = planterBlockEntity.inventory.getStackInSlot(0);
+                    if (!seedStack.isEmpty()) {
+                        String seedId = RegistryHelper.getItemId(seedStack);
+                        if (!AgritechCropConfig.isSoilValidForSeed(heldItemId, seedId)) {
+                            player.displayClientMessage(Component.translatable("message.agritech.invalid_seed_soil_combination"), true);
+                            return ItemInteractionResult.SUCCESS;
+                        }
                     }
 
-                    level.playSound(player, pos, SoundEvents.GRAVEL_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
-                } else {
-                    player.displayClientMessage(Component.translatable("message.agritech.slots_full"), true);
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
-                }
-            }
+                    ItemStack soilStack = heldItem.copyWithCount(1);
+                    planterBlockEntity.inventory.setStackInSlot(1, soilStack);
+                    heldItem.shrink(1);
+                    level.playSound(null, pos, SoundEvents.GRAVEL_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F);
 
-            if (heldItem.getItem() instanceof HoeItem) {
-                if (level.isClientSide()) {
+                    level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
+                    planterBlockEntity.setChanged();
                     return ItemInteractionResult.SUCCESS;
                 }
+            } else if (heldItem.getItem() instanceof BlockItem) {
+                ItemStack seedStack = planterBlockEntity.inventory.getStackInSlot(0);
+                if (!seedStack.isEmpty() && planterBlockEntity.inventory.getStackInSlot(1).isEmpty()) {
+                    String seedId = RegistryHelper.getItemId(seedStack);
+                    if (AgritechCropConfig.isValidSoil(heldItemId) &&
+                            !AgritechCropConfig.isSoilValidForSeed(heldItemId, seedId)) {
+                        if (!level.isClientSide()) {
+                            player.displayClientMessage(Component.translatable("message.agritech.invalid_seed_soil_combination"), true);
+                        }
+                        return ItemInteractionResult.SUCCESS;
+                    }
+                }
+            } else if (heldItem.getItem() instanceof HoeItem) {
+                ItemStack soilStack = planterBlockEntity.inventory.getStackInSlot(1);
 
-                if (planterBlockEntity.inventory.getStackInSlot(1).isEmpty()) {
-                    ItemStack farmlandStack = new ItemStack(net.minecraft.world.level.block.Blocks.FARMLAND);
-                    planterBlockEntity.inventory.setStackInSlot(1, farmlandStack);
+                if (!soilStack.isEmpty() && soilStack.getItem() instanceof BlockItem blockItem) {
+                    Block soilBlock = blockItem.getBlock();
+                    String soilId = RegistryHelper.getBlockId(soilBlock);
 
-                    level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
-                } else {
-                    player.displayClientMessage(Component.translatable("message.agritech.invalid_soil"), true);
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                    Map<String, String> tillableBlocks = new HashMap<>();
+
+                    tillableBlocks.put("minecraft:dirt", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:grass_block", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:mycelium", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:podzol", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:coarse_dirt", "minecraft:farmland");
+                    tillableBlocks.put("minecraft:rooted_dirt", "minecraft:farmland");
+
+                    if (ModList.get().isLoaded("farmersdelight")) {
+                        tillableBlocks.put("farmersdelight:rich_soil", "farmersdelight:rich_soil_farmland");
+                    }
+
+                    if (tillableBlocks.containsKey(soilId)) {
+                        Block resultBlock = RegistryHelper.getBlock(tillableBlocks.get(soilId));
+                        if (resultBlock != null) {
+                            ItemStack farmlandStack = new ItemStack(resultBlock);
+                            planterBlockEntity.inventory.setStackInSlot(1, farmlandStack);
+
+                            level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                            if (!player.getAbilities().instabuild) {
+                                heldItem.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+                            }
+
+                            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                        }
+                    }
                 }
             }
-
-            if (ModList.get().isLoaded("mysticalagriculture") || ModList.get().isLoaded("mysticalagradditions")) {
+            else {
                 Map<String, String> essenceToFarmland = new HashMap<>();
-
                 essenceToFarmland.put("mysticalagriculture:inferium_essence", "mysticalagriculture:inferium_farmland");
                 essenceToFarmland.put("mysticalagriculture:prudentium_essence", "mysticalagriculture:prudentium_farmland");
                 essenceToFarmland.put("mysticalagriculture:tertium_essence", "mysticalagriculture:tertium_farmland");
                 essenceToFarmland.put("mysticalagriculture:imperium_essence", "mysticalagriculture:imperium_farmland");
                 essenceToFarmland.put("mysticalagriculture:supremium_essence", "mysticalagriculture:supremium_farmland");
-
                 essenceToFarmland.put("mysticalagradditions:insanium_essence", "mysticalagradditions:insanium_farmland");
 
                 if (essenceToFarmland.containsKey(heldItemId)) {
-                    if (!planterBlockEntity.inventory.getStackInSlot(1).isEmpty()) {
-                        ItemStack soilStack = planterBlockEntity.inventory.getStackInSlot(1);
-                        String soilId = RegistryHelper.getItemId(soilStack);
+                    ItemStack soilStack = planterBlockEntity.inventory.getStackInSlot(1);
 
-                        if ((soilId.startsWith("mysticalagriculture:") || soilId.startsWith("mysticalagradditions:")) && soilId.endsWith("_farmland")) {
+                    if (!soilStack.isEmpty() && soilStack.getItem() instanceof BlockItem blockItem) {
+                        Block soilBlock = blockItem.getBlock();
+                        String soilId = RegistryHelper.getBlockId(soilBlock);
+
+                        if (soilId.equals("minecraft:farmland") ||
+                                soilId.startsWith("mysticalagriculture:") && soilId.endsWith("_farmland") ||
+                                soilId.startsWith("mysticalagradditions:") && soilId.endsWith("_farmland")) {
 
                             String farmlandId = essenceToFarmland.get(heldItemId);
                             Block resultBlock = RegistryHelper.getBlock(farmlandId);
@@ -225,7 +257,7 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
                 MenuProvider menuProvider = new SimpleMenuProvider(
                         (containerId, playerInventory, playerEntity) ->
                                 new AgritechPlanterMenu(containerId, playerInventory, planterBlockEntity),
-                        Component.translatable("container.agritech.planter")
+                        Component.translatable("container.agritech.hopping_planter")
                 );
 
                 player.openMenu(menuProvider, pos);

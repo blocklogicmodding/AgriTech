@@ -143,17 +143,6 @@ public class ATCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_warped_stems", has(ItemTags.WARPED_STEMS))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.AGRITECH_PLANTER_BLOCK.get())
-                .pattern("S S")
-                .pattern("PDP")
-                .pattern("LPL")
-                .define('S', ItemTags.SLABS)
-                .define('L', ItemTags.LOGS)
-                .define('D', Items.DIRT)
-                .define('P', ItemTags.PLANKS)
-                .unlockedBy("has_planks", has(ItemTags.PLANKS))
-                .save(recipeOutput, "agritech:planter_from_all_wood");
-
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.AGRITECH_HOPPING_PLANTER_BLOCK.get())
                 .requires(Items.HOPPER)
                 .requires(ModBlocks.AGRITECH_PLANTER_BLOCK.get())
