@@ -6,7 +6,7 @@
       "item": "minecraft:hopper"
     },
     "P": {
-      "tag": "minecraft:planks"
+      "tag": "minecraft:wooden_slabs"
     }
   },
   "pattern": [

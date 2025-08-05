@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-05T23:33:56.8146481	Recipes
+// 1.21.1	2025-08-06T00:34:51.9913369	Recipes
 aa2842a57aaff2dde4a3547f3a5b6a05542183d5 data/agritech/advancement/recipes/misc/acacia_hopping_planter.json
 2c4b83074a8350721331d7e7f61feb6ec44c8318 data/agritech/advancement/recipes/misc/acacia_planter.json
 6ec655c0da2ef26a27b54b0d676c77c42e735d14 data/agritech/advancement/recipes/misc/agritech_hopping_planter_block.json
@@ -36,7 +36,7 @@ abf1e1c0af82ff4efb64bbf71684e8567e8eda61 data/agritech/recipe/cherry_planter.jso
 fd2456e274eab0fd6eb862f488ed86af2717e89f data/agritech/recipe/crimson_planter.json
 3bae8a0c9627493c39daefd01e8fb6ea9b23cf28 data/agritech/recipe/dark_oak_hopping_planter.json
 b11be765d0699709e2b8cdd7a8406900c12e56bb data/agritech/recipe/dark_oak_planter.json
-de47d4963fab5ca792ec59eae1a0ed0969fa1517 data/agritech/recipe/hopping_upgrade.json
+e9c01591980c35a5e184ad5ae6d25c7914c4ff9f data/agritech/recipe/hopping_upgrade.json
 c7d7e777df6601b3f98a5897f92cd66b28f112de data/agritech/recipe/jungle_hopping_planter.json
 b5eb5954ef4f1c551e022c6ab329e12fd01b1e82 data/agritech/recipe/jungle_planter.json
 e8648138a55165fc08a3988bccf082291543af0e data/agritech/recipe/mangrove_hopping_planter.json

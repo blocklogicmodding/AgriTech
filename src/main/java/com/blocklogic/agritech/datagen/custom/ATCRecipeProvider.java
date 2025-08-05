@@ -214,7 +214,7 @@ public class ATCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("PHP")
                 .pattern(" P ")
                 .define('H', Items.HOPPER)
-                .define('P', ItemTags.PLANKS)
+                .define('P', ItemTags.WOODEN_SLABS)
                 .unlockedBy("has_hopper", has(Items.HOPPER))
                 .save(recipeOutput);
     }
