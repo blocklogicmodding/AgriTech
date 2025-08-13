@@ -98,7 +98,7 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
                     MenuProvider menuProvider = new SimpleMenuProvider(
                             (containerId, playerInventory, playerEntity) ->
                                     new AgritechPlanterMenu(containerId, playerInventory, planterBlockEntity),
-                            Component.translatable("container.agritech.hopping_planter")
+                            Component.translatable("container.agritech.planter")
                     );
 
                     player.openMenu(menuProvider, pos);
@@ -257,7 +257,7 @@ public class AgritechPlanterBlock extends BaseEntityBlock {
                 MenuProvider menuProvider = new SimpleMenuProvider(
                         (containerId, playerInventory, playerEntity) ->
                                 new AgritechPlanterMenu(containerId, playerInventory, planterBlockEntity),
-                        Component.translatable("container.agritech.hopping_planter")
+                        Component.translatable("container.agritech.planter")
                 );
 
                 player.openMenu(menuProvider, pos);
